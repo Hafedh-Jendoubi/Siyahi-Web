@@ -1,0 +1,136 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\CongeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: CongeRepository::class)]
+class Conge
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Description = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $Date_Debut = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $Date_Fin = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $Justification = null;
+
+    #[ORM\OneToMany(mappedBy: 'Conge', targetEntity: ReponseConge::class)]
+    private Collection $reponseConges;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?User $User = null;
+
+    public function __construct()
+    {
+        $this->reponseConges = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->Description;
+    }
+
+    public function setDescription(string $Description): static
+    {
+        $this->Description = $Description;
+
+        return $this;
+    }
+
+    public function getDateDebut(): ?\DateTimeInterface
+    {
+        return $this->Date_Debut;
+    }
+
+    public function setDateDebut(\DateTimeInterface $Date_Debut): static
+    {
+        $this->Date_Debut = $Date_Debut;
+
+        return $this;
+    }
+
+    public function getDateFin(): ?\DateTimeInterface
+    {
+        return $this->Date_Fin;
+    }
+
+    public function setDateFin(\DateTimeInterface $Date_Fin): static
+    {
+        $this->Date_Fin = $Date_Fin;
+
+        return $this;
+    }
+
+    public function getJustification(): ?string
+    {
+        return $this->Justification;
+    }
+
+    public function setJustification(?string $Justification): static
+    {
+        $this->Justification = $Justification;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ReponseConge>
+     */
+    public function getReponseConges(): Collection
+    {
+        return $this->reponseConges;
+    }
+
+    public function addReponseConge(ReponseConge $reponseConge): static
+    {
+        if (!$this->reponseConges->contains($reponseConge)) {
+            $this->reponseConges->add($reponseConge);
+            $reponseConge->setConge($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReponseConge(ReponseConge $reponseConge): static
+    {
+        if ($this->reponseConges->removeElement($reponseConge)) {
+            // set the owning side to null (unless already changed)
+            if ($reponseConge->getConge() === $this) {
+                $reponseConge->setConge(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->User;
+    }
+
+    public function setUser(?User $User): static
+    {
+        $this->User = $User;
+
+        return $this;
+    }
+}
