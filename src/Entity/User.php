@@ -6,6 +6,9 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use http\Message;
+use Symfony\Component\Messenger\MessageBus;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -17,21 +20,25 @@ class User
     private ?int $id = null;
 
     #[ORM\Column(length: 15)]
+    #[Assert\NotBlank]
     private ?string $First_Name = null;
 
     #[ORM\Column(length: 20)]
+    #[Assert\NotBlank]
     private ?string $Last_Name = null;
 
     #[ORM\Column(length: 1)]
     private ?string $Gender = null;
 
     #[ORM\Column(length: 50, nullable: true)]
+    #[Assert\NotBlank]
     private ?string $Address = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $Phone_Number = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
     private ?int $CIN = null;
 
     #[ORM\Column]
@@ -66,6 +73,12 @@ class User
 
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: Service::class)]
     private Collection $services;
+
+    #[ORM\Column(length: 255)]
+    private ?string $login = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $mdp = null;
 
     public function __construct()
     {
@@ -447,6 +460,30 @@ class User
                 $service->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLogin(): ?string
+    {
+        return $this->login;
+    }
+
+    public function setLogin(string $login): static
+    {
+        $this->login = $login;
+
+        return $this;
+    }
+
+    public function getMdp(): ?string
+    {
+        return $this->mdp;
+    }
+
+    public function setMdp(string $mdp): static
+    {
+        $this->mdp = $mdp;
 
         return $this;
     }

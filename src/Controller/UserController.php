@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\ReponseConge;
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,25 +14,39 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
-    #[Route('/user', name: 'app_user')]
-    public function index(): Response
+    #[Route('/users', name: 'list_user')]
+    public function index(UserRepository $repository): Response
     {
-        return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
+        $users = $repository->findAll();
+
+        return $this->render("user/index.html.twig", array('tabUsers'=>$users));
     }
 
     #[Route('/addUser', name: 'addUser')]
     public function addUser(Request $request, ManagerRegistry $managerRegistry)
     {
-        $user= new User();
-        $form= $this->createForm(UserType::class, $user);
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-        if($form->isSubmitted()){
-            $em= $managerRegistry->getManager();
+        if($form->isSubmitted() && $form->isValid()){
+            $em = $managerRegistry->getManager();
             $em->persist($user);
+            $user->setCreatedAt(new \DateTimeImmutable());
+            $user->setRole("user");
             $em->flush();
+            return $this->redirectToRoute("users");
         }
-        return $this->renderForm("user/index.html.twig", array('formUser'=>$form));
+        return $this->renderForm("user/add.html.twig", array('formUser'=>$form));
+    }
+
+    #[Route('/removeUser/{id}', name: 'removeUser')]
+    public function deleteAuthor(ManagerRegistry $managerRegistry, $id, UserRepository $repository)
+    {
+        $user = $repository->find($id);
+        $em = $managerRegistry->getManager();
+        $em->remove($user);
+        $em->flush();
+
+        return $this->redirectToRoute("users");
     }
 }

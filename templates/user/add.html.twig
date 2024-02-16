@@ -66,70 +66,43 @@
         </div>
     </section>
     <hr>
-    <style>
-        h1 {
-            color:#c00;
-            font-family:sans-serif;
-            font-size:2em;
-            margin-bottom:0;
-        }
-
-        table {
-            font-family:sans-serif;
-            th, td {
-                padding:.25em .5em;
-                text-align:center;
-                &:nth-child(2) {
-                    text-align:center;
-                }
-            }
-            td {
-                background-color:#eee;
-            }
-            th {
-                background-color:#009;
-                color:#fff;
-            }
-        }
-
-        .zigzag {
-            border-collapse:separate;
-            border-spacing:.25em 1em;
-            }
-            thead tr,
-            tbody tr:nth-child(even) {
-            }
-        }
-    </style>
-    <table class="zigzag" align="center">
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Gender</th>
-            <th>Address</th>
-            <th>Phone Number</th>
-            <th>CIN</th>
-            <th>Created At</th>
-            <th>Role</th>
-            <th>Action</th>
-        </tr>
-        {% for user in tabUsers %}
-            <tr>
-                <td>{{ user.FirstName }}</td>
-                <td>{{ user.LastName }}</td>
-                {% if user.Gender == 'M' %}
-                    <td>Male</td>
-                {% else %}
-                    <td>Female</td>
-                {% endif %}
-                <td>{{ user.Address }}</td>
-                <td>{{ user.PhoneNumber }}</td>
-                <td>{{ user.CIN }}</td>
-                <td>{{ user.CreatedAt | date("F jS \\a\\t g:ia") }}</td>
-                <td>{{ user.Role }}</td>
-                <td><a class="text-center" href="{{ path('removeUser', { id: user.id }) }}">Delete</a></td>
-            </tr>
-        {% endfor %}
-    </table>
-    <hr>
+    <section class="contact">
+        <div class="container aos-init aos-animate" data-aos="fade-up">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-6">
+                        {{ form_start(formUser, {'attr':{'novalidate': 'novalidate'}}) }}
+                        <div class="row">
+                            <div class="col form-group">
+                                {{ form_widget(formUser.FirstName, {'attr':{'class': 'form-control-sm'}}) }}
+                            </div>
+                            <div class="col form-group">
+                                {{ form_widget(formUser.LastName, {'attr':{'class': 'form-control-sm'}}) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col form-group">
+                                {{ form_widget(formUser.Address, {'attr':{'class': 'form-control-sm'}}) }}
+                            </div>
+                            <div class="col form-group">
+                                {{ form_widget(formUser.Gender, {'attr':{'class': 'form-control-sm'}}) }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col form-group">
+                                {{ form_widget(formUser.PhoneNumber, {'attr':{'class': 'form-control-sm'}}) }}
+                            </div>
+                            <div class="col form-group">
+                                {{ form_widget(formUser.CIN, {'attr':{'class': 'form-control-sm'}}) }}
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            {{ form_widget(formUser.Submit) }}
+                        </div>
+                    {{ form_end(formUser) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
