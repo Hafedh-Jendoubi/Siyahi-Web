@@ -15,12 +15,22 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
+    #[Route('/user', name: 'app_user')]
+    public function userFront(): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        return $this->render('user/index.html.twig', [
+            'controller_name' => 'StaffController',
+        ]);
+    }
+
     #[Route('/users', name: 'list_user')]
     public function index(UserRepository $repository)
     {
         $users = $repository->findAll();
 
-        return $this->render("user/index.html.twig", array('tabUsers'=>$users));
+        return $this->render("user/list.html.twig", array('tabUsers'=>$users));
     }
 
     #[Route('/addUser', name: 'addUser')]
@@ -36,9 +46,9 @@ class UserController extends AbstractController
             $user->setEmail($user->getLastName() . "." . $user->getFirstName() . "@siyahi.tn");
             $hashedPassword = $passwordHasher->hashPassword($user, "0000");
             $user->setPassword($hashedPassword);
-            $user->setRoles(["User", "Admin"]);
+            $user->setRoles(["ROLE_USER"]);
             $em->flush();
-            return $this->redirectToRoute("users");
+            return $this->redirectToRoute("list_user");
         }
         return $this->renderForm("user/add.html.twig", array('formUser'=>$form));
     }
@@ -51,6 +61,6 @@ class UserController extends AbstractController
         $em->remove($user);
         $em->flush();
 
-        return $this->redirectToRoute("users");
+        return $this->redirectToRoute("list_user");
     }
 }
