@@ -95,10 +95,10 @@
         .zigzag {
             border-collapse:separate;
             border-spacing:.25em 1em;
-            }
-            thead tr,
-            tbody tr:nth-child(even) {
-            }
+        }
+        thead tr,
+        tbody tr:nth-child(even) {
+        }
         }
     </style>
     <table class="zigzag" align="center">
@@ -126,7 +126,13 @@
                 <td>{{ user.PhoneNumber }}</td>
                 <td>{{ user.CIN }}</td>
                 <td>{{ user.CreatedAt | date("F jS \\a\\t g:ia") }}</td>
-                <td>{{ user.Role }}</td>
+                <td>
+                    {% for role in user.roles %}
+                        {% if role != 'ROLE_USER' %}
+                            {{ role }}
+                        {% endif %}
+                    {% endfor %}
+                </td>
                 <td><a class="text-center" href="{{ path('removeUser', { id: user.id }) }}">Delete</a></td>
             </tr>
         {% endfor %}

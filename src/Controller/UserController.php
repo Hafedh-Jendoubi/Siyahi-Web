@@ -10,12 +10,13 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
     #[Route('/users', name: 'list_user')]
-    public function index(UserRepository $repository): Response
+    public function index(UserRepository $repository)
     {
         $users = $repository->findAll();
 
@@ -23,7 +24,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/addUser', name: 'addUser')]
-    public function addUser(Request $request, ManagerRegistry $managerRegistry)
+    public function addUser(Request $request, ManagerRegistry $managerRegistry, UserPasswordHasherInterface $passwordHasher)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -32,7 +33,10 @@ class UserController extends AbstractController
             $em = $managerRegistry->getManager();
             $em->persist($user);
             $user->setCreatedAt(new \DateTimeImmutable());
-            $user->setRole("user");
+            $user->setEmail($user->getLastName() . "." . $user->getFirstName() . "@siyahi.tn");
+            $hashedPassword = $passwordHasher->hashPassword($user, "0000");
+            $user->setPassword($hashedPassword);
+            $user->setRoles(["User", "Admin"]);
             $em->flush();
             return $this->redirectToRoute("users");
         }
