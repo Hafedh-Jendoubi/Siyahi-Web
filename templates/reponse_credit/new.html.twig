@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ReponseCredit{% endblock %}
+
+{% block body %}
+    <h1 style="text-align: center;">Create new ReponseCredit</h1>
+
+    {{ include('reponse_credit/_form.html.twig') }}
+
+    <a href="{{ path('app_reponse_credit_index') }}">back to list</a>
+{% endblock %}
+
+
+

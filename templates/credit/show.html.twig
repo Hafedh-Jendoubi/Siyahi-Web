@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Credit{% endblock %}
+
+{% block body %}
+    <h1>Credit</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ credit.id }}</td>
+            </tr>
+            <tr>
+                <th>Solde_demande</th>
+                <td>{{ credit.soldeDemande }}</td>
+            </tr>
+            <tr>
+                <th>Date_debut_paiement</th>
+                <td>{{ credit.dateDebutPaiement ? credit.dateDebutPaiement|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Nbr_mois_paiement</th>
+                <td>{{ credit.nbrMoisPaiement }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ credit.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_credit_index') }}">back to list</a>
+
+    <a href="{{ path('app_credit_edit', {'id': credit.id}) }}">edit</a>
+
+    {{ include('credit/_delete_form.html.twig') }}
+{% endblock %}

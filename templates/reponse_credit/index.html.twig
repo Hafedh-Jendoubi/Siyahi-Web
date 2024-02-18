@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ReponseCredit index{% endblock %}
+
+{% block body %}
+    <h1>ReponseCredit index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>CreditId</th>
+                <th>Solde_a_payer</th>
+                <th>Date_debutPaiement</th>
+                <th>Nbr_moisPaiement</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reponse_credit in reponse_credits %}
+            <tr>
+                <td>{{ reponse_credit.id }}</td>
+                <td>{{ reponse_credit.credit.id }}</td>
+                <td>{{ reponse_credit.soldeAPayer }}</td>
+                <td>{{ reponse_credit.dateDebutPaiement ? reponse_credit.dateDebutPaiement|date('Y-m-d') : '' }}</td>
+                <td>{{ reponse_credit.nbrMoisPaiement }}</td>
+                <td>{{ reponse_credit.description }}</td>
+                <td>
+                    <a href="{{ path('app_reponse_credit_show', {'id': reponse_credit.id}) }}">show</a>
+                    <a href="{{ path('app_reponse_credit_edit', {'id': reponse_credit.id}) }}">edit</a>
+                    <br>
+                    {{ include('reponse_credit/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reponse_credit_new') }}">Create new</a>
+{% endblock %}

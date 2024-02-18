@@ -7,6 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Mime\Message;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: CreditRepository::class)]
 class Credit
@@ -17,15 +20,23 @@ class Credit
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:"C'est obligatoire de preciser un montant")]
+    #[Assert\Length(min:"3", minMessage:"Le montant ne doit pas être inferieur à 100.")]
     private ?float $solde_demande = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThan("today", message:"La date de début doit être superieur à aujourd'hui.")]
     private ?\DateTimeInterface $date_debut_paiement = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:"C'est obligatoire de preciser le nombres de mois de paiement.")]
+
     private ?int $nbr_mois_paiement = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"C'est obligatoire de préciser une raison.")]
+    #[Assert\Length(min:"3", minMessage:"Cette valeur est trop courte. Elle doit comporter au moins 3 caractères.")]
+
     private ?string $description = null;
 
     #[ORM\OneToMany(mappedBy: 'credit', targetEntity: ReponseCredit::class)]

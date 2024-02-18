@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Credit index{% endblock %}
+
+{% block body %}
+    <h1>Credit index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Solde_demande</th>
+                <th>Date_debut_paiement</th>
+                <th>Nbr_mois_paiement</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for credit in credits %}
+            <tr>
+                <td>{{ credit.id }}</td>
+                <td>{{ credit.soldeDemande }}</td>
+                <td>{{ credit.dateDebutPaiement ? credit.dateDebutPaiement|date('Y-m-d') : '' }}</td>
+                <td>{{ credit.nbrMoisPaiement }}</td>
+                <td>{{ credit.description }}</td>
+                <td>
+                    <a href="{{ path('app_credit_show', {'id': credit.id}) }}">Show</a>
+                    <br>
+                    <a href="{{ path('app_credit_edit', {'id': credit.id}) }}">Edit</a>
+                    <br>
+                    {{ include('credit/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_credit_new') }}">Create new</a>
+{% endblock %}

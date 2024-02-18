@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Credit{% endblock %}
+
+{% block body %}
+    <h1 style="text-align: center;">Ajouter un nouveau Credit</h1>
+
+    {{ include('credit/_form.html.twig') }}
+
+    <a href="{{ path('app_credit_index') }}">back to list</a>
+{% endblock %}
