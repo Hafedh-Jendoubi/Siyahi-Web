@@ -6,6 +6,9 @@ use App\Repository\CongeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CongeRepository::class)]
@@ -16,17 +19,28 @@ class Conge
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+   
+     #[ORM\Column(length: 255)]
+     #[Assert\NotBlank(message:"La description est obligatoire")]
+     #[Assert\Length(max:"255", maxMessage:"La description ne doit pas dépasser {{ limit }} caractères")]
+     
     private ?string $Description = null;
 
+    
+
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThan("today", message:"La date de début doit être ultérieure à aujourd'hui")]
     private ?\DateTimeInterface $Date_Debut = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\Expression(
+           "this.getDateFin() >= this.getDateDebut()",
+            message:"La date de fin doit être postérieure ou égale à la date de début"
+         )]
     private ?\DateTimeInterface $Date_Fin = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Justification = null;
+    private ?File $Justification = null;
 
     #[ORM\OneToMany(mappedBy: 'Conge', targetEntity: ReponseConge::class)]
     private Collection $reponseConges;
@@ -80,12 +94,12 @@ class Conge
         return $this;
     }
 
-    public function getJustification(): ?string
+    public function getJustification(): ?File
     {
         return $this->Justification;
     }
 
-    public function setJustification(?string $Justification): static
+    public function setJustification(?File $Justification): static
     {
         $this->Justification = $Justification;
 

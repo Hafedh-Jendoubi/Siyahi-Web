@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <h1><center>Demander congé</center></h1>
+
+    {{ include('conge/_form.html.twig') }}
+
+    <a href="{{ path('app_conge_index') }}">back to list</a>
+{% endblock %}

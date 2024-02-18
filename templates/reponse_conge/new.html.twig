@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <h1><center>Create new ReponseConge</center></h1>
+
+    {{ include('reponse_conge/_form.html.twig') }}
+
+    <a href="{{ path('app_reponse_conge_index') }}">back to list</a>
+{% endblock %}

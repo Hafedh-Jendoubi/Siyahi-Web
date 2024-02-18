@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <h1><center>Edit Conge</center></h1>
+
+    {{ include('conge/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_conge_index') }}">back to list</a>
+
+    
+{% endblock %}
