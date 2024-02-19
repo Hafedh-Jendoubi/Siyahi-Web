@@ -10,7 +10,7 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="front/assets/img/favicon.png" rel="icon">
+    <link href="front/assets/img/logo.png" rel="icon">
     <link href="front/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
@@ -81,6 +81,9 @@
                     {% endif %}
                     {% if is_granted("ROLE_STAFF") %}
                         <li><a class="nav-link scrollto" href="{{ path('app_staff_section') }}">Staff</a></li>
+                    {% endif %}
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <li><a class="nav-link scrollto" href="{{ path('admin_home') }}">Administrator</a></li>
                     {% endif %}
                     {% if is_granted("ROLE_USER") %}
                         <li><a class="nav-link scrollto" href="#">Account</a></li>

@@ -2,76 +2,207 @@
 <html lang="en">
 <head>
     <title>Login Siyahi Bank</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{{ asset('Login/vendor/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('Login/fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('fonts/iconic/css/material-design-iconic-font.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('Login/vendor/animate/animate.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('Login/vendor/css-hamburgers/hamburgers.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('Login/vendor/animsition/css/animsition.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('Login/vendor/select2/select2.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('Login/vendor/daterangepicker/daterangepicker.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('Login/css/util.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('Login/css/main.css') }}">
+    <style>
+        html {
+            height: 100%;
+        }
+        body {
+            margin:0;
+            padding:0;
+            font-family: sans-serif;
+            background: linear-gradient(#141e30, #243b55);
+        }
+
+        .login-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            padding: 40px;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,.5);
+            box-sizing: border-box;
+            box-shadow: 0 15px 25px rgba(0,0,0,.6);
+            border-radius: 10px;
+        }
+
+        .login-box h2 {
+            margin: 0 0 30px;
+            padding: 0;
+            color: #fff;
+            text-align: center;
+        }
+
+        .login-box .user-box {
+            position: relative;
+        }
+
+        .login-box .user-box input {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 30px;
+            border: none;
+            border-bottom: 1px solid #fff;
+            outline: none;
+            background: transparent;
+        }
+        .login-box .user-box label {
+            position: absolute;
+            top:0;
+            left: 0;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            pointer-events: none;
+            transition: .5s;
+        }
+
+        .login-box .user-box input:focus ~ label,
+        .login-box .user-box input:valid ~ label {
+            top: -20px;
+            left: 0;
+            color: #03e9f4;
+            font-size: 12px;
+        }
+
+        .login-box form button {
+            position: relative;
+            display: inline-block;
+            padding: 10px 20px;
+            color: #ffffff;
+            background-color: #1d0a50;
+            font-size: 16px;
+            text-decoration: none;
+            text-transform: full-size-kana;
+            overflow: hidden;
+            transition: .5s;
+            margin-top: 40px;
+            letter-spacing: 4px
+        }
+
+        .login-box button:hover {
+            background: #1d0a50;
+            color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #7a7a7a,
+            0 0 25px #7a7a7a,
+            0 0 50px #7a7a7a,
+            0 0 100px #7a7a7a;
+        }
+
+        .login-box button span {
+            position: absolute;
+            display: block;
+        }
+
+        .login-box button span:nth-child(1) {
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffffff);
+            animation: btn-anim1 1s linear infinite;
+        }
+
+        @keyframes btn-anim1 {
+            0% {
+                left: -100%;
+            }
+            50%,100% {
+                left: 100%;
+            }
+        }
+
+        .login-box button span:nth-child(2) {
+            top: -100%;
+            right: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, #ffffff);
+            animation: btn-anim2 1s linear infinite;
+            animation-delay: .25s
+        }
+
+        @keyframes btn-anim2 {
+            0% {
+                top: -100%;
+            }
+            50%,100% {
+                top: 100%;
+            }
+        }
+
+        .login-box button span:nth-child(3) {
+            bottom: 0;
+            right: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(270deg, transparent, #ffffff);
+            animation: btn-anim3 1s linear infinite;
+            animation-delay: .5s
+        }
+
+        @keyframes btn-anim3 {
+            0% {
+                right: -100%;
+            }
+            50%,100% {
+                right: 100%;
+            }
+        }
+
+        .login-box button span:nth-child(4) {
+            bottom: -100%;
+            left: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(360deg, transparent, #ffffff);
+            animation: btn-anim4 1s linear infinite;
+            animation-delay: .75s
+        }
+
+        @keyframes btn-anim4 {
+            0% {
+                bottom: -100%;
+            }
+            50%,100% {
+                bottom: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="limiter">
-        <div class="container-login100">
-            <div class="wrap-login100">
-                <form class="login100-form validate-form" method="post">
-                    {% if error %}
-                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                    {% endif %}
-    
-                    {% if app.user %}
-                        <div class="mb-3">
-                            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-                        </div>
-                    {% endif %}
-                    <span class="login100-form-title p-b-26">
-						Welcome
-					</span>
-                    <span class="login100-form-title p-b-48">
-						<i class="zmdi zmdi-font"></i>
-					</span>
-    
-                    <div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
-                        <input type="email" value="{{ last_username }}" name="_username" id="username" class="input100" autocomplete="email" required autofocus>
-                        <span class="focus-input100" data-placeholder="Email"></span>
-                    </div>
-    
-                    <div class="wrap-input100 validate-input" data-validate="Enter password">
-                            <span class="btn-show-pass">
-                                <i class="zmdi zmdi-eye"></i>
-                            </span>
-                        <input type="password" name="_password" id="password" class="input100" autocomplete="current-password" required>
-                        <span class="focus-input100" data-placeholder="Password"></span>
-                    </div>
+<div class="login-box">
+    <h2>Login</h2>
+    <form class="login100-form validate-form" method="post">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
 
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-    
-                    <div class="container-login100-form-btn">
-                        <div class="wrap-login100-form-btn">
-                            <div class="login100-form-bgbtn"></div>
-                            <button class="login100-form-btn" type="submit">
-                                Login
-                            </button>
-                        </div>
-                    </div>
-                </form>
+        {% if app.user %}
+            <div class="mb-3">
+                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
             </div>
+        {% endif %}
+        <div class="user-box">
+            <input type="email" value="{{ last_username }}" name="_username" id="username" class="input100" autocomplete="email" required autofocus>
+            <label>Username</label>
         </div>
+        <div class="user-box">
+            <input type="password" name="_password" id="password" class="input100" autocomplete="current-password" required>
+            <label>Password</label>
+        </div>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        <center><button type="submit">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Login
+        </button></center>
+    </form>
     </div>
-    <div id="dropDownSelect1"></div>
-    <script src="{{ asset('Login/vendor/jquery/jquery-3.2.1.min.js') }}') }}"></script>
-    <script src="{{ asset('Login/vendor/animsition/js/animsition.min.js') }}') }}"></script>
-    <script src="{{ asset('Login/vendor/bootstrap/js/popper.js') }}"></script>
-    <script src="{{ asset('Login/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('Login/vendor/select2/select2.min.js') }}"></script>
-    <script src="{{ asset('Login/vendor/daterangepicker/moment.min.js') }}"></script>
-    <script src="{{ asset('Login/vendor/daterangepicker/daterangepicker.js') }}"></script>
-    <script src="{{ asset('Login/vendor/countdowntime/countdowntime.js') }}"></script>
-    <script src="{{ asset('Login/js/main.js') }}"></script>
 </body>
 </html>

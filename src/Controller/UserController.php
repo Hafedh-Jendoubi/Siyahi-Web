@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ReponseConge;
 use App\Entity\User;
+use App\Form\EditUserType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -20,17 +21,7 @@ class UserController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        return $this->render('user/index.html.twig', [
-            'controller_name' => 'StaffController',
-        ]);
-    }
-
-    #[Route('/users', name: 'list_user')]
-    public function index(UserRepository $repository)
-    {
-        $users = $repository->findAll();
-
-        return $this->render("user/list.html.twig", array('tabUsers'=>$users));
+        return $this->render('user/index.html.twig');
     }
 
     #[Route('/addUser', name: 'addUser')]
@@ -46,9 +37,8 @@ class UserController extends AbstractController
             $user->setEmail($user->getLastName() . "." . $user->getFirstName() . "@siyahi.tn");
             $hashedPassword = $passwordHasher->hashPassword($user, "0000");
             $user->setPassword($hashedPassword);
-            $user->setRoles(["ROLE_USER"]);
             $em->flush();
-            return $this->redirectToRoute("list_user");
+            return $this->redirectToRoute("app_staff_section");
         }
         return $this->renderForm("user/add.html.twig", array('formUser'=>$form));
     }
@@ -61,6 +51,22 @@ class UserController extends AbstractController
         $em->remove($user);
         $em->flush();
 
-        return $this->redirectToRoute("list_user");
+        return $this->redirectToRoute("admin_users");
+    }
+
+    #[Route('/updateUser/{id}', name: 'updateUser')]
+    public function updateBook($id, UserRepository $repository, Request $request, ManagerRegistry $managerRegistry, UserPasswordHasherInterface $passwordHasher)
+    {
+        $user = $repository->find($id);
+        $form = $this->createForm(EditUserType::class, $user);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $em = $managerRegistry->getManager();
+            $hashedPassword = $passwordHasher->hashPassword($user, $user->getPassword());
+            $user->setPassword($hashedPassword);
+            $em->flush();
+            return $this->redirectToRoute("admin_users");
+        }
+        return $this->renderForm("admin/updateUser.html.twig", array('formUser' => $form));
     }
 }
