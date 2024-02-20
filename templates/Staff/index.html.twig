@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}<title>Staff Section</title>{% endblock %}
+
+{% block body %}
+    <section class="testimonials">
+        <div class="container" data-aos="zoom-in">
+
+            <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="testimonial-item">
+                            <img src="{{ asset('front/assets/img/testimonials/testimonials-1.jpg') }}" class="testimonial-img" alt="">
+                            <h3>Jendoubi Haafedh</h3>
+                            <h4>Ceo &amp; Founder</h4>
+                            <p>
+                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                                My eyes are on you Staff Team. You shall never run away from me! I will be always watching you.
+                                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                            </p>
+                        </div>
+                    </div><!-- End testimonial item -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services">
+        <div class="container aos-init aos-animate" data-aos="fade-up">
+            <div class="section-title">
+                <h2>Staff</h2>
+                <h3>Check our private <span>Staff Section</span></h3>
+                <p>This section's access is only allowed for the Staff Team or Higher. Clients have no access to this section.</p>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch aos-init aos-animate" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="icon-box">
+                        <div class="icon"><i class="bx bxs-user-account"></i></div>
+                        <h4><a href="{{ path('addUser') }}">User Management</a></h4>
+                        <p>In this section you might add a new user, edit user's details and delete a user. </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="icon-box">
+                        <div class="icon"><i class="bx bx-money"></i></div>
+                        <h4><a href="">Loans Management</a></h4>
+                        <p>In this section, you ought to manage Loans posted by users.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="icon-box">
+                        <div class="icon"><i class="bx bxs-purchase-tag"></i></div>
+                        <h4><a href="">Purchases Mangement</a></h4>
+                        <p>In this section, you ought to manage Purchases.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 aos-init aos-animate" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="icon-box">
+                        <div class="icon"><i class="bx bx-receipt"></i></div>
+                        <h4><a href="">Reclamations Management</a></h4>
+                        <p>In this section, you ought to manage reclamations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
