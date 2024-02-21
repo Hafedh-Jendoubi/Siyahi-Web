@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ReponseReclamationRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReponseReclamationRepository::class)]
@@ -21,6 +22,12 @@ class ReponseReclamation
 
     #[ORM\ManyToOne(inversedBy: 'reponseReclamations')]
     private ?User $User = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $dateCreation = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $auteur = null;
 
     public function getId(): ?int
     {
@@ -59,6 +66,40 @@ class ReponseReclamation
     public function setUser(?User $User): static
     {
         $this->User = $User;
+
+        return $this;
+    }
+     /**
+     * Get the string representation of the object.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        
+    }
+    
+    
+    public function getDateCreation(): ?\DateTimeInterface
+    {
+        return $this->dateCreation;
+    }
+
+    public function setDateCreation(\DateTimeInterface $dateCreation): static
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    public function getAuteur(): ?string
+    {
+        return $this->auteur;
+    }
+
+    public function setAuteur(string $auteur): static
+    {
+        $this->auteur = $auteur;
 
         return $this;
     }
