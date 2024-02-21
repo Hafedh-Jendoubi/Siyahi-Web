@@ -13,10 +13,4 @@ class StaffController extends AbstractController
     {
         return $this->render('staff/home.html.twig');
     }
-
-    #[Route('/staff-section', name: 'app_staff_section')]
-    public function staff_home()
-    {
-        return $this->render('staff/index.html.twig');
-    }
 }

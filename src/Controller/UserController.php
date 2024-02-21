@@ -8,6 +8,7 @@ use App\Form\EditUserType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\PseudoTypes\LowercaseString;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +25,15 @@ class UserController extends AbstractController
         return $this->render('user/index.html.twig');
     }
 
-    #[Route('/addUser', name: 'addUser')]
+    #[Route('/admin/users', name: 'admin_users')]
+    public function listUsers(UserRepository $repository)
+    {
+        $users = $repository->findAll();
+
+        return $this->render('user/users.html.twig', array('tabUsers' => $users));
+    }
+
+    #[Route('/staff/addUser', name: 'addUser')]
     public function addUser(Request $request, ManagerRegistry $managerRegistry, UserPasswordHasherInterface $passwordHasher)
     {
         $user = new User();
@@ -34,17 +43,21 @@ class UserController extends AbstractController
             $em = $managerRegistry->getManager();
             $em->persist($user);
             $user->setCreatedAt(new \DateTimeImmutable());
-            $user->setEmail($user->getLastName() . "." . $user->getFirstName() . "@siyahi.tn");
+            $user->setEmail(strtolower($user->getFirstName()) . "." . strtolower($user->getLastName()) . "@siyahi.tn");
             $hashedPassword = $passwordHasher->hashPassword($user, "0000");
             $user->setPassword($hashedPassword);
+            if($user->getGender() == "M")
+                $user->setImage("front/img/avatars/man.png");
+            else
+                $user->setImage("front/img/avatars/woman.png");
             $em->flush();
-            return $this->redirectToRoute("app_staff_section");
+            return $this->redirectToRoute("addUser");
         }
         return $this->renderForm("user/add.html.twig", array('formUser'=>$form));
     }
 
-    #[Route('/removeUser/{id}', name: 'removeUser')]
-    public function deleteAuthor(ManagerRegistry $managerRegistry, $id, UserRepository $repository)
+    #[Route('/admin/removeUser/{id}', name: 'removeUser')]
+    public function deleteUser(ManagerRegistry $managerRegistry, $id, UserRepository $repository)
     {
         $user = $repository->find($id);
         $em = $managerRegistry->getManager();
@@ -54,19 +67,28 @@ class UserController extends AbstractController
         return $this->redirectToRoute("admin_users");
     }
 
-    #[Route('/updateUser/{id}', name: 'updateUser')]
-    public function updateBook($id, UserRepository $repository, Request $request, ManagerRegistry $managerRegistry, UserPasswordHasherInterface $passwordHasher)
+    #[Route('/admin/updateUser/{id}', name: 'updateUser')]
+    public function updateUser($id, UserRepository $repository, Request $request, ManagerRegistry $managerRegistry)
     {
         $user = $repository->find($id);
         $form = $this->createForm(EditUserType::class, $user);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $em = $managerRegistry->getManager();
-            $hashedPassword = $passwordHasher->hashPassword($user, $user->getPassword());
-            $user->setPassword($hashedPassword);
+            $image = $form->get('image')->getData();
+            var_dump($image);
+            /*if ($image) {
+                $file = md5(uniqid()) . '.' . $image->guessExtension();
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $file
+                );
+                dump($image);
+                $user->setImage('front/assets/img/team/' . $file);
+            }*/
             $em->flush();
             return $this->redirectToRoute("admin_users");
         }
-        return $this->renderForm("admin/updateUser.html.twig", array('formUser' => $form));
+        return $this->renderForm("user/updateUser.html.twig", array('formUser' => $form));
     }
 }

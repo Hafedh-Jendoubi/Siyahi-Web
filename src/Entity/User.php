@@ -28,10 +28,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotBlank(message:"Password can't be blank.")]
     private ?string $password = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
     #[ORM\Column(length: 15)]
+    #[Assert\NotBlank(message: "First Name shouldn't be blank")]
     private ?string $First_Name = null;
 
     #[ORM\Column(length: 20)]
@@ -91,7 +94,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->compteClients = new ArrayCollection();
         $this->services = new ArrayCollection();
     }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -155,6 +157,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): static
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

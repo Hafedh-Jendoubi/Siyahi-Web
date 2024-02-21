@@ -13,10 +13,4 @@ class VisitorController extends AbstractController
     {
         return $this->render('visitor/index.html.twig');
     }
-
-    #[Route('/error', name: 'error')]
-    public function Error_index()
-    {
-        return $this->render('visitor/error.html.twig');
-    }
 }

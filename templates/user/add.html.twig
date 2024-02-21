@@ -1,70 +1,63 @@
-{% extends 'base.html.twig' %}
+{% extends 'back_base.html.twig' %}
 
 {% block title %}<title>User Section</title>{% endblock %}
 
 {% block body %}
-    <section class="testimonials">
-        <div class="container" data-aos="zoom-in">
-
-            <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="testimonial-item">
-                            <img src="{{ asset('front/assets/img/team/hafedh.jpg') }}" class="testimonial-img" alt="">
-                            <h3>Jendoubi Hafedh</h3>
-                            <h4>Ceo &amp; Founder</h4>
-                            <p>
-                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                My eyes are on you Staff Team. You shall never run away from me! I will be always watching you.
-                                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                            </p>
+    <div class="content-wrapper">
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Gestion Staff/</span> Add New User</h4>
+            <div class="col-xxl">
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">Add New User Form</h5>
+                        <small class="text-muted float-end">Make sure to fill the form carefully</small>
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(formUser, {'attr': {'novalidate': 'novalidate'}}) }}
+                        <div class="row mb-3">
+                            {{ form_label(formUser.FirstName) }}
+                            <div class="col-sm-10">
+                                {{ form_widget(formUser.FirstName, {'attr': {'class': 'form-control'}}) }}
+                            </div>
                         </div>
-                    </div><!-- End testimonial item -->
+                        <div class="row mb-3">
+                            {{ form_label(formUser.LastName) }}
+                            <div class="col-sm-10">
+                                {{ form_widget(formUser.LastName, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            {{ form_label(formUser.Gender) }}
+                            <div class="col-sm-10">
+                                {{ form_widget(formUser.Gender, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            {{ form_label(formUser.Address) }}
+                            <div class="col-sm-10">
+                                {{ form_widget(formUser.Address, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            {{ form_label(formUser.PhoneNumber) }}
+                            <div class="col-sm-10">
+                                {{ form_widget(formUser.PhoneNumber, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            {{ form_label(formUser.CIN) }}
+                            <div class="col-sm-10">
+                                {{ form_widget(formUser.CIN, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="col text-center">
+                            {{ form_widget(formUser.Submit) }}
+                            {{ form_widget(formUser.Reset) }}
+                        </div>
+                        {{ form_end(formUser) }}
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
-    <hr>
-    <section id="contact">
-    {{ form_start(formUser, {'attr': {'novlidate': 'novalidate'}}) }}
-    <center>
-        <table>
-            <tr>
-                <th><label>First Name[*] :</label></th>
-                <td>{{ form_widget(formUser.FirstName) }}</td>
-                <td>{{ form_errors(formUser.FirstName) }}</td>
-            </tr>
-            <tr>
-                <th><label>Last Name[*] :</label></th>
-                <td>{{ form_widget(formUser.LastName) }}</td>
-                <td>{{ form_errors(formUser.LastName) }}</td>
-            </tr>
-            <tr>
-                <th><label>Gender :</label></th>
-                <td>{{ form_widget(formUser.Gender) }}</td>
-                <td>{{ form_errors(formUser.Gender) }}</td>
-            </tr>
-            <tr>
-                <th><label>Address :</label></th>
-                <td>{{ form_widget(formUser.Address) }}</td>
-                <td>{{ form_errors(formUser.Address) }}</td>
-            </tr>
-            <tr>
-                <th><label>Phone Number :</label></th>
-                <td>{{ form_widget(formUser.PhoneNumber) }}</td>
-                <td>{{ form_errors(formUser.PhoneNumber) }}</td>
-            </tr>
-            <tr>
-                <th><label>CIN[*] :</label></th>
-                <td>{{ form_widget(formUser.CIN) }}</td>
-                <td>{{ form_errors(formUser.CIN) }}</td>
-            </tr>
-            <tr>
-                <th>{{ form_widget(formUser.Submit) }}</th>
-                <th>{{ form_widget(formUser.Reset) }}</th>
-            </tr>
-        </table>
-    </center>
-    {{ form_end(formUser) }}
-    </section>
+    </div>
 {% endblock %}

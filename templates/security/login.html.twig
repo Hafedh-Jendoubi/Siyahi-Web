@@ -171,6 +171,12 @@
                 bottom: 100%;
             }
         }
+
+        .alert {
+            position: absolute;
+            margin-top: 120px;
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -178,13 +184,7 @@
     <h2>Login</h2>
     <form class="login100-form validate-form" method="post">
         {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
-
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-            </div>
+            <div class="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
         <div class="user-box">
             <input type="email" value="{{ last_username }}" name="_username" id="username" class="input100" autocomplete="email" required autofocus>

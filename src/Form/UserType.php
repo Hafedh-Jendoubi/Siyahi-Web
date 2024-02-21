@@ -53,8 +53,8 @@ class UserType extends AbstractType
                     new Length(8)
                 ]
             ])
-            ->add("Submit", SubmitType::class)
-            ->add("Reset", ResetType::class)
+            ->add("Submit", SubmitType::class, ['attr'=> ['class' => 'btn btn-primary']])
+            ->add("Reset", ResetType::class, ['attr'=> ['class' => 'btn btn-secondary']])
         ;
     }
 

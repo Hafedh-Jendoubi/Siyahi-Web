@@ -10,8 +10,10 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
+    #This makes sure that Admin have access to everything that Staff does, and it goes on like that. "Heritage"
     role_hierarchy:
-        ROLE_STAFF: ROLE_USER
+        ROLE_USER: ROLE_USER
+        ROLE_STAFF: ROLE_STAFF
         ROLE_ADMIN: [ROLE_STAFF, admin]
         ROLE_SUPER_ADMIN: [ROLE_ADMIN]
     firewalls:
@@ -26,6 +28,8 @@ security:
                 check_path: app_login
                 enable_csrf: true
                 default_target_path: app_user
+                #This success_handler is added to redirect each user to his area. Client -> FrontOffice // Staff+ -> BackOffice
+                success_handler: App\Security\AppAuthenticationSuccessHandler
             logout:
                 path: app_logout
                 # where to redirect after logout
@@ -40,6 +44,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        - { path: ^/home, roles: ROLE_STAFF }
         - { path: ^/staff, roles: ROLE_STAFF }
         - { path: ^/admin, roles: ROLE_ADMIN }
 
