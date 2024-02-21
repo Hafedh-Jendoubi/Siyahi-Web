@@ -2,15 +2,9 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-    {% block title %} {% endblock %}
-    <meta content="" name="description">
-    <meta content="" name="keywords">
-
+   
     <!-- Favicons -->
-    <link href="front/assets/img/favicon.png" rel="icon">
+    <link href="front/assets/img/logo.png" rel="icon">
     <link href="front/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
@@ -27,17 +21,6 @@
 
         <!-- Template Main CSS File -->
         <link href="{{ asset('front/assets/css/style.css') }}" rel="stylesheet">
-    <style>
-        /* Style personnalisé pour le titre "Demande de congé" */
-        .mt-4  {
-            text-align: center;
-            font-size: 2.5rem;
-            color: #333;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-    </style>
     {% endblock %}
 
 </head>
@@ -61,9 +44,43 @@
 </section>
 
 <!-- ======= Header ======= -->
-{% block header %}
+    <header id="header" class="d-flex align-items-center">
+        <div class="container d-flex align-items-center justify-content-between">
 
-{% endblock %}
+            <h1 class="logo"><a href="#">Siyahi Bank<span>.</span></a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt=""></a>-->
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto" href="{{ path('app_home') }}">Home</a></li>
+                    <li><a class="nav-link scrollto" href="#about">About</a></li>
+                    <li><a class="nav-link scrollto" href="#team">Team</a></li>
+                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+                        <li class="dropdown"><a href="#"><span>Services</span> <i class="bi bi-chevron-down"></i></a>
+                            <ul>
+                                <li><a href="#">Operation</a></li>
+                                <li class="dropdown"><a href="#"><span>Credit</span> <i class="bi bi-chevron-right"></i></a>
+                                    <ul>
+                                        <li><a href="{{ path('app_credit_new') }}">Avoir un Crédit</a></li>
+                                        <li><a href="{{ path('app_credit_index') }}">Historique</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">Achat</a></li>
+                                <li><a href="#">Reclamation</a></li>
+                            </ul>
+                        </li>
+                  
+                        <li><a class="nav-link scrollto" href="#">Account</a></li>
+                    <li><!-- Just to leave an empty space between Contact & Logout --></li>
+                  
+                        <li><a class="nav-link scrollto" href="#">Logout</a></li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+
+        </div>
+    </header>
 <!-- End Header -->
 
 <main id="main">

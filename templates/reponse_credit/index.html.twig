@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_back.html.twig' %}
 
-{% block title %}ReponseCredit index{% endblock %}
+{% block title %}Listes des ReponsesCredits {% endblock %}
 
 {% block body %}
-    <h1>ReponseCredit index</h1>
+    <h1>Listes des ReponsesCredits </h1>
 
     <table class="table">
         <thead>
@@ -27,19 +27,20 @@
                 <td>{{ reponse_credit.nbrMoisPaiement }}</td>
                 <td>{{ reponse_credit.description }}</td>
                 <td>
-                    <a href="{{ path('app_reponse_credit_show', {'id': reponse_credit.id}) }}">show</a>
-                    <a href="{{ path('app_reponse_credit_edit', {'id': reponse_credit.id}) }}">edit</a>
+                    <a  class="btn btn-info" style="width: 110px; "  href="{{ path('app_reponse_credit_show', {'id': reponse_credit.id}) }}">Détailles</a>
+                    <br>
+                    <a class="btn btn-primary" style="width: 110px; " href="{{ path('app_reponse_credit_edit', {'id': reponse_credit.id}) }}">Modifier</a>
                     <br>
                     {{ include('reponse_credit/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">La liste est vide</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_reponse_credit_new') }}">Create new</a>
+    <a  class="btn btn-success" style="width: 110px; " href="{{ path('app_reponse_credit_new') }}">Créer</a>
 {% endblock %}

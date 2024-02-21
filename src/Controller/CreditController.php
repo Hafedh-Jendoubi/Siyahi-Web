@@ -21,6 +21,13 @@ class CreditController extends AbstractController
             'credits' => $creditRepository->findAll(),
         ]);
     }
+    #[Route('/b', name: 'app_credit_indexb', methods: ['GET'])]
+    public function indexb(CreditRepository $creditRepository): Response
+    {
+        return $this->render('credit/indexb.html.twig', [
+            'credits' => $creditRepository->findAll(),
+        ]);
+    }
 
     #[Route('/new', name: 'app_credit_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -46,6 +53,13 @@ class CreditController extends AbstractController
     public function show(Credit $credit): Response
     {
         return $this->render('credit/show.html.twig', [
+            'credit' => $credit,
+        ]);
+    }
+    #[Route('b/{id}', name: 'app_credit_showb', methods: ['GET'])]
+    public function showb(Credit $credit): Response
+    {
+        return $this->render('credit/showb.html.twig', [
             'credit' => $credit,
         ]);
     }

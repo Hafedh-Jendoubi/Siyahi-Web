@@ -1,13 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_back.html.twig' %}
 
 {% block title %}Edit ReponseCredit{% endblock %}
 
 {% block body %}
-    <h1 style="text-align: center;">Edit ReponseCredit</h1>
+    <h1 style="text-align: center;">Modifier la ReponseCredit</h1>
 
     {{ include('reponse_credit/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_reponse_credit_index') }}">back to list</a>
+    <a href="{{ path('app_reponse_credit_index') }}">retourner à la list</a>
 
     {{ include('reponse_credit/_delete_form.html.twig') }}
 {% endblock %}
