@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_back.html.twig' %}
 
 
 
 {% block body %}
-    <h1><center>Liste des congés demande</center></h1>
+    <h1><center>Liste des demandes de congé</center></h1>
 
     <table class="table">
         <thead>
@@ -25,18 +25,18 @@
                 <td>{{ conge.DateFin ? conge.DateFin|date('Y-m-d') : '' }}</td>
                 <td>{{ conge.Justification }}</td>
                 <td>
-                    <a href="{{ path('app_conge_show', {'id': conge.id}) }}">show</a><br>
-                    <a href="{{ path('app_conge_edit', {'id': conge.id}) }}">edit</a>
+                    <a class="btn btn-info" style="width: 110px; " href="{{ path('app_conge_show', {'id': conge.id}) }}">Détailles</a><br>
+                    <a  class="btn btn-primary" style="width: 110px; " href="{{ path('app_conge_edit', {'id': conge.id}) }}">modifier</a>
                     {{ include('conge/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">Aucun enregistrement trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_conge_new') }}">Create new</a>
+    <a  class="btn btn-success" style="width: 110px; " href="{{ path('app_conge_new') }}">ajouter</a>
 {% endblock %}

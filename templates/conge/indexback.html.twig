@@ -1,0 +1,41 @@
+{% extends 'base_back.html.twig' %}
+
+
+
+{% block body %}
+    <h1><center>Liste des demandes de congé</center></h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Date_Debut</th>
+                <th>Date_Fin</th>
+                <th>Justification</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for conge in conges %}
+            <tr>
+                <td>{{ conge.id }}</td>
+                <td>{{ conge.Description }}</td>
+                <td>{{ conge.DateDebut ? conge.DateDebut|date('Y-m-d') : '' }}</td>
+                <td>{{ conge.DateFin ? conge.DateFin|date('Y-m-d') : '' }}</td>
+                <td>{{ conge.Justification }}</td>
+                <td>
+                    <a  class="btn btn-info" style="width: 110px; " href="{{ path('app_conge_show1', {'id': conge.id}) }}">Détailles</a><br>
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}

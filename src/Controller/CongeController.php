@@ -21,6 +21,13 @@ class CongeController extends AbstractController
             'conges' => $congeRepository->findAll(),
         ]);
     }
+    #[Route('/i', name: 'app_conge_indexb', methods: ['GET'])]
+    public function index1(CongeRepository $congeRepository): Response
+    {
+        return $this->render('conge/indexback.html.twig', [
+            'conges' => $congeRepository->findAll(),
+        ]);
+    }
 
     #[Route('/new', name: 'app_conge_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -46,6 +53,13 @@ class CongeController extends AbstractController
     public function show(Conge $conge): Response
     {
         return $this->render('conge/show.html.twig', [
+            'conge' => $conge,
+        ]);
+    }
+    #[Route('/i/{id}', name: 'app_conge_show1', methods: ['GET'])]
+    public function show1(Conge $conge): Response
+    {
+        return $this->render('conge/showback.html.twig', [
             'conge' => $conge,
         ]);
     }

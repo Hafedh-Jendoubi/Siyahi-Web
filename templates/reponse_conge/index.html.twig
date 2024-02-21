@@ -1,9 +1,7 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}ReponseConge index{% endblock %}
+{% extends 'base_back.html.twig' %}
 
 {% block body %}
-    <h1>ReponseConge index</h1>
+    <h1>Liste des réponses congé</h1>
 
     <table class="table">
         <thead>
@@ -11,33 +9,32 @@
                 <th>Id</th>
                 <th>Congé_id</th>
                 <th>Description</th>
-                <th>DateDebut</th>
-
-                <th>DateFin</th>
-                <th>actions</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for reponse_conge in reponse_conges %}
             <tr>
                 <td>{{ reponse_conge.id }}</td>
-                 <td>{{ reponse_conge.conge.id }}</td>
-                  <td>{{ reponse_conge.description }}</td>
+                <td>{{ reponse_conge.conge.id }}</td>
+                <td>{{ reponse_conge.description }}</td>
                 <td>{{ reponse_conge.DateDebut ? reponse_conge.DateDebut|date('Y-m-d') : '' }}</td>
                 <td>{{ reponse_conge.DateFin ? reponse_conge.DateFin|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_reponse_conge_show', {'id': reponse_conge.id}) }}">show</a><br>
-                    <a href="{{ path('app_reponse_conge_edit', {'id': reponse_conge.id}) }}">edit</a>
+                    <a class="btn btn-info" style="width: 110px; " href="{{ path('app_reponse_conge_show', {'id': reponse_conge.id}) }}">Détailles</a><br>
+                    <a class="btn btn-primary" style="width: 110px; " href="{{ path('app_reponse_conge_edit', {'id': reponse_conge.id}) }}">Modifier</a>
                     {{ include('reponse_conge/_delete_form.html.twig') }}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="6">Aucun enregistrement trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_reponse_conge_new') }}">Create new</a>
+    <a class="btn btn-success" style="width: 110px; " href="{{ path('app_reponse_conge_new') }}">Ajouter</a> 
 {% endblock %}

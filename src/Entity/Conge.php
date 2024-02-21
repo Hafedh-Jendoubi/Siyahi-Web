@@ -40,7 +40,7 @@ class Conge
     private ?\DateTimeInterface $Date_Fin = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?File $Justification = null;
+    private ?string $Justification = null;
 
     #[ORM\OneToMany(mappedBy: 'Conge', targetEntity: ReponseConge::class)]
     private Collection $reponseConges;
@@ -94,12 +94,12 @@ class Conge
         return $this;
     }
 
-    public function getJustification(): ?File
+    public function getJustification(): ?string
     {
         return $this->Justification;
     }
 
-    public function setJustification(?File $Justification): static
+    public function setJustification(?string $Justification): static
     {
         $this->Justification = $Justification;
 
