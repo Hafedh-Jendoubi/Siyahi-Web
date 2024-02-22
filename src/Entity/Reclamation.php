@@ -34,7 +34,7 @@ class Reclamation
     public ?User $User = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Assert\GreaterThan("today", message:"La date de création ne peut pas être postérieure à aujourd\'hui.")]
+   /* #[Assert\GreaterThan("today", message:"La date de création ne peut pas être postérieure à aujourd\'hui.")]*/
     private ?\DateTimeInterface $dateCreation = null;
 
     #[ORM\Column(length: 255)]
