@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use http\Message;
 use PHPUnit\Util\Type;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -12,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Blank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -22,13 +24,13 @@ class UserType extends AbstractType
         $builder
             ->add('FirstName', TextType::class, ['attr' => ['placeholder' => 'First Name*'],
                 'constraints' => [
-                    new NotBlank(['message' => 'First Name cannot be blank.']),
+                    new NotBlank(['message' => 'First Name is required.']),
                     new Length(['max' => 15, 'maxMessage' => 'First Name cannot be longer than {{ limit }} characters.'])
                 ]
             ])
             ->add('LastName', TextType::class, ['attr' => ['placeholder' => 'Last Name*'],
                 'constraints' => [
-                    new NotBlank(['message' => 'Last Name cannot be blank.']),
+                    new NotBlank(['message' => 'Last Name is required.']),
                     new Length(['max' => 20, 'maxMessage' => 'First Name cannot be longer than {{ limit }} characters.'])
                 ]
             ])

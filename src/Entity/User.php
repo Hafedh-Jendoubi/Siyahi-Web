@@ -34,7 +34,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $image = null;
 
     #[ORM\Column(length: 15)]
-    #[Assert\NotBlank(message: "First Name shouldn't be blank")]
+    #[Assert\NotBlank(message:"First Name is required.")]
     private ?string $First_Name = null;
 
     #[ORM\Column(length: 20)]

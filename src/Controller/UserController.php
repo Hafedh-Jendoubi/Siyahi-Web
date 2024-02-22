@@ -47,9 +47,9 @@ class UserController extends AbstractController
             $hashedPassword = $passwordHasher->hashPassword($user, "0000");
             $user->setPassword($hashedPassword);
             if($user->getGender() == "M")
-                $user->setImage("front/img/avatars/man.png");
+                $user->setImage("http://localhost/img/7f9183c93cb4803aefc8262447c4efc9.png");
             else
-                $user->setImage("front/img/avatars/woman.png");
+                $user->setImage("http://localhost/img/b56ef85920323ead69e5f0d1ca13a0cd.png");
             $em->flush();
             return $this->redirectToRoute("addUser");
         }
@@ -76,16 +76,17 @@ class UserController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $em = $managerRegistry->getManager();
             $image = $form->get('image')->getData();
-            var_dump($image);
-            /*if ($image) {
-                $file = md5(uniqid()) . '.' . $image->guessExtension();
+            if ($image) {
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+
                 $image->move(
                     $this->getParameter('images_directory'),
-                    $file
+                    $fichier
                 );
                 dump($image);
-                $user->setImage('front/assets/img/team/' . $file);
-            }*/
+
+                $user->setImage('http://localhost/img/' . $fichier);
+            }
             $em->flush();
             return $this->redirectToRoute("admin_users");
         }

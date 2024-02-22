@@ -41,15 +41,10 @@
                             <div class="col-sm-10">
                                 <div class="input-group input-group-merge">
                                     {{ form_widget(formUser.email, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(formUser.email) }}
                                     <span class="input-group-text" id="basic-default-email2">@siyahi.tn</span>
                                 </div>
                                 <div class="form-text">You can use letters, numbers &amp; periods</div>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            {{ form_label(formUser.password) }}
-                            <div class="col-sm-10">
-                                {{ form_widget(formUser.password, {'attr': {'class': 'form-control'}}) }}
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -62,18 +57,21 @@
                             {{ form_label(formUser.Address) }}
                             <div class="col-sm-10">
                                 {{ form_widget(formUser.Address, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(formUser.Address) }}
                             </div>
                         </div>
                         <div class="row mb-3">
                             {{ form_label(formUser.Phone_Number) }}
                             <div class="col-sm-10">
                                 {{ form_widget(formUser.Phone_Number, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(formUser.Phone_Number) }}
                             </div>
                         </div>
                         <div class="row mb-3">
                             {{ form_label(formUser.CIN) }}
                             <div class="col-sm-10">
                                 {{ form_widget(formUser.CIN, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(formUser.CIN) }}
                             </div>
                         </div>
                         <div class="row mb-3">
