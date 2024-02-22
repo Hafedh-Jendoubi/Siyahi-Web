@@ -55,18 +55,19 @@ class User
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: ReponseCredit::class)]
     private Collection $reponseCredits;
 
-    #[ORM\OneToMany(mappedBy: 'User', targetEntity: Commande::class)]
-    private Collection $commandes;
-
-    #[ORM\OneToMany(mappedBy: 'User', targetEntity: Achat::class)]
-    private Collection $achats;
-
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: CompteClient::class)]
     private Collection $compteClients;
 
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: Service::class)]
     private Collection $services;
 
+    #[ORM\OneToMany(mappedBy: 'User', targetEntity: Commande::class)]
+    private Collection $Commande;
+
+    public function __toString()
+    {
+        return $this->First_Name;
+    }
     public function __construct()
     {
         $this->reponseConges = new ArrayCollection();
@@ -74,10 +75,9 @@ class User
         $this->reponseReclamations = new ArrayCollection();
         $this->credits = new ArrayCollection();
         $this->reponseCredits = new ArrayCollection();
-        $this->commandes = new ArrayCollection();
-        $this->achats = new ArrayCollection();
         $this->compteClients = new ArrayCollection();
         $this->services = new ArrayCollection();
+        $this->Commande = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -331,65 +331,7 @@ class User
         return $this;
     }
 
-    /**
-     * @return Collection<int, Commande>
-     */
-    public function getCommandes(): Collection
-    {
-        return $this->commandes;
-    }
 
-    public function addCommande(Commande $commande): static
-    {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes->add($commande);
-            $commande->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommande(Commande $commande): static
-    {
-        if ($this->commandes->removeElement($commande)) {
-            // set the owning side to null (unless already changed)
-            if ($commande->getUser() === $this) {
-                $commande->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Achat>
-     */
-    public function getAchats(): Collection
-    {
-        return $this->achats;
-    }
-
-    public function addAchat(Achat $achat): static
-    {
-        if (!$this->achats->contains($achat)) {
-            $this->achats->add($achat);
-            $achat->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAchat(Achat $achat): static
-    {
-        if ($this->achats->removeElement($achat)) {
-            // set the owning side to null (unless already changed)
-            if ($achat->getUser() === $this) {
-                $achat->setUser(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, CompteClient>
@@ -445,6 +387,36 @@ class User
             // set the owning side to null (unless already changed)
             if ($service->getUser() === $this) {
                 $service->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommande(): Collection
+    {
+        return $this->Commande;
+    }
+
+    public function addCommande(Commande $commande): static
+    {
+        if (!$this->Commande->contains($commande)) {
+            $this->Commande->add($commande);
+            $commande->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): static
+    {
+        if ($this->Commande->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getUser() === $this) {
+                $commande->setUser(null);
             }
         }
 

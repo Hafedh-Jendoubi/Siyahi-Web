@@ -3,7 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\CommandeRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
 class Commande
@@ -13,25 +15,45 @@ class Commande
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $Object = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $date = null;
 
-    #[ORM\ManyToOne(inversedBy: 'commandes')]
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank (message:"veuillez saisir Votre Addresse ")]
+    private ?string $Adresse = null;
+
+    #[ORM\ManyToOne(inversedBy: 'Commande')]
     private ?User $User = null;
+
+    public function __construct() {
+        $this->date= new \DateTime('now');
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getObject(): ?string
+    public function getDate(): ?\DateTimeInterface
     {
-        return $this->Object;
+        return $this->date;
     }
 
-    public function setObject(string $Object): static
+    public function setDate(\DateTimeInterface $date): static
     {
-        $this->Object = $Object;
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->Adresse;
+    }
+
+    public function setAdresse(string $Adresse): static
+    {
+        $this->Adresse = $Adresse;
 
         return $this;
     }

@@ -56,67 +56,32 @@
 <!-- End Header -->
 
 <main id="main">
+
+ <nav class="navbar navbar-expand-lg navbar-light ftco_navbar ftco-navbar-light" id="ftco-navbar">
+        <div class="container">
+          <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item"><a href="{{ path('app_article_indexFront') }}" class="nav-link">Article</a></li>
+                <li class="nav-item">
+                    <a href="{{ path('app_panier') }}" class="nav-link">
+                        <i class="bi bi-cart"></i>
+                        {% if app.session.get("panier", [])|length > 0 %}
+                            <span class="badge bg-primary">{{ app.session.get("panier", [])|length }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+            </ul>
+          </div>
+          
+        </div>
+</nav>
+
+<br>
+<br>
     {% block body %}
 
     {% endblock %}
 </main><!-- End #main -->
-
-<!-- ======= Footer ======= -->
-<footer id="footer">
-
-    <hr>
-    <div class="footer-top">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-lg-3 col-md-6 footer-contact">
-                    <h3>Siyahi Bank<span>.</span></h3>
-                    <p>
-                        ESPRIT Bloc IJK <br>
-                        La Gazelle, Ariana <br>
-                        Tunisia <br><br>
-                        <strong>Phone:</strong> +216 95 052 214<br>
-                        <strong>Email:</strong> siyahi-info@siyahi.tn<br>
-                    </p>
-                </div>
-
-                <div class="col-lg-3 col-md-6 footer-links">
-                    <h4>Useful Links</h4>
-                    <ul>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-3 col-md-6 footer-links">
-                    <h4>Our Services</h4>
-                    <ul>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-3 col-md-6 footer-links">
-                    <h4>Our Social Networks</h4>
-                    <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
-                    <div class="social-links mt-3">
-                        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-                        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-</footer><!-- End Footer -->
 
 <div id="preloader"></div>
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

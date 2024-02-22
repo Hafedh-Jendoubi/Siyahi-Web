@@ -1,0 +1,52 @@
+{% extends 'front.html.twig' %}
+
+
+
+{% block body %}
+
+
+    <div class="service">
+        <div class="container">
+            <div class="section-header text-center">
+              <div id="google_translate_element"></div>
+
+                <h4 style="margin-top:50px; margin-bottom:50px;">Liste des Articles</h4>
+            </div>
+            <div class="row">
+           {% for article in articles %}
+           
+        <div class="col-lg-4 col-md-6 mb-4">
+        <div class="service-item">
+          <img src="{{ asset('uploads/' ~article.Image) }}" style=" width:150px; height:150px; " alt=""/>
+          <p><strong style="color:#696969"> Type:</strong> {{ article.Type }}</p>
+          <p><strong style="color:#696969" >nombre :</strong> {{ article.NbArticle }}</p>
+          <p><strong style="color:#696969" >Description :</strong> {{ article.Description }}</p>
+          <p><strong style="color:#696969" >Prix :</strong> {{ article.Prix }} TND</p>
+          
+            {% if article.NbArticle > 0 %}
+          <a href="{{path("add_panier",{id: article.id})}}" class="btn btn-success"> <i class="bi bi-cart-plus"></i> Ajouter </a>
+            {% else %}          
+                <h3> Out Of Stock </h3>
+            {% endif %}
+         
+         <br>
+         <br>
+
+        </div>
+      </div>
+
+      {% else %}
+      <div class="col">
+        <p class="text-center">Aucun article trouvé.</p>
+      </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+    </div>
+    <br>
+
+{% endblock %}
+               
