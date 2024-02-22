@@ -132,4 +132,17 @@ class CompteClient
 
         return $this;
     }
+
+    public function __toString(): string
+{
+    return sprintf(
+        'CompteClient [ID: %d, Type: %s, RIB: %d, Created_at: %s, Solde: %f]',
+        $this->id,
+        $this->Type,
+        $this->RIB,
+        $this->Created_at ? $this->Created_at->format('Y-m-d H:i:s') : 'null',
+        $this->Solde
+    );
+}
+
 }

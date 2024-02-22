@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}<title>User Section</title>{% endblock %}
+
+{% block body %}
+    <section class="testimonials">
+        <div class="container" data-aos="zoom-in">
+
+            <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="testimonial-item">
+                            <img src="{{ asset('front/assets/img/team/hafedh.jpg') }}" class="testimonial-img" alt="">
+                            <h3>Jendoubi Hafedh</h3>
+                            <h4>Ceo &amp; Founder</h4>
+                            <p>
+                                <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                                My eyes are on you Staff Team. You shall never run away from me! I will be always watching you.
+                                <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                            </p>
+                        </div>
+                    </div><!-- End testimonial item -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <section id="contact">
+    {{ form_start(formUser, {'attr': {'novlidate': 'novalidate'}}) }}
+    <center>
+        <table>
+            <tr>
+                <th><label>First Name[*] :</label></th>
+                <td>{{ form_widget(formUser.FirstName) }}</td>
+                <td>{{ form_errors(formUser.FirstName) }}</td>
+            </tr>
+            <tr>
+                <th><label>Last Name[*] :</label></th>
+                <td>{{ form_widget(formUser.LastName) }}</td>
+                <td>{{ form_errors(formUser.LastName) }}</td>
+            </tr>
+            <tr>
+                <th><label>Gender :</label></th>
+                <td>{{ form_widget(formUser.Gender) }}</td>
+                <td>{{ form_errors(formUser.Gender) }}</td>
+            </tr>
+            <tr>
+                <th><label>Address :</label></th>
+                <td>{{ form_widget(formUser.Address) }}</td>
+                <td>{{ form_errors(formUser.Address) }}</td>
+            </tr>
+            <tr>
+                <th><label>Phone Number :</label></th>
+                <td>{{ form_widget(formUser.PhoneNumber) }}</td>
+                <td>{{ form_errors(formUser.PhoneNumber) }}</td>
+            </tr>
+            <tr>
+                <th><label>CIN[*] :</label></th>
+                <td>{{ form_widget(formUser.CIN) }}</td>
+                <td>{{ form_errors(formUser.CIN) }}</td>
+            </tr>
+            <tr>
+                <th>{{ form_widget(formUser.Submit) }}</th>
+                <th>{{ form_widget(formUser.Reset) }}</th>
+            </tr>
+        </table>
+    </center>
+    {{ form_end(formUser) }}
+    </section>
+{% endblock %}
