@@ -76,42 +76,27 @@
                     </a>
                 </li>
 
-                {% if is_granted("ROLE_STAFF") %}
-                <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">Staff Panel</span>
-                </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-user"></i>
-                            <div data-i18n="Account Settings">User Section</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="{{ path('addUser') }}" class="menu-link">
-                                    <div data-i18n="Account">Add New User</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="#" class="menu-link">
-                                    <div data-i18n="Account">Search User</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon bx bx-message-rounded-error"></i>
-                            <div data-i18n="Account Settings">Reclamation Section</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="#" class="menu-link">
-                                    <div data-i18n="Account">Reclamations List</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                {% endif %}
+                
+
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                        <div data-i18n="Account Settings">Gestion Reclamation</div>
+                          </a>
+                          <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="{{ path('app_reclamation_index') }}" class="menu-link">
+                                <div data-i18n="Account">List Reclamation</div>
+                            </a>
+                               </li>
+                               <li class="menu-item">
+                            <a href="{{ path('app_reponse_reclamation_index') }}" class="menu-link">
+                                <div data-i18n="Notifications">repondre Reclamation</div>
+                            </a>
+                        </li>
+                        
+
+                
                 {% if is_granted("ROLE_ADMIN") %}
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">Admin Panel</span>
@@ -194,24 +179,12 @@
                         <li class="nav-item navbar-dropdown dropdown-user dropdown">
                             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                 <div class="avatar avatar-online">
-                                    <img src="{{ asset('front/assets/img/team/hafedh.jpg') }}" alt class="w-px-40 h-auto rounded-circle" />
+                                    <img src="{{ asset('front/assets/img/team/iheb.jpg') }}" alt class="w-px-40 h-auto rounded-circle" />
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li>
-                                    <a class="dropdown-item" href="#">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar avatar-online">
-                                                    <img src="{{ asset('front/assets/img/team/hafedh.jpg') }}" alt class="w-px-40 h-auto rounded-circle" />
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <span class="fw-semibold d-block">Jendoubi Hafedh</span>
-                                                <small class="text-muted">Admin</small>
-                                            </div>
-                                        </div>
-                                    </a>
+                                    
                                 </li>
                                 <li>
                                     <div class="dropdown-divider"></div>
