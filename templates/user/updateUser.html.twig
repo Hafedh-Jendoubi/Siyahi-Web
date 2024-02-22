@@ -1,0 +1,95 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}
+    <title>Edit User</title>
+{% endblock %}
+
+{% block body %}
+    <div class="content-wrapper">
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Gestion Admin/</span> Edit User</h4>
+            <div class="col-xxl">
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">Edit User Form</h5>
+                        <small class="text-muted float-end">Make sure to fill the form carefully</small>
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(formUser, {'attr': {'novalidate': 'novalidate'}}) }}
+                        <div class="row mb-3">
+                            <div class="col-sm-10">
+                                {{ form_widget(formUser.image, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(formUser.image) }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            {{ form_label(formUser.First_Name) }}
+                            <div class="col-sm-10">
+                                {{ form_widget(formUser.First_Name, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(formUser.First_Name) }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            {{ form_label(formUser.Last_Name) }}
+                            <div class="col-sm-10">
+                                {{ form_widget(formUser.Last_Name, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(formUser.Last_Name) }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            {{ form_label(formUser.email) }}
+                            <div class="col-sm-10">
+                                <div class="input-group input-group-merge">
+                                    {{ form_widget(formUser.email, {'attr': {'class': 'form-control'}}) }}
+                                    <span class="input-group-text" id="basic-default-email2">@siyahi.tn</span>
+                                </div>
+                                <div class="form-text">You can use letters, numbers &amp; periods</div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            {{ form_label(formUser.password) }}
+                            <div class="col-sm-10">
+                                {{ form_widget(formUser.password, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            {{ form_label(formUser.Gender) }}
+                            <div class="col-sm-10">
+                                {{ form_widget(formUser.Gender, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            {{ form_label(formUser.Address) }}
+                            <div class="col-sm-10">
+                                {{ form_widget(formUser.Address, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            {{ form_label(formUser.Phone_Number) }}
+                            <div class="col-sm-10">
+                                {{ form_widget(formUser.Phone_Number, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            {{ form_label(formUser.CIN) }}
+                            <div class="col-sm-10">
+                                {{ form_widget(formUser.CIN, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            {{ form_label(formUser.roles) }}
+                            <div class="col-sm-10">
+                                {{ form_widget(formUser.roles, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="col text-center">
+                            {{ form_widget(formUser.Submit) }}
+                            {{ form_widget(formUser.Reset) }}
+                        </div>
+                        {{ form_end(formUser) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

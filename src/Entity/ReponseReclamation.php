@@ -76,9 +76,20 @@ class ReponseReclamation
      */
     public function __toString()
     {
-        
+        try {
+            return sprintf(
+                'ReponseReclamation {id: %s, Description: %s, Reclamation: %s, User: %s, DateCreation: %s, Auteur: %s}',
+                $this->id,
+                $this->Description,
+                $this->Reclamation ? $this->Reclamation->getId() : 'null',
+                $this->User ? $this->User->getId() : 'null',
+                $this->dateCreation ? $this->dateCreation->format('Y-m-d') : 'null',
+                $this->auteur
+            );
+        } catch (\Exception $e) {
+            return 'Error in __toString method';
+        }
     }
-    
     
     public function getDateCreation(): ?\DateTimeInterface
     {

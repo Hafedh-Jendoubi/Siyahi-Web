@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: ReclamationRepository::class)]
 class Reclamation
@@ -18,18 +20,21 @@ class Reclamation
 
     #[ORM\Column(length: 255)]
     private ?string $Object = null;
+    #[Assert\NotBlank(message:"Le champ Object ne peut pas être vide.")]
+
     
 
     #[ORM\Column(length: 255)]
     private ?string $Description = null;
 
     #[ORM\OneToMany(mappedBy: 'Reclamation', targetEntity: ReponseReclamation::class)]
-    private Collection $reponseReclamations;
+    public Collection $reponseReclamations;
 
     #[ORM\ManyToOne(inversedBy: 'reclamations')]
-    private ?User $User = null;
+    public ?User $User = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThan("today", message:"La date de création ne peut pas être postérieure à aujourd\'hui.")]
     private ?\DateTimeInterface $dateCreation = null;
 
     #[ORM\Column(length: 255)]
@@ -163,6 +168,18 @@ class Reclamation
         $this->status = $status;
 
         return $this;
+    }
+    public function __toString()
+    {
+        return sprintf(
+            'Reclamation {id: %s, Object: %s, Description: %s, User: %s, DateCreation: %s, Auteur: %s}',
+            $this->getId() !== null ? $this->getId() : 'null',
+            $this->getObject() !== null ? $this->getObject() : 'null',
+            $this->getDescription() !== null ? $this->getDescription() : 'null',
+            $this->getUser() !== null ? $this->getUser()->getId() : 'null',
+            $this->getDateCreation() !== null ? $this->getDateCreation()->format('Y-m-d') : 'null',
+            $this->getAuteur() !== null ? $this->getAuteur() : 'null'
+        );
     }
 
     

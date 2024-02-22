@@ -10,6 +10,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Validator\Constraints\Expression;
+
+
 
 class ReclamationType extends AbstractType
 {
@@ -26,16 +29,16 @@ class ReclamationType extends AbstractType
                 new NotBlank(['message' => 'Le champ Description ne peut pas être vide.']),
             ],
         ])
-        ->add('dateCreation', DateType::class, [
-            'widget' => 'single_text',
-            'format' => 'yyyy-MM-dd',
-            'constraints' => [
-        new LessThanOrEqual([
-            'value' => 'today',
-            'message' => 'La date de création ne peut pas être postérieure à aujourd\'hui.',
-        ]),
-        ],
-        ])
+        ->add('dateCreation') #DateType::class, [
+            // ...
+           /* 'constraints' => [
+                new LessThanOrEqual([
+                    'value' => new \DateTime(),
+                    'message' => 'La date de création ne peut pas être postérieure à aujourd\'hui.',
+                ]),
+            ],
+        ])*/
+        
         ->add('auteur', null, [
             'constraints' => [
                 new NotBlank(['message' => 'Le champ auteur ne peut pas être vide.']),
