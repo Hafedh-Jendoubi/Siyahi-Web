@@ -1,0 +1,63 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}DemandeAchat index{% endblock %}
+
+{% block body %}
+    <h1>DemandeAchat index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>DateDemande</th>
+                <th>NumTel</th>
+                <th>TypePaiement</th>
+                <th>CIN</th>
+                <th>Adresse</th>
+                <th>User</th>
+                <th>Achat</th>
+                <th>Etat Demande</th>
+                <th>Accepter</th>
+                <th>Refuser</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for demande_achat in demande_achats %}
+            <tr>
+                <td>{{ demande_achat.id }}</td>
+                <td>{{ demande_achat.Nom }}</td>
+                <td>{{ demande_achat.Prenom }}</td>
+                <td>{{ demande_achat.DateDemande ? demande_achat.DateDemande|date('Y-m-d') : '' }}</td>
+                <td>{{ demande_achat.numTel }}</td>
+                <td>{{ demande_achat.TypePaiement }}</td>
+                <td>{{ demande_achat.CIN }}</td>
+                <td>{{ demande_achat.Adresse }}</td>
+                <td>{{ demande_achat.User }}</td>
+                <td>{{ demande_achat.Achat }}</td>
+               
+                <td style="{% if demande_achat.etatdemande == 'en cours de traitement' %}color: yellow;{% elseif demande_achat.etatdemande == 'demande accepter' %}color: green;{% elseif demande_achat.etatdemande == 'demande refu' %}color: red;{% endif %}">
+                    {{ demande_achat.etatdemande }}
+                </td>
+                <td>
+                    <a href="{{ path('app_demande_achat_accepter', {'id': demande_achat.id}) }}">Accepter</a>
+                </td>
+                <td>
+                    <a href="{{ path('app_demande_achat_refuser', {'id': demande_achat.id}) }}">Refuser</a>
+                </td>
+                <td>
+                    <a href="{{ path('app_demande_achat_show', {'id': demande_achat.id}) }}">show</a>
+                    <a href="{{ path('app_demande_achat_edit', {'id': demande_achat.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

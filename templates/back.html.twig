@@ -18,8 +18,7 @@
 
     {% endblock %}
 
-    <meta name="description" content="" />
-
+    
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('back/assets/img/favicon/favicon.ico') }}" />
 
@@ -44,6 +43,7 @@
     <link rel="stylesheet" href="{{ asset('back/assets/vendor/libs/apex-charts/apex-charts.css') }}" />
 
     <!-- Page CSS -->
+    
  {% endblock %}
     <!-- Helpers -->
     <script src="{{ asset('back/assets/vendor/js/helpers.js') }}"></script>
@@ -110,13 +110,13 @@
                     <ul class="menu-sub">
                        
                         <li class="menu-item">
-                            <a href="{{ path('app_article_index') }}" class="menu-link">
-                                <div data-i18n="Account">Article</div>
+                            <a href="{{ path('app_achat_index') }}" class="menu-link">
+                                <div data-i18n="Account">Achat</div>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="{{ path('app_commande_index') }}" class="menu-link">
-                                <div data-i18n="Notifications">Commande</div>
+                            <a href="{{ path('app_demande_achat_index')}}" class="menu-link">
+                                <div data-i18n="Notifications">Demande d'Achat</div>
                             </a>
                         </li>
                         
@@ -195,56 +195,7 @@
                             >
                         </li>
 
-                        <!-- User -->
-                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                                <div class="avatar avatar-online">
-                                    <img src="{{ asset('front/assets/img/team/ahmed.jpg') }}" alt class="w-px-40 h-auto rounded-circle" />
-                                </div>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <div class="d-flex">
-                                            <div class="flex-shrink-0 me-3">
-                                                <div class="avatar avatar-online">
-                                                    <img src="{{ asset('front/assets/img/team/ahmed.jpg') }}" alt class="w-px-40 h-auto rounded-circle" />
-                                                </div>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <span class="fw-semibold d-block">Bettaieb Ahmed</span>
-                                                <small class="text-muted">Admin</small>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="dropdown-divider"></div>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="bx bx-user me-2"></i>
-                                        <span class="align-middle">My Profile</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="bx bx-cog me-2"></i>
-                                        <span class="align-middle">Settings</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="dropdown-divider"></div>
-                                </li>
-                                <li>
-                                    
-                                        <i class="bx bx-power-off me-2"></i>
-                                        <span class="align-middle">Log Out</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <!--/ User -->
+                       
                     </ul>
                 </div>
             </nav>

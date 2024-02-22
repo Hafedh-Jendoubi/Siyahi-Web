@@ -29,6 +29,7 @@
         <link href="{{ asset('front/assets/css/style.css') }}" rel="stylesheet">
     {% endblock %}
 
+
 </head>
 
 <body>
@@ -57,31 +58,17 @@
 
 <main id="main">
 
- <nav class="navbar navbar-expand-lg navbar-light ftco_navbar ftco-navbar-light" id="ftco-navbar">
-        <div class="container">
-          <div class="collapse navbar-collapse" id="ftco-nav">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item"><a href="{{ path('app_article_indexFront') }}" class="nav-link">Article</a></li>
-                <li class="nav-item">
-                    <a href="{{ path('app_panier') }}" class="nav-link">
-                        <i class="bi bi-cart"></i>
-                        {% if app.session.get("panier", [])|length > 0 %}
-                            <span class="badge bg-primary">{{ app.session.get("panier", [])|length }}</span>
-                        {% endif %}
-                    </a>
-                </li>
-            </ul>
-          </div>
-          
-        </div>
-</nav>
+<br>
+<br>
 
-<br>
-<br>
+
+
     {% block body %}
 
     {% endblock %}
-</main><!-- End #main -->
+</main>
+
+
 
 
 <footer id="footer">
@@ -156,8 +143,10 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('front/assets/js/main.js') }}"></script>
+ 
 {% endblock %}
 
 </body>
 
 </html>
+

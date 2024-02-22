@@ -61,12 +61,12 @@ class User
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: Service::class)]
     private Collection $services;
 
-    #[ORM\OneToMany(mappedBy: 'User', targetEntity: Commande::class)]
-    private Collection $Commande;
+    #[ORM\OneToMany(mappedBy: 'User', targetEntity: DemandeAchat::class)]
+    private Collection $DemandeAchat;
 
     public function __toString()
     {
-        return $this->First_Name;
+        return $this->Address;
     }
     public function __construct()
     {
@@ -78,8 +78,10 @@ class User
         $this->compteClients = new ArrayCollection();
         $this->services = new ArrayCollection();
         $this->Commande = new ArrayCollection();
+        $this->DemandeAchat = new ArrayCollection();
     }
 
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -394,32 +396,33 @@ class User
     }
 
     /**
-     * @return Collection<int, Commande>
+     * @return Collection<int, DemandeAchat>
      */
-    public function getCommande(): Collection
+    public function getDemandeAchat(): Collection
     {
-        return $this->Commande;
+        return $this->DemandeAchat;
     }
 
-    public function addCommande(Commande $commande): static
+    public function addDemandeAchat(DemandeAchat $demandeAchat): static
     {
-        if (!$this->Commande->contains($commande)) {
-            $this->Commande->add($commande);
-            $commande->setUser($this);
+        if (!$this->DemandeAchat->contains($demandeAchat)) {
+            $this->DemandeAchat->add($demandeAchat);
+            $demandeAchat->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeCommande(Commande $commande): static
+    public function removeDemandeAchat(DemandeAchat $demandeAchat): static
     {
-        if ($this->Commande->removeElement($commande)) {
+        if ($this->DemandeAchat->removeElement($demandeAchat)) {
             // set the owning side to null (unless already changed)
-            if ($commande->getUser() === $this) {
-                $commande->setUser(null);
+            if ($demandeAchat->getUser() === $this) {
+                $demandeAchat->setUser(null);
             }
         }
 
         return $this;
     }
+
 }

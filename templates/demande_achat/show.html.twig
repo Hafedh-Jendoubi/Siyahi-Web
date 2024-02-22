@@ -1,0 +1,50 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}DemandeAchat{% endblock %}
+
+{% block body %}
+    <h1>DemandeAchat</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ demande_achat.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ demande_achat.Nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ demande_achat.Prenom }}</td>
+            </tr>
+            <tr>
+                <th>DateDemande</th>
+                <td>{{ demande_achat.DateDemande ? demande_achat.DateDemande|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>NumTel</th>
+                <td>{{ demande_achat.numTel }}</td>
+            </tr>
+            <tr>
+                <th>TypePaiement</th>
+                <td>{{ demande_achat.TypePaiement }}</td>
+            </tr>
+            <tr>
+                <th>CIN</th>
+                <td>{{ demande_achat.CIN }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ demande_achat.Adresse }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_demande_achat_index') }}">back to list</a>
+
+    <a href="{{ path('app_demande_achat_edit', {'id': demande_achat.id}) }}">edit</a>
+
+    {{ include('demande_achat/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'front.html.twig' %}
+
+{% block body %}
+
+
+ <nav class="navbar navbar-expand-lg navbar-light ftco_navbar ftco-navbar-light" id="ftco-navbar">
+        <div class="container">
+          <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+<li class="nav-item">
+    <a href="{{ path('app_achat_indexvoiture') }}" class="nav-link">
+        <img src="https://zitouna.azureedge.net/media/icons/vehicule_0.png" alt="Véhicule" class="car-icon" style="width: 40px; height: 40px;">
+    </a>
+</li>
+
+
+<li class="nav-item">
+    <a href="{{ path('app_achat_indexappartement') }}" class="nav-link">
+        <img src="https://zitouna.azureedge.net/media/icons/immobilier_0.png" alt="Voiture" class="car-icon" style="width: 40px; height: 40px;">
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="{{ path('app_achat_indexTerrain') }}" class="nav-link">
+        <img src="https://zitouna.azureedge.net/media/icons/immobilier_0.png" alt="Voiture" class="car-icon" style="width: 40px; height: 40px;">
+    </a>
+</li>
+
+              <!-- Ajoutez ici d'autres éléments de navigation au besoin -->
+
+            </ul>
+          </div>
+          
+        </div>
+</nav>
+
+
+    <div class="service">
+        <div class="container">
+            <div class="section-header text-center">
+              <div id="google_translate_element"></div>
+                <h4 style="margin-top:50px; margin-bottom:50px;">Liste des Appartement</h4>
+            </div>
+            <div class="row">
+                {% for achat in achats %}
+                    {% if achat.Type =="Appartement" %}
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="service-item">
+                                <img src="{{ asset('uploads/' ~achat.Image)}}" style=" width:360px; height:250px; " alt="">
+                                <center><h2>{{ achat.Type }}</h2></center>
+                                <p><strong style="color:#696969"> Description:</strong> {{ achat.Description }}</p>
+                                <p><strong style="color:#696969" >Prix:</strong> {{ achat.Prix }} TND</p>
+                                <center> <a href="{{ path('app_demande_achat_new',{'idachat':achat.id}) }}" class="btn btn-primary">Demande d'Achat</a></center>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+                {% if achats is empty %}
+                    <div class="col">
+                        <p class="text-center">Aucun achat de type "Voiture" trouvé.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <br>
+
+{% endblock %}
