@@ -182,7 +182,7 @@
 <body>
 <div class="login-box">
     <h2>Login</h2>
-    <form class="login100-form validate-form" method="post">
+    <form class="login100-form validate-form" method="post" novalidate>
         {% if error %}
             <div class="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}

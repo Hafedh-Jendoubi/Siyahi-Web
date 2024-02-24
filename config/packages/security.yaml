@@ -13,8 +13,8 @@ security:
     #This makes sure that Admin have access to everything that Staff does, and it goes on like that. "Heritage"
     role_hierarchy:
         ROLE_USER: ROLE_USER
-        ROLE_STAFF: ROLE_STAFF
-        ROLE_ADMIN: [ROLE_STAFF, admin]
+        ROLE_STAFF: [ROLE_STAFF, ROLE_USER]
+        ROLE_ADMIN: ROLE_STAFF
         ROLE_SUPER_ADMIN: [ROLE_ADMIN]
     firewalls:
         dev:
@@ -28,8 +28,7 @@ security:
                 check_path: app_login
                 enable_csrf: true
                 default_target_path: app_user
-                #This success_handler is added to redirect each user to his area. Client -> FrontOffice // Staff+ -> BackOffice
-                success_handler: App\Security\AppAuthenticationSuccessHandler
+
             logout:
                 path: app_logout
                 # where to redirect after logout

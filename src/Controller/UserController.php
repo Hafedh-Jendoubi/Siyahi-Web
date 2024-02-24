@@ -92,4 +92,13 @@ class UserController extends AbstractController
         }
         return $this->renderForm("user/updateUser.html.twig", array('formUser' => $form));
     }
+
+    #[Route('/account/{id}', name: 'user_account')]
+    public function UserInfo($id, UserRepository $repository)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = $repository->find($id);
+
+        return $this->renderForm("user/infoUser.html.twig", array('user' => $user));
+    }
 }

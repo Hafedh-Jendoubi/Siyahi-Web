@@ -36,7 +36,7 @@
                                     <td>
                                         <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
                                             <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="" data-bs-original-title="{{ user.LastName ~ " " ~ user.FirstName }}">
-                                                <img src="{{ user.image }}" alt="Avatar" class="rounded-circle">
+                                                <a href="{{ path('user_account', { id: user.id }) }}"><img src="{{ user.image }}"  alt="Avatar" class="rounded-circle"></a>
                                             </li>
                                         </ul>
                                     </td>
