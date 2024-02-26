@@ -12,6 +12,10 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            // Redirect the user to the homepage or another appropriate page
+            return $this->redirectToRoute('app_user');
+        }
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 

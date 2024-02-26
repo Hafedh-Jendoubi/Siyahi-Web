@@ -82,6 +82,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: Service::class)]
     private Collection $services;
 
+    #[ORM\Column(length: 255)]
+    private ?string $old_email = null;
+
+    #[ORM\Column(length: 1)]
+    private ?string $activity = null;
+
     public function __construct()
     {
         $this->reponseConges = new ArrayCollection();
@@ -545,5 +551,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getOldEmail(): ?string
+    {
+        return $this->old_email;
+    }
+
+    public function setOldEmail(string $old_email): static
+    {
+        $this->old_email = $old_email;
+
+        return $this;
+    }
+
+    public function getActivity(): ?string
+    {
+        return $this->activity;
+    }
+
+    public function setActivity(string $activity): static
+    {
+        $this->activity = $activity;
+
+        return $this;
     }
 }

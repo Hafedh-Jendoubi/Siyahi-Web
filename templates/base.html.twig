@@ -53,16 +53,16 @@
     <header id="header" class="d-flex align-items-center">
         <div class="container d-flex align-items-center justify-content-between">
 
-            <h1 class="logo"><a href="{{ path('app_staff') }}#hero">Siyahi Bank<span>.</span></a></h1>
+            <h1 class="logo"><a href="{{ path('app_user') }}#hero">Siyahi Bank<span>.</span></a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt=""></a>-->
 
             <nav id="navbar" class="navbar">
                 <ul>
-                    <li><a class="nav-link scrollto" href="{{ path('app_staff') }}#hero">Home</a></li>
-                    <li><a class="nav-link scrollto" href="{{ path('app_staff') }}#about">About</a></li>
-                    <li><a class="nav-link scrollto" href="{{ path('app_staff') }}#team">Team</a></li>
-                    <li><a class="nav-link scrollto" href="{{ path('app_staff') }}#contact">Contact</a></li>
+                    <li><a class="nav-link scrollto" href="{{ path('app_user') }}#hero">Home</a></li>
+                    <li><a class="nav-link scrollto" href="{{ path('app_user') }}#about">About</a></li>
+                    <li><a class="nav-link scrollto" href="{{ path('app_user') }}#team">Team</a></li>
+                    <li><a class="nav-link scrollto" href="{{ path('app_user') }}#contact">Contact</a></li>
                     {% if is_granted("ROLE_USER") %}
                         <li class="dropdown"><a href="#"><span>Services</span> <i class="bi bi-chevron-down"></i></a>
                             <ul>

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}<title xmlns="http://www.w3.org/1999/html">{{ user.FirstName ~ " " ~ user.LastName }}'s Account</title>{% endblock %}
+{% block title %}<title>{{ user.FirstName ~ " " ~ user.LastName }}'s Account</title>{% endblock %}
 
 {% block body %}
     <style>
@@ -60,47 +60,38 @@
     </style>
 
     <div class="container">
+        {{ form_start(formUser, {'attr': {'novalidate': 'novalidate'}}) }}
         <div class="main-body">
             <div class="row gutters-sm">
-                <div class="col-md-4 mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex flex-column align-items-center text-center">
-                                <img src="{{ user.image }}" class="rounded-circle" width="250" height="250">
-                                <div class="mt-3">
-                                    {% if is_granted("ROLE_ADMIN") %}
-                                    <h4>{{ user.FirstName ~ " " ~ user.LastName }}</h4>
-                                    <div>
-                                    {% if is_granted("ROLE_USER") %}
-                                        {% for role in user.roles %}
-                                            {% if role == "ROLE_USER" %}
-                                                <strong>User</strong>
-                                            {% elseif role == "ROLE_STAFF" %}
-                                                <strong>Staff</strong>
-                                            {% elseif role == "ROLE_ADMIN" %}
-                                                <strong>Admin</strong>
-                                            {% else %}
-                                                <strong>Super Admin</strong>
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% endif %}
-                                    </div>
-                                    {% endif %}
-                                    <button style="margin-top: 17px;" class="btn btn-outline-primary">Message</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="col-md-8">
                     <div class="card mb-3">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Full Name</h6>
+                                    <h6 class="mb-0">Picture</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{ user.FirstName ~ " " ~ user.LastName }}
+                                    {{ form_widget(formUser.image) }}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">First Name</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{ form_widget(formUser.FirstName) }}
+                                    {{ form_errors(formUser.FirstName) }}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Last Name</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{ form_widget(formUser.LastName) }}
+                                    {{ form_errors(formUser.LastName) }}
                                 </div>
                             </div>
                             <hr>
@@ -109,20 +100,7 @@
                                     <h6 class="mb-0">Gender</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {% if user.gender == "M" %}
-                                        Male
-                                    {% else %}
-                                        Female
-                                    {% endif %}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Email</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    {{ user.email }}
+                                    {{ form_widget(formUser.Gender) }}
                                 </div>
                             </div>
                             <hr>
@@ -131,7 +109,8 @@
                                     <h6 class="mb-0">Phone</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    (+216) {{ user.PhoneNumber }}
+                                    {{ form_widget(formUser.PhoneNumber) }}
+                                    {{ form_errors(formUser.PhoneNumber) }}
                                 </div>
                             </div>
                             <hr>
@@ -140,19 +119,39 @@
                                     <h6 class="mb-0">Address</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{ user.address }}
+                                    {{ form_widget(formUser.Address) }}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">CIN</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{ form_widget(formUser.CIN) }}
+                                    {{ form_errors(formUser.CIN) }}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Password</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    {{ form_widget(formUser.plainPassword) }}
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <a class="btn btn-info" href="{{ path('editUser', { id: app.user.id }) }}">Edit</a>
+                                    {{ form_widget(formUser.Submit) }}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            {{ form_end(formUser) }}
         </div>
     </div>
 {% endblock %}
