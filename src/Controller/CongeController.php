@@ -37,6 +37,16 @@ class CongeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $justificationFile = $form->get('Justification')->getData();
+        if ($justificationFile) {
+            // Gérez le stockage du fichier
+            $newFilename = uniqid().'.'.$justificationFile->guessExtension();
+            $justificationFile->move(
+                $this->getParameter('conge_directory'),
+                $newFilename
+            );
+            $conge->setJustification($newFilename);
+        }
             $entityManager->persist($conge);
             $entityManager->flush();
 

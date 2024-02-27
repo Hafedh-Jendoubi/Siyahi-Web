@@ -23,8 +23,12 @@
                 <td>{{ reponse_conge.DateDebut ? reponse_conge.DateDebut|date('Y-m-d') : '' }}</td>
                 <td>{{ reponse_conge.DateFin ? reponse_conge.DateFin|date('Y-m-d') : '' }}</td>
                 <td>
-                    <a class="btn btn-info" style="width: 110px; " href="{{ path('app_reponse_conge_show', {'id': reponse_conge.id}) }}">Détailles</a><br>
-                    <a class="btn btn-primary" style="width: 110px; " href="{{ path('app_reponse_conge_edit', {'id': reponse_conge.id}) }}">Modifier</a>
+                    <a href="{{ path('app_reponse_conge_show', {'id': reponse_conge.id}) }}">
+                        <img src="{{ asset('front/assets/img/team/show.png') }}" alt="Détails" style="width: 25px;">
+                    </a><br>
+                    <a href="{{ path('app_reponse_conge_edit', {'id': reponse_conge.id}) }}">
+                        <img src="{{ asset('front/assets/img/team/edit.png') }}" alt="Modifier" style="width: 25px;">
+                    </a><br>
                     {{ include('reponse_conge/_delete_form.html.twig') }}
                 </td>
             </tr>
@@ -35,6 +39,9 @@
         {% endfor %}
         </tbody>
     </table>
+
+    
+
 
     <a class="btn btn-success" style="width: 110px; " href="{{ path('app_reponse_conge_new') }}">Ajouter</a> 
 {% endblock %}

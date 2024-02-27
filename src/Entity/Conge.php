@@ -40,6 +40,7 @@ class Conge
     private ?\DateTimeInterface $Date_Fin = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    
     private ?string $Justification = null;
 
     #[ORM\OneToMany(mappedBy: 'Conge', targetEntity: ReponseConge::class)]

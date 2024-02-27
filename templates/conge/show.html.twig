@@ -29,10 +29,11 @@
             </tr>
         </tbody>
     </table>
+    
 
     <a  href="{{ path('app_conge_index') }}">retour à la liste</a>
 
-    <a  class="btn btn-primary" href="{{ path('app_conge_edit', {'id': conge.id}) }}">modifier</a>
+    <a  class="btn btn-primary" style="width: 110px; " href="{{ path('app_conge_edit', {'id': conge.id}) }}">modifier</a>
 
     {{ include('conge/_delete_form.html.twig') }}
 {% endblock %}
