@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ FirstName ~ " " ~ LastName ~ " PDF"}}</title>
+
+    <style type="text/css">
+        * {
+            font-family: Verdana, Arial, sans-serif;
+        }
+        table{
+            font-size: small;
+        }
+        tfoot tr td{
+            font-weight: bold;
+            font-size: x-small;
+        }
+        td{
+            text-align: center;
+            height: 50px;
+        }
+    </style>
+
+</head>
+<body>
+
+<img src="{{ LogoSrc }}" alt="" width="200" height="200">
+<br><br>
+<center><img src="{{ ImageSrc }}" alt="" width="150" height="150"></center>
+<br><br>
+<table width="100%">
+    <thead style="background-color: lightblue;">
+    <tr>
+        <th>Labels</th>
+        <th>Information</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row">First Name</th>
+        <td>{{ FirstName }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Last Name</th>
+        <td>{{ LastName }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Phone Number</th>
+        <td>{{ PhoneNumber }}</td>
+    </tr>
+    <tr>
+        <th scope="row">CIN</th>
+        <td>{{ CIN }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Address</th>
+        <td>{{ Address }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Email</th>
+        <td>{{ Email }}</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

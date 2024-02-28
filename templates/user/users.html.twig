@@ -76,6 +76,7 @@
                                                 {% else %}
                                                     <a class="dropdown-item" href="{{ path('enable_user_account', { id: user.id}) }}"><i class="bx bx-lock-open me-1"></i> Enable</a>
                                                 {% endif %}
+                                                <a class="dropdown-item" href="{{ path('pdf_generator', { id: user.id}) }}"><i class="bx bxs-file-pdf me-1"></i> PDF</a>
                                             </div>
                                         </div>
                                     </td>
