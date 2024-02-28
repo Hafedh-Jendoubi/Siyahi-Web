@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demande de Credit{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Style personnalisé pour le titre "Demande de congé" */
+        .mt-4  {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        
+        <div class="row">
+       
+            <div class="col-md-6 offset-md-3">
+             <h1 class="mt-4 ">Demande de Credit</h1>
+                {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+                    <div class="form-group">
+                        {{ form_label(form.solde_demande, 'Solde demandé') }}
+                        {{ form_widget(form.solde_demande, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le solde demandé'}}) }}
+                        {{ form_errors(form.solde_demande) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.date_debut_paiement, 'Date de début') }}
+                        {{ form_widget(form.date_debut_paiement, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.date_debut_paiement) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.nbr_mois_paiement, 'Date de fin') }}
+                        {{ form_widget(form.nbr_mois_paiement, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.nbr_mois_paiement) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.description, 'Description') }}
+                        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Entrez une description'}}) }}
+                        {{ form_errors(form.description) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.Contrat, 'Contrat') }}
+                        {{ form_widget(form.Contrat, {'attr': {'class': 'form-control', 'placeholder': 'Entrez (un contrat de travaille, hypothéque) favorisant votre demande '}}) }}
+                        {{ form_errors(form.Contrat) }}
+                    </div>
+                    
+                   
+                    <div class="form-group text-center">
+                        {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+    
