@@ -5,7 +5,9 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     images_directory: 'C:\xampp\htdocs\img'
-
+    conge_directory: '%kernel.project_dir%/public/uploads/conge'
+    App\Entity\Conge:
+        public: true
 services:
     # default configuration for services in *this* file
     _defaults:
