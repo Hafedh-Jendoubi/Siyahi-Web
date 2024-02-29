@@ -27,7 +27,7 @@ class Reclamation
     #[ORM\Column(length: 255)]
     private ?string $Description = null;
 
-    #[ORM\OneToMany(mappedBy: 'Reclamation', targetEntity: ReponseReclamation::class)]
+    #[ORM\OneToMany(mappedBy: 'Reclamation', targetEntity: ReponseReclamation::class,cascade: ['remove'])]
     public Collection $reponseReclamations;
 
     #[ORM\ManyToOne(inversedBy: 'reclamations')]
@@ -49,8 +49,17 @@ class Reclamation
     public function __construct()
     {
         $this->reponseReclamations = new ArrayCollection();
+        $this->status = 'Non traitée'; // Valeur par défaut
+        $this->dateCreation = new \DateTime(); // Date de création automatique
     }
-
+    public function updateStatus(): void
+    {
+        if (!$this->reponseReclamations->isEmpty()) {
+            $this->status = 'Répondue';
+        } else {
+            $this->status = 'Non traitée';
+        }
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +96,15 @@ class Reclamation
     {
         return $this->reponseReclamations;
     }
+    /*////teeeeeeeeeeeeeeeeeeeeeeeeeest/*///
+    /**
+ * @return ReponseReclamation|null
+ */
+public function getFirstReponse(): ?ReponseReclamation
+{
+    return $this->reponseReclamations->first();
+}
+/************ */
 
     public function addReponseReclamation(ReponseReclamation $reponseReclamation): static
     {

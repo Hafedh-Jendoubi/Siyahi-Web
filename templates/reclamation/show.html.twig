@@ -1,46 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reclamation{% endblock %}
+{% block title %}Détails de la Réclamation{% endblock %}
 
 {% block body %}
-    <h1>Reclamation</h1>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Détails de la Réclamation</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ reclamation.id }}</td>
-            </tr>
-            <tr>
-                <th>Object</th>
-                <td>{{ reclamation.Object }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ reclamation.Description }}</td>
-            </tr>
-            <tr>
-                <th>DateCreation</th>
-                <td>{{ reclamation.dateCreation ? reclamation.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Auteur</th>
-                <td>{{ reclamation.auteur }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ reclamation.status }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ reclamation.email }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th scope="row">Id</th>
+                    <td>{{ reclamation.id }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Object</th>
+                    <td>{{ reclamation.Object }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Description</th>
+                    <td>{{ reclamation.Description }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Date de Création</th>
+                    <td>{{ reclamation.dateCreation ? reclamation.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Auteur</th>
+                    <td>{{ reclamation.auteur }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Statut</th>
+                    <td>{{ reclamation.status }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Email</th>
+                    <td>{{ reclamation.email }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <a href="{{ path('app_reclamation_index') }}">back to list</a>
+        <div class="text-center">
+            <a href="{{ path('app_reclamation_index') }}" class="btn btn-secondary"><span class="fas fa-arrow-left"></span> Retour à la Liste</a>
+            <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}" class="btn btn-primary"><span class="fas fa-edit"></span> Modifier</a>
+        </div>
 
-    <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a>
-
-    {{ include('reclamation/_delete_form.html.twig') }}
+        {{ include('reclamation/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

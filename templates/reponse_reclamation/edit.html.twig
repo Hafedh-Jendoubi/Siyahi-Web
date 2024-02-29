@@ -1,13 +1,15 @@
 {% extends 'back_base.html.twig' %}
 
-{% block title %}Edit ReponseReclamation{% endblock %}
+{% block title %}Modifier la Réponse de Réclamation{% endblock %}
 
 {% block body %}
-    <h1>Edit ReponseReclamation</h1>
+    <div class="container mt-4">
+        <h1 class="mb-4">Modifier la Réponse de Réclamation</h1>
 
-    {{ include('reponse_reclamation/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ include('reponse_reclamation/_form.html.twig', {'button_label': 'Mettre à Jour'}) }}
 
-    <a href="{{ path('app_reponse_reclamation_index') }}">back to list</a>
+        <a href="{{ path('app_reponse_reclamation_index') }}" class="btn btn-secondary"><span class="fas fa-arrow-left"></span> Retour à la Liste</a>
 
-    {{ include('reponse_reclamation/_delete_form.html.twig') }}
+        {{ include('reponse_reclamation/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

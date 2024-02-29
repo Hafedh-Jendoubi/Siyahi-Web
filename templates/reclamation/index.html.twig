@@ -5,41 +5,69 @@
 {% block body %}
     <h1>Reclamation index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Object</th>
-                <th>Description</th>
-                <th>DateCreation</th>
-                <th>Auteur</th>
-                <th>Status</th>
-                <th>Email</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for reclamation in reclamations %}
-            <tr>
-                <td>{{ reclamation.id }}</td>
-                <td>{{ reclamation.Object }}</td>
-                <td>{{ reclamation.Description }}</td>
-                <td>{{ reclamation.dateCreation ? reclamation.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ reclamation.auteur }}</td>
-                <td>{{ reclamation.status }}</td>
-                <td>{{ reclamation.email }}</td>
-                <td>
-                    <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">show</a>
-                    <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <input id="search-input" type="form-control" placeholder="Search...">
+<title>AJAX Search Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#search-input").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("table tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 
-    <a href="{{ path('app_reclamation_new') }}">Create new</a>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Object</th>
+                    <th>Description</th>
+                    <th>Date de Création</th>
+                    <th>Auteur</th>
+                    <th>Status</th>
+                    <th>Email</th>
+                    <th>Réponse</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for reclamation in reclamations %}
+                <tr>
+                    <td>{{ reclamation.id }}</td>
+                    <td>{{ reclamation.Object }}</td>
+                    <td>{{ reclamation.Description }}</td>
+                    <td>{{ reclamation.dateCreation ? reclamation.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ reclamation.auteur }}</td>
+                    <td>{{ reclamation.status }}</td>
+                    <td>{{ reclamation.email }}</td>
+
+                    <td>
+                        {% if reclamation.reponseReclamations is not empty %}
+                            {# Si la réclamation a des réponses, affichez la première #}
+                            {{ reclamation.reponseReclamations[0].Description }}
+                        {% else %}
+                            {# Sinon, affichez un message indiquant qu'il n'y a pas de réponse #}
+                            Aucune réponse
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}" class="btn btn-info btn-sm"><span class="fas fa-eye"></span> Voir</a>
+                        <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}" class="btn btn-primary btn-sm"><span class="fas fa-edit"></span> Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">Aucun enregistrement trouvé.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ path('app_reclamation_new') }}" class="btn btn-success"><span class="fas fa-plus"></span> Nouvelle Réclamation</a>
 {% endblock %}

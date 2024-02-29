@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Reclamation; // Ajoutez cette ligne
+
 
 #[Route('/reponse/reclamation')]
 class ReponseReclamationController extends AbstractController
@@ -78,4 +80,23 @@ class ReponseReclamationController extends AbstractController
 
         return $this->redirectToRoute('app_reponse_reclamation_index', [], Response::HTTP_SEE_OTHER);
     }
+    // Exemple dans votre contrôleur
+
+// Exemple dans votre contrôleur
+public function addReponseToReclamation(Reclamation $reclamation, ReponseReclamation $reponse, EntityManagerInterface $entityManager)
+{
+    // Ajoutez la réponse à la réclamation
+    $reclamation->addReponseReclamation($reponse);
+
+    // Mettez à jour le statut de la réclamation
+    $reclamation->updateStatus();
+
+    // Enregistrez les modifications dans la base de données
+    $entityManager->persist($reclamation);
+    $entityManager->flush();
+
+    // ... Autres logiques de redirection ou de réponse
+}
+
+
 }

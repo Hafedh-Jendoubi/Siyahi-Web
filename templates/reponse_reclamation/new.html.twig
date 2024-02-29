@@ -1,11 +1,13 @@
 {% extends 'back_base.html.twig' %}
 
-{% block title %}New ReponseReclamation{% endblock %}
+{% block title %}Nouvelle Réponse de Réclamation{% endblock %}
 
 {% block body %}
-    <h1>Create new ReponseReclamation</h1>
+    <div class="container mt-4">
+        <h1 class="mb-4">Nouvelle Réponse de Réclamation</h1>
 
-    {{ include('reponse_reclamation/_form.html.twig') }}
+        {{ include('reponse_reclamation/_form.html.twig') }}
 
-    <a href="{{ path('app_reponse_reclamation_index') }}">back to list</a>
+        <a href="{{ path('app_reponse_reclamation_index') }}" class="btn btn-secondary"><span class="fas fa-arrow-left"></span> Retour à la Liste</a>
+    </div>
 {% endblock %}

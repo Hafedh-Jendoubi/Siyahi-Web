@@ -5,6 +5,9 @@ namespace App\Entity;
 use App\Repository\ReponseReclamationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 #[ORM\Entity(repositoryClass: ReponseReclamationRepository::class)]
 class ReponseReclamation
@@ -114,4 +117,5 @@ class ReponseReclamation
 
         return $this;
     }
+    
 }

@@ -44,7 +44,7 @@ class ReclamationType extends AbstractType
                 new NotBlank(['message' => 'Le champ auteur ne peut pas être vide.']),
             ],
         ])
-        ->add('status') // Ajoutez les contraintes nécessaires ici si besoin
+       /* ->add('status') // Ajoutez les contraintes nécessaires ici si besoin*/
         ->add('email', null, [
             'constraints' => [
                 new NotBlank(['message' => 'Le champ email ne peut pas être vide.']),

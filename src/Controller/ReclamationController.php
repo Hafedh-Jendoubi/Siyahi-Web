@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 
 #[Route('/reclamation')]
 class ReclamationController extends AbstractController
@@ -45,8 +47,12 @@ class ReclamationController extends AbstractController
     #[Route('/{id}', name: 'app_reclamation_show', methods: ['GET'])]
     public function show(Reclamation $reclamation): Response
     {
+        /** */
+            $reponse = $reclamation->getReponseReclamations();
+/*///**/
         return $this->render('reclamation/show.html.twig', [
             'reclamation' => $reclamation,
+            'reponse' => $reponse,/*//*/
         ]);
     }
 
@@ -78,4 +84,27 @@ class ReclamationController extends AbstractController
 
         return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+   // Dans votre contrôleur
+public function votreAction()
+{
+    // Générez la clé du captcha (remplacez cela par votre logique de génération de captcha)
+    $captchaKey = $this->generateCaptchaKey();
+
+    // Passez la clé du captcha au modèle
+    return $this->render('_form.html.twig', [
+        'captcha_key' => $captchaKey,
+    ]);
+}
+
+// ...
+
+private function generateCaptchaKey()
+{
+    // Votre logique de génération de la clé du captcha ici
+    // Par exemple, générez une chaîne aléatoire ou utilisez une logique mathématique
+    return 'clé_du_captcha';
+}
+
 }
