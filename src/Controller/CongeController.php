@@ -6,6 +6,7 @@ use App\Entity\Conge;
 use App\Entity\ReponseConge;
 use App\Form\Conge1Type;
 use App\Repository\CongeRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -158,18 +159,12 @@ public function edit(Request $request, int $id, CongeRepository $congeRepository
 
 
 #[Route('/conge/{id}', name: 'app_conge_delete', methods: ['POST'])]
-public function delete(Request $request, int $id, EntityManagerInterface $entityManager, CongeRepository $congeRepository): Response
+public function delete(Request $request, ManagerRegistry $managerRegistry, int $id, CongeRepository $congeRepository): Response
 {
     $conge = $congeRepository->find($id);
-
-    if (!$conge) {
-        throw $this->createNotFoundException('La demande de congé n\'existe pas.');
-    }
-
-    if ($this->isCsrfTokenValid('delete'.$conge->getId(), $request->request->get('_token'))) {
-        $entityManager->remove($conge);
-        $entityManager->flush();
-    }
+    $em = $managerRegistry->getManager();
+    $em->remove($conge);
+    $em->flush();
 
     return $this->redirectToRoute('app_conge_index');
 }
