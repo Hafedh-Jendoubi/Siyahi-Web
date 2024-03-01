@@ -2,7 +2,14 @@
 
 
 {% block body %}
-
+<style>
+.image-cercle {
+  border-radius: 50%;
+  width: 100px; /* Ajustez la taille en fonction de vos besoins */
+  height: 100px; /* Ajustez la taille en fonction de vos besoins */
+  object-fit: cover;
+}
+</style>
     <h1>Listes des credits</h1>
 
     <table class="table">
@@ -29,7 +36,7 @@
                 <td>{{ credit.description }}</td>
                 <td>
                 {% if credit.Contrat is not null %}
-                    <img src="{{ asset('uploads/credit/' ~ credit.Contrat) }}" alt="Contrat "style="width:200px;">
+                    <img src="{{ asset('uploads/credit/' ~ credit.Contrat) }}" class="image-cercle"  alt="Contrat "style="width:100px;">
                 {% else %}
                     Aucun Contrat n'est trouvé
                 {% endif %}
@@ -45,5 +52,22 @@
         {% endfor %}
         </tbody>
     </table>
+    
+      <div class="pagination">
+        {{ knp_pagination_render(credits, 'credit/my_custom_template.html.twig') }}
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#search-input").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("table tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 
 {% endblock %}
