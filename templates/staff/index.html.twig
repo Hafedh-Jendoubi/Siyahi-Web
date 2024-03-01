@@ -1,0 +1,24 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}<title>Staff - Add User</title>{% endblock %}
+
+{% block body %}
+    <div class="content-wrapper">
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Gestion Staff/</span> Add User</h4>
+            <div class="col-xxl">
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">Edit User Form</h5>
+                        <small class="text-muted float-end">Make sure to fill the form carefully</small>
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(formUser, {'attr': {'novalidate': 'novalidate'}}) }}
+
+                        {{ form_end(formUser) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

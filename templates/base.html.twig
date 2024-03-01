@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    {% block title %} {% endblock %}
+    {% block title %} {% endblock %} <!-- Title -->
     <meta content="" name="description">
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="front/assets/img/favicon.png" rel="icon">
+    <link href="front/assets/img/logo.png" rel="icon">
     <link href="front/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
@@ -50,9 +50,52 @@
 </section>
 
 <!-- ======= Header ======= -->
-{% block header %}
+    <header id="header" class="d-flex align-items-center">
+        <div class="container d-flex align-items-center justify-content-between">
 
-{% endblock %}
+            <h1 class="logo"><a href="{{ path('app_user') }}#hero">Siyahi Bank<span>.</span></a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt=""></a>-->
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto" href="{{ path('app_user') }}#hero">Home</a></li>
+                    <li><a class="nav-link scrollto" href="{{ path('app_user') }}#about">About</a></li>
+                    <li><a class="nav-link scrollto" href="{{ path('app_user') }}#team">Team</a></li>
+                    <li><a class="nav-link scrollto" href="{{ path('app_user') }}#contact">Contact</a></li>
+                    {% if is_granted("ROLE_USER") %}
+                        <li class="dropdown"><a href="#"><span>Services</span> <i class="bi bi-chevron-down"></i></a>
+                            <ul>
+                                <li><a href="#">Operation</a></li>
+                                <li class="dropdown"><a href="#"><span>Credit</span> <i class="bi bi-chevron-right"></i></a>
+                                    <ul>
+                                        <li><a href="{{ path('app_credit_new') }}">Avoir un Crédit</a></li>
+                                        <li><a href="{{ path('app_credit_index') }}">Historique</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">Achat</a></li>
+                                <li><a href="#">Reclamation</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                    {% if is_granted("ROLE_USER") %}
+                        <li><a class="nav-link scrollto" href="{{ path('user_account', { id: app.user.id }) }}">Account</a></li>
+                    {% endif %}
+                    {% if is_granted("ROLE_STAFF") %}
+                        <li><a class="nav-link scrollto" href="{{ path('app_home') }}">Dashboard</a></li>
+                    {% endif %}
+                    <li><!-- Just to leave an empty space between Contact & Logout --></li>
+                    {% if is_granted("ROLE_USER") %}
+                        <li><a class="nav-link scrollto" href="{{ path('app_logout') }}">Logout</a></li>
+                    {% else %}
+                        <li><a class="nav-link scrollto" href="{{ path('app_login') }}">Login</a></li>
+                    {% endif %}
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+
+        </div>
+    </header>
 <!-- End Header -->
 
 <main id="main">
