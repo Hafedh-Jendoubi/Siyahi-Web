@@ -2,7 +2,6 @@
 
 
 {% block body %}
-
     <h1>Listes des ReponsesCredits </h1>
 
     <table class="table">
@@ -41,6 +40,21 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="pagination">
+        {{ knp_pagination_render(reponse_credits, 'credit/my_custom_template.html.twig') }}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#search-input").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("table tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 
     <a  class="btn btn-success" style="width: 110px; " href="{{ path('app_reponse_credit_new') }}">Créer</a>
 {% endblock %}

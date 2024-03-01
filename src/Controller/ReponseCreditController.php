@@ -13,21 +13,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\Security as CoreSecurity;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 #[Route('/reponse/credit')]
 class ReponseCreditController extends AbstractController
 {
     #[Route('/', name: 'app_reponse_credit_index', methods: ['GET'])]
-    public function index(ReponseCreditRepository $reponseCreditRepository): Response
+    public function index(Request $request, CoreSecurity $security,  ReponseCreditRepository $reponseCreditRepository, PaginatorInterface $paginator): Response
     {
+        $user = $security->getUser();
+        $pagination = $paginator->paginate(
+            $reponseCreditRepository->findBy(['User' => $user]),
+            $request->query->getInt('page', 1),
+            3
+        );
         return $this->render('reponse_credit/index.html.twig', [
-            'reponse_credits' => $reponseCreditRepository->findAll(),
+            'reponse_credits' => $pagination,
         ]);
     }
 
     #[Route('/new', name: 'app_reponse_credit_new', methods: ['GET', 'POST'])]
-    public function new(Request $request,Security $security , EntityManagerInterface $entityManager): Response
+    public function new(Request $request,CoreSecurity $security , EntityManagerInterface $entityManager): Response
     {
         $reponseCredit = new ReponseCredit();
         $form = $this->createForm(ReponseCredit1Type::class, $reponseCredit);
