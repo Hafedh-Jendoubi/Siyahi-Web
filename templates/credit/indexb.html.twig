@@ -11,6 +11,19 @@
   
 }
 </style>
+
+<form method="get" action="{{ path('app_filtre') }}">
+        <label for="minSolde">Minimum Solde:</label>
+        <input type="number" name="minSolde" id="minSolde" value="{{ app.request.query.get('minSolde') }}">
+        <br>
+
+        <label for="maxSolde">Maximum Solde:</label>maxSolde
+        <input type="number" name="maxSolde" id="maxSolde" value="{{ app.request.query.get('max_price') }}">
+        <br>
+
+        <button type="c-btn">Filter</button>
+    </form>
+
     <h1>Listes des credits</h1>
 
     <table class="table">
@@ -54,10 +67,12 @@
         </tbody>
     </table>
 
-    <li ><a href="{{ path('order_By_montant')}}">Trier par montant</a></li>
-    <li ><a href="{{ path('order_By_date')}}">Trier par date</a></li>
-    <a href="{{ path('credit_statistics3') }}" class="btn btn-primary">Statistiques des crédits</a>
-
+   
+<div class="d-flex justify-content-end">
+    <a href="{{ path('credit_statistics3') }}" class="btn btn-secondary" style="width: 208px; ">Statistiques des crédits</a>
+</div>
+ <a href="{{ path('app_credit_indexb', {'sortBy': 'montant'}) }}">Tri par montant</a>
+<a href="{{ path('app_credit_indexb', {'sortBy': 'date'}) }}">Tri par date</a>
       <div class="pagination">
         {{ knp_pagination_render(credits, 'credit/my_custom_template.html.twig') }}
     </div>

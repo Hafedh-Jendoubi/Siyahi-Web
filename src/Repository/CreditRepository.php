@@ -46,14 +46,14 @@ class CreditRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-public function orderBymontant()
+public function findSortedByMontant()
     {
         return $this->createQueryBuilder('s')
         ->orderBy('s.solde_demande','DESC')
             ->getQuery()->getResult();
     }
 
-public function orderBydate()
+public function findSortedByDate()
     {
         return $this->createQueryBuilder('s')
         ->orderBy('s.date_debut_paiement','DESC')
@@ -87,4 +87,15 @@ public function orderBydate()
         return $qb->getResult();
     }
 
+
+    public function findByPriceRange($minSolde, $maxSolde)
+{
+    return $this->createQueryBuilder('p')
+        ->where('p.solde_demande >= :minSolde')
+        ->andWhere('p.solde_demande <= :maxSolde')
+        ->setParameter('minSolde', $minSolde)
+        ->setParameter('maxSolde', $maxSolde)
+        ->getQuery()
+        ->getResult();
+}
 }
