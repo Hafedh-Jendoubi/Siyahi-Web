@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\ReponseConge;
 use App\Entity\User;
 use App\Form\EditUserType;
+use App\Form\SearchUserType;
 use App\Form\UpdateUserType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\DocBlock\Tags\Method;
 use phpDocumentor\Reflection\PseudoTypes\LowercaseString;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,11 +33,17 @@ class UserController extends AbstractController
     }
 
     #[Route('/admin/users', name: 'admin_users')]
-    public function listUsers(UserRepository $repository)
+    public function listUsers(UserRepository $repository, Request $request)
     {
         $users = $repository->findAll();
+        $form= $this->createForm(SearchUserType::class);
+        $form->handleRequest($request);
+        if($form->isSubmitted()){
+            $name= $form->getData()->getFirstName();
+            return $this->render('user/users.html.twig', array('tabUsers' => $users, 'users' => $repository->searchUser($name), 'searchForm'=>$form->createView()));
+        }
 
-        return $this->render('user/users.html.twig', array('tabUsers' => $users));
+        return $this->render('user/users.html.twig', array('tabUsers' => $users, 'searchForm'=>$form->createView()));
     }
 
     public static function generate(int $length = 8): string
@@ -67,8 +75,8 @@ class UserController extends AbstractController
             $em->persist($user);
             $user->setCreatedAt(new \DateTimeImmutable());
             $user->setEmail(strtolower($user->getFirstName()) . "." . strtolower($user->getLastName()) . "@siyahi.tn");
-            //$pass = self::generate();
-            $hashedPassword = $passwordHasher->hashPassword($user, '0000');
+            $pass = self::generate();
+            $hashedPassword = $passwordHasher->hashPassword($user, $pass);
             $user->setPassword($hashedPassword);
             if($user->getGender() == "M")
                 $user->setImage("http://localhost/img/7f9183c93cb4803aefc8262447c4efc9.png");
@@ -82,7 +90,7 @@ class UserController extends AbstractController
                 ->htmlTemplate('user/email.html.twig')
                 ->context([
                     'SiyahiEmail' => $user->getEmail(),
-                    //'Password' => $pass
+                    'Password' => $pass
                 ])
             ;
             $mailer->send($email);
@@ -167,6 +175,7 @@ class UserController extends AbstractController
     #[Route('/account/{id}', name: 'user_account')]
     public function UserInfo($id, UserRepository $repository)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser(); //$user has the logged in user
         $user_details = $repository->findOneByEmail($user->getUserIdentifier()); //$user_details got the details of the logged in user
         if ($user_details[0]->getRoles()[0] != "ROLE_ADMIN") {

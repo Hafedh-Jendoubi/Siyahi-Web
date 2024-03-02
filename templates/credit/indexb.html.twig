@@ -8,6 +8,7 @@
   width: 100px; /* Ajustez la taille en fonction de vos besoins */
   height: 100px; /* Ajustez la taille en fonction de vos besoins */
   object-fit: cover;
+  
 }
 </style>
     <h1>Listes des credits</h1>
@@ -30,7 +31,7 @@
             <tr>
                 <td>{{ credit.id }}</td>
                 <td>{{ credit.User.email }}</td>
-                <td>{{ credit.soldeDemande }}</td>
+                <td>{{ credit.soldeDemande }}DTN</td>
                 <td>{{ credit.dateDebutPaiement ? credit.dateDebutPaiement|date('Y-m-d') : '' }}</td>
                 <td>{{ credit.nbrMoisPaiement }}</td>
                 <td>{{ credit.description }}</td>
@@ -52,13 +53,18 @@
         {% endfor %}
         </tbody>
     </table>
-    
+
+    <li ><a href="{{ path('order_By_montant')}}">Trier par montant</a></li>
+    <li ><a href="{{ path('order_By_date')}}">Trier par date</a></li>
+    <a href="{{ path('credit_statistics3') }}" class="btn btn-primary">Statistiques des crédits</a>
+
       <div class="pagination">
         {{ knp_pagination_render(credits, 'credit/my_custom_template.html.twig') }}
     </div>
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <script>
         $(document).ready(function() {
             $("#search-input").on("keyup", function() {
@@ -69,5 +75,6 @@
             });
         });
     </script>
+
 
 {% endblock %}

@@ -77,20 +77,22 @@ class CreditController extends AbstractController
             'form' => $form,
         ]);
     }
-     
-
     #[Route('/{id}', name: 'app_credit_show', methods: ['GET'])]
-    public function show(int $id,CreditRepository $creditRepository): Response
-    {
-        $credit = $creditRepository->find($id);
+public function show(string $id, CreditRepository $creditRepository): Response
+{
+    $id = intval($id); // Convertir en entier
+
+    $credit = $creditRepository->find($id);
 
     if (!$credit) {
-        throw $this->createNotFoundException('Le credit demandé n\'existe pas');
+        throw $this->createNotFoundException('Le crédit demandé n\'existe pas');
     }
-        return $this->render('credit/show.html.twig', [
-            'credit' => $credit,
-        ]);
-    }
+
+    return $this->render('credit/show.html.twig', [
+        'credit' => $credit,
+    ]);
+}
+   
     #[Route('b/{id}', name: 'app_credit_showb', methods: ['GET'])]
     public function showb(int $id,CreditRepository $creditRepository): Response
     {
@@ -149,4 +151,84 @@ public function deleteUser(ManagerRegistry $managerRegistry, $id, CreditReposito
 
     return $this->redirectToRoute('app_credit_index');
 }
+
+/**
+     * @Route("/order_By_montant", name="order_By_montant" ,methods={"GET"})
+     */
+    public function order_By_montant(Request $request,CreditRepository $CreditRepository): Response
+    {
+        $credit = $CreditRepository->order_By_montant();
+
+        return $this->render('credit/indexb.html.twig', [
+            'credits' => $credit,
+        ]);
+
+
+    }
+    /**
+     * @Route("/order_By_date", name="order_By_date" ,methods={"GET"})
+     */
+    public function order_By_date(Request $request,CreditRepository $CreditRepository): Response
+    {
+        $credit = $CreditRepository->order_By_date();
+
+        return $this->render('credit/indexb.html.twig', [
+            'credits' => $credit,
+        ]);
+
+
+    }
+/*
+
+    #[Route('/credits/statistics', name: 'credit_statistics')]
+    public function statistics(CreditRepository $creditRepository): Response
+    {
+        $statistics = $creditRepository->getCreditStatistics();
+
+        return $this->render('credit/statistics.html.twig', [
+            'statistics' => $statistics,
+        ]);
+    }
+    */
+/**
+     * @Route("/credit/statistics-by-year", name="credit_statistics_by_year")
+     */
+  /*  public function statisticbyyear(CreditRepository $creditRepository)
+    {
+        $credits = $creditRepository->findAllCredits();
+
+        $creditsByYear = [];
+        foreach ($credits as $credit) {
+            $year = $credit->getDateDebutPaiement()->format('Y');
+            if (!isset($creditsByYear[$year])) {
+                $creditsByYear[$year] = 0;
+            }
+            $creditsByYear[$year]++;
+        }
+
+        return $this->render('credit/statistics2.html.twig', [
+            'creditsByYear' => $creditsByYear,
+        ]);
+    }
+    */
+    #[Route('/credits/statistics3', name: 'credit_statistics3')]
+    public function statistics3(CreditRepository $creditRepository): Response
+    {
+        $statistics = $creditRepository->getCreditStatistics();
+        $credits = $creditRepository->findAllCredits();
+
+        $creditsByYear = [];
+        foreach ($credits as $credit) {
+            $year = $credit->getDateDebutPaiement()->format('Y');
+            if (!isset($creditsByYear[$year])) {
+                $creditsByYear[$year] = 0;
+            }
+            $creditsByYear[$year]++;
+        }
+
+        return $this->render('credit/statistics2.html.twig', [
+            'statistics' => $statistics, 
+            'creditsByYear' => $creditsByYear,
+        ]);
+    }
 }

@@ -45,4 +45,46 @@ class CreditRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function orderBymontant()
+    {
+        return $this->createQueryBuilder('s')
+        ->orderBy('s.solde_demande','DESC')
+            ->getQuery()->getResult();
+    }
+
+public function orderBydate()
+    {
+        return $this->createQueryBuilder('s')
+        ->orderBy('s.date_debut_paiement','DESC')
+            ->getQuery()->getResult();
+    }
+
+    public function getCreditStatistics(): array
+    {
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->select('c.date_debut_paiement AS date, COUNT(c.id) AS count')
+            ->groupBy('c.date_debut_paiement')
+            ->getQuery();
+
+        return $queryBuilder->getResult();
+    }
+    public function findAllCredits(): array
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->getQuery();
+
+        return $qb->getResult();
+    }
+    
+    public function findCreditsByYear(int $year): array
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->andWhere('YEAR(c.date_debut_paiement) = :year')
+            ->setParameter('year', $year)
+            ->getQuery();
+
+        return $qb->getResult();
+    }
+
 }

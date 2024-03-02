@@ -55,12 +55,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $Created_At = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $old_email = null;
-
-    #[ORM\Column(length: 1, nullable: true)]
-    private ?string $activity = null;
-
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: ReponseConge::class)]
     private Collection $reponseConges;
 
@@ -88,7 +82,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: Service::class)]
     private Collection $services;
 
-   
+    #[ORM\Column(length: 255)]
+    private ?string $old_email = null;
+
+    #[ORM\Column(length: 1)]
+    private ?string $activity = null;
 
     public function __construct()
     {
@@ -261,30 +259,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreatedAt(\DateTimeImmutable $Created_At): static
     {
         $this->Created_At = $Created_At;
-
-        return $this;
-    }
-
-    public function getOldEmail(): ?string
-    {
-        return $this->old_email;
-    }
-
-    public function setOldEmail(string $old_email): static
-    {
-        $this->old_email = $old_email;
-
-        return $this;
-    }
-
-    public function getActivity(): ?string
-    {
-        return $this->activity;
-    }
-
-    public function setActivity(string $activity): static
-    {
-        $this->activity = $activity;
 
         return $this;
     }
@@ -579,5 +553,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-   
+    public function getOldEmail(): ?string
+    {
+        return $this->old_email;
+    }
+
+    public function setOldEmail(string $old_email): static
+    {
+        $this->old_email = $old_email;
+
+        return $this;
+    }
+
+    public function getActivity(): ?string
+    {
+        return $this->activity;
+    }
+
+    public function setActivity(string $activity): static
+    {
+        $this->activity = $activity;
+
+        return $this;
+    }
 }

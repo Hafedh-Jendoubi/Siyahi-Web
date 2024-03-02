@@ -6,6 +6,7 @@ use App\Entity\Credit;
 use App\Entity\ReponseCredit;
 use App\Form\ReponseCredit1Type;
 use App\Repository\CongeRepository;
+use App\Repository\CreditRepository;
 use App\Repository\ReponseCreditRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;

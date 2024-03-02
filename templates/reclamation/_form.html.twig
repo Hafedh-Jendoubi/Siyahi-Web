@@ -1,0 +1,12 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    
+{# Ajoutez une question mathématique simple #}
+<label for="captcha">Combien font 2 + 2 ?</label>
+<input type="text" id="captcha" name="captcha" required>
+
+{# Ajoutez un éventuel bouton de soumission #}
+<button type="submit">Envoyer</button>
+
+{{ form_end(form) }}
