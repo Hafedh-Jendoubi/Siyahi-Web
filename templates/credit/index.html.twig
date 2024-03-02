@@ -16,6 +16,18 @@
                 <th>Actions</th>
             </tr>
         </thead>
+        {%  for message in app.flashes('updateCredit')  %}
+                            <div class="alert alert-primary" role="alert">
+                                {{message}}                               </div>
+                        {% endfor %}
+                        {%  for message in app.flashes('AddCredit')  %}
+                            <div class="alert alert-success" role="alert">
+                                {{message}}                               </div>
+                        {% endfor %}
+                        {%  for message in app.flashes('deleteCredit')  %}
+                            <div class="alert alert-danger" role="alert">
+                                {{message}}                               </div>
+                        {% endfor %}
         <tbody>
             {% for credit in credits %}
                 <tr>

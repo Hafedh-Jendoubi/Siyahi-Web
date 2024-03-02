@@ -68,6 +68,7 @@ class CreditController extends AbstractController
         }
             $entityManager->persist($credit);
             $entityManager->flush();
+            $this->addFlash('AddCredit', 'Votre credit a été ajouté avec succès');
 
             return $this->redirectToRoute('app_credit_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -131,6 +132,7 @@ public function edit(Request $request, int $id, CreditRepository $CreditReposito
         }
 
         $entityManager->flush();
+        $this->addFlash('updateCredit', 'Votre credit a été modifié avec succès');
 
         return $this->redirectToRoute('app_credit_index', [], Response::HTTP_SEE_OTHER);
     }
@@ -148,6 +150,7 @@ public function deleteUser(ManagerRegistry $managerRegistry, $id, CreditReposito
     $em = $managerRegistry->getManager();
     $em->remove($user);
     $em->flush();
+    $this->addFlash('deleteCredit', 'Votre credit a été suupprimé avec succès');
 
     return $this->redirectToRoute('app_credit_index');
 }

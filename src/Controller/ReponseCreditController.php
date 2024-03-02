@@ -46,7 +46,8 @@ class ReponseCreditController extends AbstractController
             $reponseCredit->setUser($security->getUser());
             $entityManager->persist($reponseCredit);
             $entityManager->flush();
-        
+            $this->addFlash('AddReponseCredit', 'Votre reponse_credit a été ajouté avec succès');
+
     
 
             return $this->redirectToRoute('app_reponse_credit_index', [], Response::HTTP_SEE_OTHER);
@@ -88,6 +89,7 @@ public function edit(Request $request, int $id, ReponseCreditRepository $Reponse
 
     if ($form->isSubmitted() && $form->isValid()) {
         $entityManager->flush();
+        $this->addFlash('updateReponseCredit', 'Votre reponse_credit a été modifié avec succès');
 
         return $this->redirectToRoute('app_reponse_credit_index', [], Response::HTTP_SEE_OTHER);
     }
@@ -106,7 +108,8 @@ public function edit(Request $request, int $id, ReponseCreditRepository $Reponse
         $em = $managerRegistry->getManager();
         $em->remove($user);
         $em->flush();
-    
+        $this->addFlash('deleteReponseCredit', 'Votre reponse_credit a été supprimé avec succès');
+
         return $this->redirectToRoute('app_reponse_credit_index');
     }
 
