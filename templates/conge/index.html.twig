@@ -12,8 +12,13 @@
             <tr>
                 <th>Id</th>
                 <th>Description</th>
+
                 <th>Date_Debut</th>
                 <th>Date_Fin</th>
+                 <th>Type_conge</th>
+                  <th>Date_demande</th>
+
+
                 <th>Justification</th>
                 <th>actions</th>
             </tr>
@@ -25,6 +30,10 @@
                 <td>{{ conge.Description }}</td>
                 <td>{{ conge.DateDebut ? conge.DateDebut|date('Y-m-d') : '' }}</td>
                 <td>{{ conge.DateFin ? conge.DateFin|date('Y-m-d') : '' }}</td>
+                <td>{{ conge.getTypeConge() }}</td>
+               <td>{{ conge.getDateDemande() ? conge.getDateDemande()|date('Y-m-d') : '' }}</td>
+
+
                 <td>{% if conge.Justification is not null %}<img src="{{ asset('uploads/conge/' ~ conge.Justification) }}" alt="Justification "style="width:200px;"> {% else %}
                     Aucun Contrat n'est trouvé
                 {% endif %}

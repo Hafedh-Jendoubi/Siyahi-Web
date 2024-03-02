@@ -49,6 +49,12 @@ class Conge
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?User $User = null;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $Date_demande = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Type_conge = null;
+
     public function __construct()
     {
         $this->reponseConges = new ArrayCollection();
@@ -145,6 +151,30 @@ class Conge
     public function setUser(?User $User): static
     {
         $this->User = $User;
+
+        return $this;
+    }
+
+    public function getDateDemande(): ?\DateTimeInterface
+    {
+        return $this->Date_demande;
+    }
+
+    public function setDateDemande(\DateTimeInterface $Date_demande): static
+    {
+        $this->Date_demande = $Date_demande;
+
+        return $this;
+    }
+
+    public function getTypeConge(): ?string
+    {
+        return $this->Type_conge;
+    }
+
+    public function setTypeConge(string $Type_conge): static
+    {
+        $this->Type_conge = $Type_conge;
 
         return $this;
     }

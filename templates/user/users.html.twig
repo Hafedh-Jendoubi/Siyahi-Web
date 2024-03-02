@@ -8,7 +8,21 @@
         <div class="container-xxl flex-grow-1 container-p-y">
             <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Gestion Admin /</span> List Users</h4>
 
+            <input id="search-input" type="form-control" placeholder="Search..." style="width: 400px; border-radius: 10px;" >
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $("#search-input").on("keyup", function() {
+                        var value = $(this).val().toLowerCase();
+                        $("table tbody tr").filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                });
+            </script>
+
             <!-- Basic Bootstrap Table -->
+            <br><br>
             <div class="card">
                 <h5 class="card-header">Table Basic</h5>
                 <div class="table-responsive text-nowrap">
@@ -76,6 +90,7 @@
                                                 {% else %}
                                                     <a class="dropdown-item" href="{{ path('enable_user_account', { id: user.id}) }}"><i class="bx bx-lock-open me-1"></i> Enable</a>
                                                 {% endif %}
+                                                <a class="dropdown-item" href="{{ path('pdf_generator', { id: user.id}) }}"><i class="bx bxs-file-pdf me-1"></i> PDF</a>
                                             </div>
                                         </div>
                                     </td>

@@ -1,0 +1,39 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}Détails de la Réponse{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Détails de la Réponse</h1>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ reponse_reclamation.id }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ reponse_reclamation.Description }}</td>
+                </tr>
+                <tr>
+                    <th>Date de Création</th>
+                    <td>{{ reponse_reclamation.dateCreation ? reponse_reclamation.dateCreation|date('Y-m-d') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Auteur</th>
+                    <td>{{ reponse_reclamation.auteur }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+            
+
+        <div class="mt-4">
+            <a href="{{ path('app_reponse_reclamation_index') }}" class="btn btn-secondary"><span class="fas fa-arrow-left"></span> Retour à la Liste</a>
+            <a href="{{ path('app_reponse_reclamation_edit', {'id': reponse_reclamation.id}) }}" class="btn btn-primary"><span class="fas fa-edit"></span> Modifier</a>
+        </div>
+
+        {{ include('reponse_reclamation/_delete_form.html.twig') }}
+    </div>
+{% endblock %}
