@@ -1,3 +1,7 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+search_demande_achat:
+  path: /demande_achat/search
+  controller: App\Controller\DemandeAchatController::search
+  methods: GET

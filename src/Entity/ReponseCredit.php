@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\ReponseCreditRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: ReponseCreditRepository::class)]
 class ReponseCredit
@@ -15,18 +17,26 @@ class ReponseCredit
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:"C'est obligatoire de preciser un montant")]
+    #[Assert\Length(min:"3", minMessage:"Le montant ne doit pas être inferieur à 100.")]
     private ?float $solde_a_payer = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThan("today", message:"La date de début doit être superieur à aujourd'hui.")]
     private ?\DateTimeInterface $date_debutPaiement = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:"C'est obligatoire de preciser le nombres de mois de paiement.")]
     private ?int $nbr_moisPaiement = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"C'est obligatoire de préciser une raison.")]
+    #[Assert\Length(min:"3", minMessage:"Cette valeur est trop courte. Elle doit comporter au moins 3 caractères.")]
     private ?string $description = null;
+    
 
     #[ORM\ManyToOne(inversedBy: 'reponseCredits')]
+    #[Assert\NotBlank(message:"C'est obligatoire de préciser à quel credit on va attribuer la reponse.")]
     private ?Credit $credit = null;
 
     #[ORM\ManyToOne(inversedBy: 'reponseCredits')]

@@ -1,0 +1,70 @@
+
+
+{% block body %}
+    <h1 style="text-align: center;">Créer une nouvelle ReponseCredit</h1>
+
+   {% block stylesheets %}
+    <style>
+        /* Style personnalisé pour le titre "Demande de congé" */
+        .mt-4  {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    </style>
+{% endblock %}
+
+
+
+    <div class="container">
+        
+        <div class="row">
+       
+            <div class="col-md-6 offset-md-3">
+                {{ form_start(reponseform, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+                    <div class="form-group">
+                        {{ form_label(reponseform.credit, 'Credit') }}
+                        {{ form_widget(reponseform.credit, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(reponseform.credit) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(reponseform.solde_a_payer, ' Solde à payer') }}
+                        {{ form_widget(reponseform.solde_a_payer, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le solde à payer'}}) }}
+                        {{ form_errors(reponseform.solde_a_payer) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(reponseform.date_debutPaiement, 'Date de début') }}
+                        {{ form_widget(reponseform.date_debutPaiement, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(reponseform.date_debutPaiement) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(reponseform.nbr_moisPaiement, 'Nombre de mois de paiement') }}
+                        {{ form_widget(reponseform.nbr_moisPaiement, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(reponseform.nbr_moisPaiement) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(reponseform.description, 'Description') }}
+                        {{ form_widget(reponseform.description, {'attr': {'class': 'form-control', 'placeholder': 'Entrez une description'}}) }}
+                        {{ form_errors(reponseform.description) }}
+                    </div>
+                   
+                   <h2>Répondre au Crédit</h2>
+                    <form action="{{ path('app_credit_handleb', {'id': credit.id}) }}" method="POST">
+                        {{ form_widget(reponseform.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+                    </form>
+                   
+                {{ form_end(reponseform) }}
+            </div>
+        </div>
+    </div>
+
+
+
+
+    
+
+    <a href="{{ path('app_reponse_credit_index') }}">retourner à la list</a>
+{% endblock %}
