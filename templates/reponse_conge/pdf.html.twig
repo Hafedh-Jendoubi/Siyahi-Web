@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <style type="text/css">
+        * {
+            font-family: Verdana, Arial, sans-serif;
+        }
+        table{
+            font-size: small;
+        }
+        tfoot tr td{
+            font-weight: bold;
+            font-size: x-small;
+        }
+        td{
+            text-align: center;
+            height: 50px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div>
+    
+    
+</div>
+<hr>
+<br><br>
+<table width="100%" border="1">
+    <thead style="background-color: lightblue;">
+   
+           
+    <tr>
+        <th>Labels</th>
+        <th>Information</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row">Description</th>
+        <td>{{ description }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Date de Debut</th>
+        <td>{{ DateDebut  ? DateDebut|date('Y-m-d') : ''}}</td>
+    </tr>
+    
+    <tr>
+        <th scope="row">Date de Debut</th>
+        <td>{{ DateFin  ? DateFin|date('Y-m-d') : ''}}</td>
+    </tr>
+    <tr>
+        <th scope="row">Congé_id</th>
+        <td>{{ Conge.id }}</td>
+    </tr>
+    
+    </tbody>
+</table>
+<br><br><hr>
+
+</body>
+</html>

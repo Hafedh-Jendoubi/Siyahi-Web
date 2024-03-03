@@ -13,6 +13,7 @@
         "doctrine/orm": "^2.11",
         "dompdf/dompdf": "^2.0",
         "endroid/qr-code-bundle": "^5.0",
+        "mpdf/mpdf": "^6.1",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.25",
         "sensio/framework-extra-bundle": "^6.2",
@@ -65,7 +66,7 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src/","Mpdf\\": "vendor/mpdf/mpdf/src/"
         }
     },
     "autoload-dev": {
