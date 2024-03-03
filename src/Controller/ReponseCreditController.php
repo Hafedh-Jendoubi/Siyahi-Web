@@ -16,6 +16,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security as CoreSecurity;
 use Knp\Component\Pager\PaginatorInterface;
+use Twilio\Rest\Client;
+use App\Service\TwilioService;
+use Symfony\Component\Mailer\Transport\Smtp\SmtpTransport;
+use Symfony\Component\Mailer\Transport;
+use Symfony\Component\Mailer\Transport\Smtp\Stream\SocketStream;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Swift_Mailer;
+use Swift_Message;
+
+
 
 
 #[Route('/reponse/credit')]
@@ -36,7 +47,7 @@ class ReponseCreditController extends AbstractController
     }
 
     #[Route('/new', name: 'app_reponse_credit_new', methods: ['GET', 'POST'])]
-    public function new(Request $request,CoreSecurity $security , EntityManagerInterface $entityManager): Response
+    public function new(MailerInterface $mailer,Request $request,CoreSecurity $security , EntityManagerInterface $entityManager): Response
     {
         $reponseCredit = new ReponseCredit();
         $form = $this->createForm(ReponseCredit1Type::class, $reponseCredit);
@@ -49,7 +60,16 @@ class ReponseCreditController extends AbstractController
             $this->addFlash('AddReponseCredit', 'Votre reponse_credit a été ajouté avec succès');
 
     
+            $accountSid = 'ACd4df0fc05c27caa57a1852fe00965381';
+            $authToken = 'dcf6eaf3135478e6b3d141daa2771e23';
+            $client = new Client($accountSid, $authToken);
+            $client->messages->create('+21658405717', // replace with admin's phone number // $message = $client->messages->create('+' . $form->get('tel')->getData(), // replace with admin's phone number
 
+                [
+                    'from' => '+12672824271', // replace with your Twilio phone number
+                    'body' => 'Votre demande de credit a été traitée , Veuillez consulter notre site . Merci. ' ,
+                ]
+            ); 
             return $this->redirectToRoute('app_reponse_credit_index', [], Response::HTTP_SEE_OTHER);
         }
 

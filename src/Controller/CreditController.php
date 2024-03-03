@@ -101,7 +101,7 @@ public function show(int $id, CreditRepository $creditRepository): Response
     }
    
     #[Route('/new', name: 'app_credit_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, CoreSecurity $security): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, CoreSecurity $security ): Response
     {
         $credit = new Credit();
         $form = $this->createForm(Credit1Type::class, $credit);
@@ -126,6 +126,7 @@ public function show(int $id, CreditRepository $creditRepository): Response
                
                 $entityManager->persist($credit);
                 $entityManager->flush();
+               
                 $this->addFlash('AddCredit', 'Votre crédit a été ajouté avec succès');
     
                 return $this->redirectToRoute('app_credit_index', [], Response::HTTP_SEE_OTHER);
