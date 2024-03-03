@@ -21,7 +21,7 @@ class PdfGeneratorController extends AbstractController
     {
         $user = $repository->find($id);
         $writer = new PngWriter();
-        $qrCode = QrCode::create('http://127.0.0.1:8000/account/' . $id)
+        $qrCode = QrCode::create('http://192.168.1.18:8000/account/' . $id)
             ->setEncoding(new Encoding('UTF-8'))
             ->setSize(120)
             ->setMargin(0)
@@ -34,6 +34,7 @@ class PdfGeneratorController extends AbstractController
             'ImageSrc'  => $this->imageToBase64($user->getImage()),
             'FirstName'         => $user->getFirstName(),
             'LastName'         => $user->getLastName(),
+            'Gender' => $user->getGender(),
             'Address'      => $user->getAddress(),
             'PhoneNumber' => "(+216) " . $user->getPhoneNumber(),
             'CIN' => $user->getCIN(),

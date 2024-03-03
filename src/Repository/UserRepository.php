@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -57,9 +59,60 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findOneByEmail($value)
     {
         return $this->createQueryBuilder('user')
-            ->andWhere('user.email = :val')
+            ->where('user.email = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getResult();
+    }
+
+    public function searchUser($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.email LIKE :x')
+            ->setParameter('x', $value)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getClientsOnly(): int
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+            ->where("JSON_CONTAINS(u.roles, :role)")
+            ->setParameter('role', '"ROLE_USER"')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getStaffsOnly(): int
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+            ->where("JSON_CONTAINS(u.roles, :role)")
+            ->setParameter('role', '"ROLE_STAFF"')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
+    public function getAdminsOnly(): int
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+            ->where("JSON_CONTAINS(u.roles, :role)")
+            ->setParameter('role', '"ROLE_ADMIN"')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

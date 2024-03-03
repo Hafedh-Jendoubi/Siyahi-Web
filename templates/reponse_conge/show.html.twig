@@ -1,0 +1,38 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}ReponseConge{% endblock %}
+
+{% block body %}
+    <h1>ReponseConge</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ reponse_conge.id }}</td>
+            </tr>
+            <tr>
+                <th>Id_conge</th>
+                <td>{{ reponse_conge.conge.id }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ reponse_conge.description}}</td>
+            </tr>
+            <tr>
+                <th>DateDebut</th>
+                <td>{{ reponse_conge.DateDebut ? reponse_conge.DateDebut|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateFin</th>
+                <td>{{ reponse_conge.DateFin ? reponse_conge.DateFin|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reponse_conge_index') }}">retour à liste </a>
+<a href="{{ path('app_reponse_conge_edit', {'id': reponse_conge.id}) }}">
+    <img src="{{ asset('front/assets/img/team/edit.png') }}" alt="Modifier" style="width: 25px;">
+ </a>
+    {{ include('reponse_conge/_delete_form.html.twig') }}
+{% endblock %}

@@ -46,6 +46,14 @@
         <td>{{ LastName }}</td>
     </tr>
     <tr>
+        <th scope="row">Gender</th>
+        {% if Gender == "M" %}
+            <td>Male</td>
+        {% else %}
+            <td>Female</td>
+        {% endif %}
+    </tr>
+    <tr>
         <th scope="row">Phone Number</th>
         <td>{{ PhoneNumber }}</td>
     </tr>
@@ -63,10 +71,11 @@
     </tr>
     </tbody>
 </table>
+<br><br><hr>
 <div class="container text-center">
     <div class="row">
         <div class="col">
-            <img src="{{ QR }}" style="margin-top: 170px; margin-left: 580px;"/>
+            <img src="{{ QR }}" style="margin-top: 50px; margin-left: 580px;"/>
         </div>
     </div>
 </div>

@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\ReponseCongeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: ReponseCongeRepository::class)]
 class ReponseConge
@@ -15,9 +17,14 @@ class ReponseConge
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThan("today", message:"La date de début doit être ultérieure à aujourd'hui")]
     private ?\DateTimeInterface $DateDebut = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\Expression(
+        "this.getDateFin() >= this.getDateDebut()",
+         message:"La date de fin doit être postérieure ou égale à la date de début"
+      )]
     private ?\DateTimeInterface $DateFin = null;
 
     #[ORM\ManyToOne(inversedBy: 'reponseConges')]
@@ -25,6 +32,11 @@ class ReponseConge
 
     #[ORM\ManyToOne(inversedBy: 'reponseConges')]
     private ?User $User = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"La description est obligatoire")]
+     #[Assert\Length(max:"255", maxMessage:"La description ne doit pas dépasser {{ limit }} caractères")]
+    private ?string $description = null;
 
     public function getId(): ?int
     {
@@ -75,6 +87,18 @@ class ReponseConge
     public function setUser(?User $User): static
     {
         $this->User = $User;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }

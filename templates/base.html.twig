@@ -69,9 +69,8 @@
                                 <li><a href="#">Operation</a></li>
                                 <li class="dropdown"><a href="#"><span>Credit</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
-                                        <li><a href="#">Get Credit</a></li>
-                                        <li><a href="#">Current Credit Information</a></li>
-                                        <li><a href="#">Credits History</a></li>
+                                        <li><a href="{{ path('app_credit_new') }}">Avoir un Crédit</a></li>
+                                        <li><a href="{{ path('app_credit_index') }}">Historique</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="#">Achat</a></li>
@@ -91,6 +90,8 @@
                     {% else %}
                         <li><a class="nav-link scrollto" href="{{ path('app_login') }}">Login</a></li>
                     {% endif %}
+
+
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->

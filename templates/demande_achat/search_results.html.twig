@@ -1,0 +1,55 @@
+{# templates/demande_achat/search_results.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Résultats de la recherche{% endblock %}
+
+{% block body %}
+    <h1>Résultats de la recherche</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>DateDemande</th>
+                <th>NumTel</th>
+                <th>TypePaiement</th>
+                <th>CIN</th>
+                <th>Adresse</th>
+                <th>User</th>
+                <th>Achat</th>
+                <th>Etat Demande</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for demande_achat in demande_achats %}
+            <tr>
+                <td>{{ demande_achat.id }}</td>
+                <td>{{ demande_achat.Nom }}</td>
+                <td>{{ demande_achat.Prenom }}</td>
+                <td>{{ demande_achat.DateDemande ? demande_achat.DateDemande|date('Y-m-d') : '' }}</td>
+                <td>{{ demande_achat.numTel }}</td>
+                <td>{{ demande_achat.TypePaiement }}</td>
+                <td>{{ demande_achat.CIN }}</td>
+                <td>{{ demande_achat.Adresse }}</td>
+                <td>{{ demande_achat.User }}</td>
+                <td>{{ demande_achat.Achat }}</td>
+                <td>{{ demande_achat.etatdemande }}</td>
+                <td>
+                    <a href="{{ path('app_demande_achat_show', {'id': demande_achat.id}) }}">show</a>
+                    <a href="{{ path('app_demande_achat_edit', {'id': demande_achat.id}) }}">edit</a>
+                    <a href="{{ path('app_demande_achat_delete', {'id': demande_achat.id}) }}" onclick="return confirm('Are you sure you want to delete this item?');">delete</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">Aucun résultat trouvé.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
