@@ -7,6 +7,7 @@ use App\Form\ServiceType;
 use App\Repository\ServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,24 +24,28 @@ class ServiceController extends AbstractController
     }
 
     #[Route('/new', name: 'app_service_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $service = new Service();
-        $form = $this->createForm(ServiceType::class, $service);
-        $form->handleRequest($request);
+public function new(Request $request, EntityManagerInterface $entityManager): Response
+{
+    $service = new Service();
+    $form = $this->createForm(ServiceType::class, $service);
+    $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($service);
-            $entityManager->flush();
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Persist the new service entity
+        $entityManager->persist($service);
+        
+        // Flush changes to the database
+        $entityManager->flush();
 
-            return $this->redirectToRoute('app_service_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('service/new.html.twig', [
-            'service' => $service,
-            'form' => $form,
-        ]);
+        // Redirect to the index page
+        return $this->redirectToRoute('app_service_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    return $this->renderForm('service/new.html.twig', [
+        'service' => $service,
+        'form' => $form,
+    ]);
+}
 
     #[Route('/{id}', name: 'app_service_show', methods: ['GET'])]
     public function show(Service $service): Response

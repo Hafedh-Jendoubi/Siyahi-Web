@@ -15,32 +15,73 @@ use Symfony\Component\Routing\Annotation\Route;
 class CompteClientController extends AbstractController
 {
     #[Route('/', name: 'app_compte_client_index', methods: ['GET'])]
-    public function index(CompteClientRepository $compteClientRepository): Response
+    public function index(CompteClientRepository $compteClientRepository, Request $request): Response
     {
+        $sortBy = $request->query->get('sortBy', 'id');
+        $sortOrder = $request->query->get('sortOrder', 'asc');
+    
+        // Adjust the sorting fields based on your entity properties
+        $sortableFields = ['id', 'service', 'rib', 'created_at', 'solde'];
+    
+        // Validate if the provided sortBy parameter is a valid sortable field
+        if (!in_array($sortBy, $sortableFields)) {
+            $sortBy = 'id'; // Default to 'id' if invalid sortBy parameter is provided
+        }
+    
+        // Handle special cases for 'created_at', 'solde', and associations
+        $sortParts = explode('.', $sortBy);
+        $sortField = end($sortParts);
+    
+        // Check if it's an association
+        if (count($sortParts) > 1) {
+            $compteClients = $compteClientRepository->findByWithJoin([$sortField => $sortOrder], ['service']);
+        } else {
+            // Handle special cases for 'created_at' and 'solde'
+            if ($sortField === 'created_at') {
+                $compteClients = $compteClientRepository->findBy([], [$sortBy => $sortOrder]);
+            } elseif ($sortField === 'solde') {
+                $compteClients = $compteClientRepository->findBy([], [$sortBy => $sortOrder]);
+            } else {
+                $compteClients = $compteClientRepository->findBy([], [$sortBy => $sortOrder]);
+            }
+        }
+    
         return $this->render('compte_client/index.html.twig', [
-            'compte_clients' => $compteClientRepository->findAll(),
+            'compte_clients' => $compteClients,
+            'sortableFields' => $sortableFields,
+            'currentSort' => ['field' => $sortBy, 'order' => $sortOrder],
         ]);
     }
 
     #[Route('/new', name: 'app_compte_client_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $compteClient = new CompteClient();
-        $form = $this->createForm(CompteClientType::class, $compteClient);
-        $form->handleRequest($request);
+    public function new(Request $request, EntityManagerInterface $entityManager, CompteClientRepository $compteClientRepository): Response
+{
+    $compteClient = new CompteClient();
+    $form = $this->createForm(CompteClientType::class, $compteClient);
+    $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($compteClient);
-            $entityManager->flush();
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Check if RIB already exists
+        $existingCompteClient = $compteClientRepository->findOneBy(['rib' => $compteClient->getRib()]);
 
-            return $this->redirectToRoute('app_compte_client_index', [], Response::HTTP_SEE_OTHER);
+        if ($existingCompteClient) {
+            // RIB already exists, handle accordingly (e.g., show an error message)
+            // You might want to customize this part based on your needs
+            $this->addFlash('error', 'This RIB already exists.');
+            return $this->redirectToRoute('app_compte_client_new');
         }
 
-        return $this->renderForm('compte_client/new.html.twig', [
-            'compte_client' => $compteClient,
-            'form' => $form,
-        ]);
+        $entityManager->persist($compteClient);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_compte_client_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    return $this->renderForm('compte_client/new.html.twig', [
+        'compte_client' => $compteClient,
+        'form' => $form,
+    ]);
+}
 
     #[Route('/{id}', name: 'app_compte_client_show', methods: ['GET'])]
     public function show(CompteClient $compteClient): Response

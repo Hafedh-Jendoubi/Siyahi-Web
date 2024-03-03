@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 class ServiceType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -22,6 +23,9 @@ class ServiceType extends AbstractType
             ->add('Name', TextType::class, ['attr' => ['placeholder' => 'Name*'],
             'constraints' => [
                 new NotBlank(['message' => 'Service Name cannot be blank.']),
+                new Regex([
+                    'pattern' => '/^[a-zA-Z]+$/',
+                    'message' => 'Only letters are allowed.']),
                 new Length(['max' => 15, 'maxMessage' => 'Service Name cannot be longer than {{ limit }} characters.'])
             ]
         ])
@@ -30,8 +34,8 @@ class ServiceType extends AbstractType
                 new Length(['max' => 300, 'maxMessage' => 'Description cannot be longer than {{ limit }} characters.'])
             ]
         ])
-            ->add('Compte_Client')
-            ->add('User')
+            /*->add('Compte_Client')
+            ->add('User')*/
         ;
     }
 

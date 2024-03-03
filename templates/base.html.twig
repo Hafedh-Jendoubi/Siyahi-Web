@@ -79,14 +79,11 @@
                             </ul>
                         </li>
                     {% endif %}
-                    {% if is_granted("ROLE_STAFF") %}
-                        <li><a class="nav-link scrollto" href="{{ path('app_staff_section') }}">Staff</a></li>
-                    {% endif %}
-                    {% if is_granted("ROLE_ADMIN") %}
-                        <li><a class="nav-link scrollto" href="{{ path('admin_home') }}">Administrator</a></li>
-                    {% endif %}
                     {% if is_granted("ROLE_USER") %}
-                        <li><a class="nav-link scrollto" href="#">Account</a></li>
+                        <li><a class="nav-link scrollto" href="{{ path('user_account', { id: app.user.id }) }}">Account</a></li>
+                    {% endif %}
+                    {% if is_granted("ROLE_STAFF") %}
+                        <li><a class="nav-link scrollto" href="{{ path('app_home') }}">Dashboard</a></li>
                     {% endif %}
                     <li><!-- Just to leave an empty space between Contact & Logout --></li>
                     {% if is_granted("ROLE_USER") %}

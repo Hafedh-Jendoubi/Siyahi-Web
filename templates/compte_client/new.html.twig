@@ -3,9 +3,32 @@
 {% block title %}New CompteClient{% endblock %}
 
 {% block body %}
-    <h1>Create new CompteClient</h1>
+    <h1>Créer un nouveau CompteClient</h1>
 
     {{ include('compte_client/_form.html.twig') }}
 
-    <a href="{{ path('app_compte_client_index') }}">back to list</a>
+    <a class="btn btn-primary d-block mx-auto" style="width:200px;" href="{{ path('app_compte_client_index') }}">Retour à la liste</a>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector('form[name="compte_client"]');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                // Use SweetAlert for confirmation
+                Swal.fire({
+                    title: 'Confirmer l\'ajout?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Oui',
+                    cancelButtonText: 'Non',
+                    icon: 'question'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // If user confirms, proceed with form submission
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}

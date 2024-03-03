@@ -3,39 +3,102 @@
 {% block title %}CompteClient index{% endblock %}
 
 {% block body %}
-    <h1>CompteClient index</h1>
+    <title>Comptes</title>
+
+    <h1>Liste des Comptes</h1>
+
+    <!-- Barre de recherche -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <input id="search-input" type="text" class="form-control" placeholder="Rechercher...">
+        </div>
+        <div class="col-md-6">
+            <select id="search-by" class="form-select">
+                <option value="0">ID</option>
+                <option value="1">Service</option>
+                <option value="2">RIB</option>
+                <option value="3">Date de Création</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Sorting options -->
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <label for="sort-by">Trier par :</label>
+            <select id="sort-by" class="form-select">
+                <option value="id">ID</option>
+                <option value="service">Service</option>
+                <option value="RIB">RIB</option>
+                <option value="CreatedAt">Date de Création</option>
+                <option value="Solde">Solde</option>
+            </select>
+            <select id="sort-order" class="form-select">
+                <option value="asc">Ascendant</option>
+                <option value="desc">Descendant</option>
+            </select>
+            <button class="btn btn-primary" id="sort-btn">Trier</button>
+        </div>
+    </div>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Type</th>
+                <th>ID</th>
+                <th>Service</th>
                 <th>RIB</th>
-                <th>Created_at</th>
+                <th>Date de Création</th>
                 <th>Solde</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for compte_client in compte_clients %}
             <tr>
                 <td>{{ compte_client.id }}</td>
-                <td>{{ compte_client.Type }}</td>
+                <td>{{ compte_client.service }}</td>
                 <td>{{ compte_client.RIB }}</td>
                 <td>{{ compte_client.CreatedAt ? compte_client.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ compte_client.Solde }}</td>
                 <td>
-                    <a href="{{ path('app_compte_client_show', {'id': compte_client.id}) }}">show</a>
-                    <a href="{{ path('app_compte_client_edit', {'id': compte_client.id}) }}">edit</a>
+                    <a class="btn btn-info" style="width: 110px;" href="{{ path('app_compte_client_show', {'id': compte_client.id}) }}">Afficher</a>
+                    <a class="btn btn-primary" style="width: 110px;" href="{{ path('app_compte_client_edit', {'id': compte_client.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">Pas de Comptes Clients trouvés.</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_compte_client_new') }}">Create new</a>
+    <a class="btn btn-success d-block mx-auto" style="width: 200px; " href="{{ path('app_compte_client_new') }}">Créer nouveau</a>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#search-input").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                var searchBy = $("#search-by").val();
+
+                $("table tr").filter(function () {
+                    var rowData = $(this).find("td:eq(" + searchBy + ")").text().toLowerCase();
+                    $(this).toggle(rowData.indexOf(value) > -1);
+                });
+            });
+
+            // Change event for the search-by dropdown
+            $("#search-by").on("change", function () {
+                $("#search-input").val(''); // Clear the input when changing search criteria
+            });
+
+            // Sorting functionality
+            $("#sort-btn").on("click", function () {
+                var sortBy = $("#sort-by").val();
+                var sortOrder = $("#sort-order").val();
+                window.location.href = "{{ path('app_compte_client_index') }}?sortBy=" + sortBy + "&sortOrder=" + sortOrder;
+            });
+        });
+    </script>
 {% endblock %}

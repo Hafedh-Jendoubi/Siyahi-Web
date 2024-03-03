@@ -450,4 +450,9 @@ class User
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->First_Name . ' ' . $this->Last_Name;
+    }
 }

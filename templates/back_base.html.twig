@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="{{ asset('back/assets/vendor/css/core.css') }}" class="template-customizer-core-css" />
     <link rel="stylesheet" href="{{ asset('back/assets/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{{ asset('back/assets/css/demo.css') }}" />
-
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.min.css" rel="stylesheet">
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{ asset('back/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
     <link rel="stylesheet" href="{{ asset('back/assets/vendor/libs/apex-charts/apex-charts.css') }}" />
@@ -48,6 +48,7 @@
     <!-- Helpers -->
     <script src="{{ asset('back/assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('back/assets/js/config.js') }}"></script>
+    
 </head>
 
 <body>
@@ -86,17 +87,17 @@
                 <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                        <div data-i18n="Account Settings">Gestion Compte</div>
+                        <div data-i18n="Account Settings">Gestion des Comptes</div>
                     </a>
                     <ul class="menu-sub">
                         <li class="menu-item">
                             <a href="{{ path('app_compte_client_index') }}" class="menu-link">
-                                <div data-i18n="Account">List Accounts</div>
+                                <div data-i18n="Account">Liste des Comptes</div>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="{{ path('app_compte_client_new') }}" class="menu-link">
-                                <div data-i18n="Notifications">Add Account</div>
+                                <div data-i18n="Notifications">Ajouter Compte Client</div>
                             </a>
                         </li>
                     </ul>
@@ -104,17 +105,17 @@
                 <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                        <div data-i18n="Account Settings">Gestion Service</div>
+                        <div data-i18n="Account Settings">Gestion des Services</div>
                     </a>
                     <ul class="menu-sub">
                         <li class="menu-item">
                             <a href="{{ path('app_service_index') }}" class="menu-link">
-                                <div data-i18n="Account">List Services</div>
+                                <div data-i18n="Account">Liste des Services</div>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="{{ path('app_service_new') }}" class="menu-link">
-                                <div data-i18n="Notifications">Add Service</div>
+                                <div data-i18n="Notifications">Ajouter Service</div>
                             </a>
                         </li>
                     </ul>
@@ -139,7 +140,8 @@
 
                 <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
                     <!-- Search -->
-                    <div class="navbar-nav align-items-center">
+                    <!-- POUR SUPPRIMER LA BARRE DE RECHERCHE INITIALE-->
+                    <!--<div class="navbar-nav align-items-center">
                         <div class="nav-item d-flex align-items-center">
                             <i class="bx bx-search fs-4 lh-0"></i>
                             <input
@@ -149,7 +151,7 @@
                                     aria-label="Search..."
                             />
                         </div>
-                    </div>
+                    </div>-->
                     <!-- /Search -->
 
                     <ul class="navbar-nav flex-row align-items-center ms-auto">
@@ -170,7 +172,7 @@
                         <li class="nav-item navbar-dropdown dropdown-user dropdown">
                             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                 <div class="avatar avatar-online">
-                                    <img src="{{ asset('back\assets\img\illustrations\me.jpg') }}" alt class="w-px-40 h-auto rounded-circle" />
+                                    <img src="{{ asset('back/assets/img/illustrations/me2.png') }}" alt class="w-px-40 h-auto rounded-circle" />
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
@@ -179,7 +181,7 @@
                                         <div class="d-flex">
                                             <div class="flex-shrink-0 me-3">
                                                 <div class="avatar avatar-online">
-                                                    <img src="{{ asset('back\assets\img\illustrations\me.jpg') }}" alt class="w-px-40 h-auto rounded-circle" />
+                                                    <img src="{{ asset('back/assets/img/illustrations/me2.png') }}" alt class="w-px-40 h-auto rounded-circle" />
                                                 </div>
                                             </div>
                                             <div class="flex-grow-1">
@@ -248,8 +250,50 @@
 <script src="{{ asset('back/assets/vendor/libs/popper/popper.js') }}"></script>
 <script src="{{ asset('back/assets/vendor/js/bootstrap.js') }}"></script>
 <script src="{{ asset('back/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="{{ asset('back/assets/vendor/js/menu.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.all.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-button');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const form = this.closest('.delete-form');
+
+                Swal.fire({
+                    title: 'Êtes-vous sûr de supprimer ce service?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Oui',
+                    cancelButtonText: 'Non'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Submit the form using AJAX
+                        fetch(form.action, {
+                            method: form.method,
+                            body: new FormData(form),
+                        }).then(response => {
+                            if (response.ok) {
+                                Swal.fire('Supprimé avec succès', '', 'success')
+                                    .then(() => {
+                                        window.location.href = '{{ path('app_service_index') }}';
+                                    });
+                            } else {
+                                Swal.fire('Erreur lors de la suppression', '', 'error');
+                            }
+                        });
+                    } else {
+                        Swal.fire('Suppression annulée', '', 'info');
+                    }
+                });
+            });
+        });
+    });
+</script>
+
 <!-- endbuild -->
 
 <!-- Vendors JS -->
