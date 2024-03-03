@@ -21,6 +21,19 @@
                 });
             </script>
 
+            <input id="search-input" type="form-control" placeholder="Search..." style="width: 400px; border-radius: 10px;" >
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $("#search-input").on("keyup", function() {
+                        var value = $(this).val().toLowerCase();
+                        $("table tbody tr").filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                });
+            </script>
+
             <!-- Basic Bootstrap Table -->
             <br><br>
             <div class="card">
