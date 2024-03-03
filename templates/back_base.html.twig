@@ -81,25 +81,6 @@
                     <span class="menu-header-text">Staff Panel</span>
                 </li>
                     <li class="menu-item">
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                            <div data-i18n="Account Settings">Gestion des credits</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="{{ path('app_credit_indexb') }}" class="menu-link">
-                                    <div data-i18n="Account">Liste des credits</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="{{ path('app_reponse_credit_index') }}" class="menu-link">
-                                    <div data-i18n="Account">Liste des reponses</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-user"></i>
                             <div data-i18n="Account Settings">User Section</div>
@@ -118,39 +99,28 @@
                                 </a>
                             </li>
                         </ul>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="{{ path('app_conge_index') }}"class="menu-link">
-                                    <div data-i18n="Account">Ma liste des Congés </div>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                     <li class="menu-item">
-                    <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                            <div data-i18n="Account Settings">Gestion Achat </div>
+                            <i class="menu-icon tf-icons bx bx-credit-card"></i>
+                            <div data-i18n="Account Settings">Gestion des credits</div>
                         </a>
                         <ul class="menu-sub">
-
                             <li class="menu-item">
-                                <a href="{{ path('app_achat_index') }}" class="menu-link">
-                                    <div data-i18n="Account">Achat</div>
+                                <a href="{{ path('app_credit_indexb') }}" class="menu-link">
+                                    <div data-i18n="Account">Liste des credits</div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="{{ path('app_demande_achat_index')}}" class="menu-link">
-                                    <div data-i18n="Notifications">Demande d'Achat</div>
+                                <a href="{{ path('app_reponse_credit_index') }}" class="menu-link">
+                                    <div data-i18n="Account">Liste des reponses</div>
                                 </a>
                             </li>
-
                         </ul>
                     </li>
                     <li class="menu-item">
-                    <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <i class="menu-icon tf-icons bx bx-purchase-tag"></i>
                             <div data-i18n="Account Settings">Gestion Achat </div>
                         </a>
                         <ul class="menu-sub">
@@ -210,20 +180,6 @@
                             </a>
                         </li>
                     </ul>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="{{ path('app_conge_indexb') }}"class="menu-link">
-                                <div data-i18n="Account">La liste des Congés </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="{{ path('app_reponse_conge_index') }}"class="menu-link">
-                                <div data-i18n="Account">La liste des Réponses Congé </div>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -248,6 +204,20 @@
                             <i class="menu-icon tf-icons bx bx-user"></i>
                             <div data-i18n="Account Settings">User Section</div>
                         </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="{{ path('app_conge_indexb') }}"class="menu-link">
+                                    <div data-i18n="Account">La liste des Congés </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="{{ path('app_reponse_conge_index') }}"class="menu-link">
+                                    <div data-i18n="Account">La liste des Réponses Congé </div>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 {% endif %}
             </ul>
