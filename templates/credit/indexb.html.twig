@@ -12,16 +12,14 @@
 }
 </style>
 
-<form method="get" action="{{ path('app_filtre') }}">
-        <label for="minSolde">Minimum Solde:</label>
-        <input type="number" name="minSolde" id="minSolde" value="{{ app.request.query.get('minSolde') }}">
-        <br>
+<form method="get" action="{{ path('app_credit_indexb') }}">
+        <label for="minSolde" style="font-weight: bold; color: grey;">Solde minimum:</label>
+        <input type="number" name="minSolde" id="minSolde" style="border: 1px solid #ccc; padding: 5px;" value="{{ app.request.query.get('minSolde') }}">
 
-        <label for="maxSolde">Maximum Solde:</label>maxSolde
-        <input type="number" name="maxSolde" id="maxSolde" value="{{ app.request.query.get('max_price') }}">
-        <br>
+        <label for="maxSolde" style="font-weight: bold; color: grey;">Solde maximum:</label>
+        <input type="number" name="maxSolde" id="maxSolde" style="border: 1px solid #ccc; padding: 5px;" value="{{ app.request.query.get('maxSolde') }}">
 
-        <button type="c-btn">Filter</button>
+        <button  class="btn btn-secondary" style="width: 80px;height: 38px" type="c-btn">Filter</button>
     </form>
 
     <h1>Listes des credits</h1>
@@ -56,7 +54,7 @@
                 {% endif %}
                 </td>
                 <td>
-                    <a  class="btn btn-info" style="width: 110px; "  href="{{ path('app_credit_showb', {'id': credit.id}) }}">Détailles</a>
+                    <a  class="btn btn-info" style="width: 110px;"  href="{{ path('app_credit_showb', {'id': credit.id}) }}">Détailles</a>
                 </td>
             </tr>
         {% else %}
@@ -68,11 +66,14 @@
     </table>
 
    
-<div class="d-flex justify-content-end">
-    <a href="{{ path('credit_statistics3') }}" class="btn btn-secondary" style="width: 208px; ">Statistiques des crédits</a>
+<div class="d-flex justify-content-between">
+    <div>
+        <a href="{{ path('app_credit_indexb', {'sortBy': 'montant'}) }}" class="btn btn-secondary">Tri par montant</a>
+        <a href="{{ path('app_credit_indexb', {'sortBy': 'date'}) }}" class="btn btn-secondary">Tri par date</a>
+    </div>
+    <a href="{{ path('credit_statistics3') }}" class="btn btn-secondary" style="width: 208px;">Statistiques des crédits</a>
 </div>
- <a href="{{ path('app_credit_indexb', {'sortBy': 'montant'}) }}">Tri par montant</a>
-<a href="{{ path('app_credit_indexb', {'sortBy': 'date'}) }}">Tri par date</a>
+
       <div class="pagination">
         {{ knp_pagination_render(credits, 'credit/my_custom_template.html.twig') }}
     </div>

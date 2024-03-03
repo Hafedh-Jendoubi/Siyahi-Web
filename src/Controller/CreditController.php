@@ -34,20 +34,32 @@ class CreditController extends AbstractController
     
     #[Route('/b', name: 'app_credit_indexb', methods: ['GET'])]
     public function indexb(Request $request, CreditRepository $creditRepository, PaginatorInterface $paginator): Response
-    {
-        $sortBy = $request->query->get('sortBy');
-        if ($sortBy === 'montant') {
-            $pagination = $paginator->paginate(
-            $creditRepository->findSortedByMontant(),
+{
+    $sortBy = $request->query->get('sortBy');
+    $minSolde = $request->query->get('minSolde');
+    $maxSolde = $request->query->get('maxSolde');
+
+    // Vérifiez si les valeurs minSolde et maxSolde sont définies
+    if ($minSolde !== null && $maxSolde !== null) {
+        $pagination = $paginator->paginate(
+            $creditRepository->findByPriceRange($minSolde, $maxSolde),
             $request->query->getInt('page', 1),
             4
         );
+    } else {
+        // Si les valeurs minSolde et maxSolde ne sont pas définies, effectuez le tri en fonction de la valeur de $sortBy
+        if ($sortBy === 'montant') {
+            $pagination = $paginator->paginate(
+                $creditRepository->findSortedByMontant(),
+                $request->query->getInt('page', 1),
+                4
+            );
         } elseif ($sortBy === 'date') {
             $pagination = $paginator->paginate(
-             $creditRepository->findSortedByDate(),
-             $request->query->getInt('page', 1),
-             4
-         );
+                $creditRepository->findSortedByDate(),
+                $request->query->getInt('page', 1),
+                4
+            );
         } else {
             $pagination = $paginator->paginate(
                 $creditRepository->findAll(),
@@ -55,13 +67,13 @@ class CreditController extends AbstractController
                 4
             );
         }
-
-       
-
-        return $this->render('credit/indexb.html.twig', [
-            'credits' => $pagination,
-        ]);
     }
+
+    return $this->render('credit/indexb.html.twig', [
+        'credits' => $pagination,
+    ]);
+}
+
 
     #[Route('/{id}', name: 'app_credit_show', methods: ['GET'])]
     public function show(string $id, CreditRepository $creditRepository): Response
