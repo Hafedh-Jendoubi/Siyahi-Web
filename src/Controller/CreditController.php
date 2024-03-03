@@ -75,16 +75,16 @@ class CreditController extends AbstractController
 }
 
 
-    #[Route('/{id}', name: 'app_credit_show', methods: ['GET'])]
-    public function show(string $id, CreditRepository $creditRepository): Response
-    {
-        $credit = $creditRepository->find($id);
+#[Route('/{id}', name: 'app_credit_show', methods: ['GET'], requirements: ['id' => '\d+'])]
+public function show(int $id, CreditRepository $creditRepository): Response
+{
+    $credit = $creditRepository->find($id);
+   
+    return $this->render('credit/show.html.twig', [
+        'credit' => $credit,
+    ]);
+}
 
-       
-        return $this->render('credit/show.html.twig', [
-            'credit' => $credit,
-        ]);
-    }
    
     #[Route('b/{id}', name: 'app_credit_showb', methods: ['GET'])]
     public function showb(int $id, CreditRepository $creditRepository): Response
@@ -97,6 +97,44 @@ class CreditController extends AbstractController
 
         return $this->render('credit/showb.html.twig', [
             'credit' => $credit,
+        ]);
+    }
+   
+    #[Route('/new', name: 'app_credit_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, CoreSecurity $security): Response
+    {
+        $credit = new Credit();
+        $form = $this->createForm(Credit1Type::class, $credit);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $credit->setUser($security->getUser());
+            
+            // Vérifier si l'entité est nouvelle
+            if ($credit->getId() === null) {
+                // Vérifier si le champ Contrat est défini
+                if ($form->has('Contrat') && $form->get('Contrat')->getData()) {
+                    $Contrat = $form->get('Contrat')->getData();
+                    // Gérez le stockage du fichier
+                    $newFilename = uniqid().'.'.$Contrat->guessExtension();
+                    $Contrat->move(
+                        $this->getParameter('Credit_directory'),
+                        $newFilename
+                    );
+                    $credit->setContrat($newFilename);
+                }
+               
+                $entityManager->persist($credit);
+                $entityManager->flush();
+                $this->addFlash('AddCredit', 'Votre crédit a été ajouté avec succès');
+    
+                return $this->redirectToRoute('app_credit_index', [], Response::HTTP_SEE_OTHER);
+            }
+        }
+    
+        return $this->renderForm('credit/new.html.twig', [
+            'credit' => $credit,
+            'form' => $form,
         ]);
     }
 
@@ -167,21 +205,5 @@ class CreditController extends AbstractController
         ]);
     }
 
-    #[Route('/filtreP', name: 'app_filtre')]
-    public function filtre(CreditRepository $creditRepository, Request $request, ManagerRegistry $em, PaginatorInterface $paginator)
-    {
-        $minSolde = $request->query->get('minSolde');
-        $maxSolde = $request->query->get('maxSolde');
-
-        $credit = $creditRepository->findByPriceRange($minSolde, $maxSolde);
-        $data = $paginator->paginate(
-            $credit,
-            $request->query->getInt('page', 1),
-            4
-        );
-        return $this->render('credit/indexb.html.twig', [
-            'credit' => $credit,
-            'data' => $data
-        ]);
-    }
+   
 }

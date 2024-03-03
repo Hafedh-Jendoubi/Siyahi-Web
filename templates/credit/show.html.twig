@@ -1,39 +1,56 @@
-{% extends 'back_base.html.twig' %}
+{% extends 'base.html.twig' %}
+
 
 {% block body %}
-        <table class="table">
-            <tbody>
-                <tr>
-                    <th>Id</th>
-                    <td>{{ credit.id }}</td>
-                </tr>
-                <tr>
-                    <th>Solde_demande</th>
-                    <td>{{ credit.soldeDemande }} DTN</td>
-                </tr>
-                <tr>
-                    <th>Date_debut_paiement</th>
-                    <td>{{ credit.dateDebutPaiement ? credit.dateDebutPaiement|date('Y-m-d') : '' }}</td>
-                </tr>
-                <tr>
-                    <th>Nbr_mois_paiement</th>
-                    <td>{{ credit.nbrMoisPaiement }}</td>
-                </tr>
-                <tr>
-                    <th>Description</th>
-                    <td>{{ credit.description }}</td>
-                </tr>
-                <tr>
-                    <th>Contrat</th>
-                    <td>
-                        {% if credit.Contrat is not null %}
-                            <img src="{{ asset('uploads/credit/' ~ credit.Contrat) }}" class="image-cercle" alt="Contrat" style="width:100px;">
-                        {% else %}
-                            Aucun Contrat n'est trouvé
+    <h1>Credit</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ credit.id }}</td>
+            </tr>
+            <tr>
+                <th>Solde_demande</th>
+                <td>{{ credit.soldeDemande }}</td>
+            </tr>
+            <tr>
+                <th>Date_debut_paiement</th>
+                <td>{{ credit.dateDebutPaiement ? credit.dateDebutPaiement|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Nbr_mois_paiement</th>
+                <td>{{ credit.nbrMoisPaiement }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ credit.description }}</td>
+            </tr>
+             <tr>
+                <th>Contrat</th>
+                <td>
+                {% if credit.Contrat is not null %}
+                    <img src="{{ asset('uploads/credit/' ~ credit.Contrat) }}" alt="Contrat "style="width:600px;height: 600px;">
+                {% else %}
+                    Aucun Contrat n'est trouvé
+                {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_credit_index') }}">retourner à la list</a>
+    <br>
+        <br>
+
+    {% if credit.reponseCredits is empty %}
+                        <a class="btn btn-primary" style="width: 110px;" href="{{ path('app_credit_edit', {'id': credit.id}) }}">Modifier</a>
+                        <br>
                         {% endif %}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    
+
+
+                        {% if credit.reponseCredits is empty %}
+                        {{ include('credit/_delete_form.html.twig') }}
+                        {% endif %}
+
 {% endblock %}
