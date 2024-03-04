@@ -3,6 +3,26 @@
 
 
 {% block body %}
+<div id="google_translate_element"></div>
+<script type="text/javascript">
+    function translateToFrench() {
+        var el = document.getElementById("google_translate_element").querySelector(".goog-te-combo");
+        el.value = "fr";
+        el.dispatchEvent(new Event('change'));
+    }
+
+    function translateToEnglish() {
+        var el = document.getElementById("google_translate_element").querySelector(".goog-te-combo");
+        el.value = "en";
+        el.dispatchEvent(new Event('change'));
+    }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'fr', includedLanguages: 'en', autoDisplay: false}, 'google_translate_element');
+    }
+</script>
 <input id="search-input" type="form-control" placeholder="Search...">
 <title>AJAX Search Example</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -27,6 +47,7 @@
                 <th>Date_Debut</th>
                 <th>Date_Fin</th>
                 <th>Justification</th>
+                <th>Status</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -42,6 +63,7 @@
                 <td>{% if conge.Justification is not null %}<img src="{{ asset('uploads/conge/' ~ conge.Justification) }}" alt="Justification "style="width:200px;"> {% else %}
                     Aucun Contrat n'est trouvé
                 {% endif %}</td>
+               
                 <td>
                     <a  class="btn btn-info" style="width: 110px; " href="{{ path('app_conge_show1', {'id': conge.id}) }}">Détailles</a><br>
                     
