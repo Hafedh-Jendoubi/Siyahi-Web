@@ -55,14 +55,14 @@
 
 
                 <td>{% if conge.Justification is not null %}<img src="{{ asset('uploads/conge/' ~ conge.Justification) }}" alt="Justification "style="width:200px;"> {% else %}
-                    Aucun Contrat n'est trouvé
+                    Aucune justification n'est trouvé
                 {% endif %}
 </td>
  <td>
     {% if conge.status %}
-        <boutton class="badge badge-success">Confirmé</span>
+        <button class="badge badge-success" >Confirmé</button>
     {% else %}
-        <span class="badge badge-secondary">En attente</span>
+        <button class="badge badge-secondary">En attente</button>
     {% endif %}
 </td>
                 <td>

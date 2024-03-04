@@ -19,23 +19,7 @@ use Symfony\Component\Security\Core\Security as CoreSecurity;
 class CongeController extends AbstractController
 {
 
-     #[ Route("/search", name:"search")]
      
-    public function search(Request $request, CongeRepository $congeRepository): Response
-    {
-        $email = $request->query->get('email');
-
-        if ($email) {
-            $conges = $congeRepository->searchByKeyword($email);
-        } else {
-            $conges = [];
-        }
-
-        return $this->render('conge/search_results.html.twig', [
-            'conges' => $conges,
-            'email' => $email,
-        ]);
-    }
     #[Route('/', name: 'app_conge_index', methods: ['GET'])]
     public function index(CongeRepository $congeRepository,CoreSecurity $security): Response
     {

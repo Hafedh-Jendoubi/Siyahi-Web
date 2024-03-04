@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\ReponseConge;
 use App\Form\CongeReponseType;
+use App\Entity\Conge;
 use App\Repository\ReponseCongeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -14,6 +15,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mailer\SentMessage;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 
 
@@ -33,27 +38,43 @@ class ReponseCongeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_reponse_conge_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,Security $security): Response
-    {
-        $reponseConge = new ReponseConge();
-        $form = $this->createForm(CongeReponseType::class, $reponseConge);
-        $form->handleRequest($request);
+public function new(Request $request, EntityManagerInterface $entityManager, Security $security, MailerInterface $mailer): Response
+{
+    $reponseConge = new ReponseConge();
+    $form = $this->createForm(CongeReponseType::class, $reponseConge);
+    $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $reponseConge->setUser($security->getUser());
-            $entityManager->persist($reponseConge);
-            $entityManager->flush();
+    if ($form->isSubmitted() && $form->isValid()) {
+        $reponseConge->setUser($security->getUser());
+        $entityManager->persist($reponseConge);
+        $entityManager->flush();
 
-            return $this->redirectToRoute('app_reponse_conge_index', [], Response::HTTP_SEE_OTHER);
+        // Construction du contenu de l'email
+        $email = (new Email())
+            ->from('bettaieb.ahmed@esprit.tn') // Remplacez par votre adresse email
+            ->to('ahmedbettaib56@gmail.com') // Adresse email de votre compte Mailtrap
+            ->subject('Nouvelle réponse de congé ajoutée')
+            ->html('<p>Une nouvelle réponse de congé a été ajoutée.</p>');
+
+        try {
+            // Envoi de l'email
+            $mailer->send($email);
+            
+            // Si l'email est envoyé avec succès, redirigez avec un message de succès
+            $this->addFlash('success', 'L\'email a été envoyé avec succès.');
+        } catch (TransportExceptionInterface $e) {
+            // Si une erreur se produit lors de l'envoi de l'email, redirigez avec un message d'erreur
+            $this->addFlash('error', 'Une erreur s\'est produite lors de l\'envoi de l\'email : ' . $e->getMessage());
         }
 
-        return $this->renderForm('reponse_conge/new.html.twig', [
-            'reponse_conge' => $reponseConge,
-            'form' => $form,
-        ]);
+        return $this->redirectToRoute('app_reponse_conge_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    
+    return $this->renderForm('reponse_conge/new.html.twig', [
+        'reponse_conge' => $reponseConge,
+        'form' => $form,
+    ]);
+}
     #[Route('/{id}', name: 'app_reponse_conge_show', methods: ['GET'])]
 public function show(int $id, ReponseCongeRepository $reponseCongeRepository): Response
 {
@@ -66,6 +87,32 @@ public function show(int $id, ReponseCongeRepository $reponseCongeRepository): R
     return $this->render('reponse_conge/show.html.twig', [
         'reponse_conge' => $reponseConge,
     ]);
+}
+#[Route('/{id}/confirm', name: 'app_reponse_conge_confirm', methods: ['POST'])]
+    public function confirm(Request $request, int $id, EntityManagerInterface $entityManager): Response
+    {
+        $reponseConge = $entityManager->getRepository(ReponseConge::class)->find($id);
+
+        if (!$reponseConge) {
+            throw $this->createNotFoundException('La réponse de congé demandée n\'existe pas');
+        }
+
+        
+
+        // Mettre à jour le statut de la demande de congé associée
+        $conge = $reponseConge->getConge();
+        if ($conge) {
+            // Modifier le statut de la demande de congé
+            $conge->setStatus(true);
+            $entityManager->persist($conge);
+            $entityManager->flush();
+        }
+
+    $entityManager->flush();
+    return $this->redirectToRoute('app_reponse_conge_index', [], Response::HTTP_SEE_OTHER);
+    
+
+    // Redirigez ou affichez un message de confirmation
 }
 
 
@@ -110,14 +157,16 @@ public function delete(ManagerRegistry $managerRegistry, $id, ReponseCongeReposi
     {
         $reponseConges = $reponseCongeRepository->find($id);
         $data = [
-            
-            
+            'LogoSrc'=> $this->imageToBase64($this->getParameter('kernel.project_dir') . '/public/front/assets/img/s-logo.png'),
+           
             'description'         => $reponseConges->getDescription(),
             'DateDebut'         => $reponseConges->getDateDebut(),
             'DateFin' => $reponseConges->getDateFin(),
             'Conge'      => $reponseConges->getConge(),
             
+            
         ];
+        
 
         // Création d'une instance Dompdf
         $options = new Options();
@@ -153,5 +202,6 @@ public function delete(ManagerRegistry $managerRegistry, $id, ReponseCongeReposi
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
         return $base64;
     }
+    
 
 }
