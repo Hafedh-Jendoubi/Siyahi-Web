@@ -183,16 +183,8 @@
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item">
-                                <a href="{{ path('app_conge_indexb') }}" class="menu-link">
-                                    <div data-i18n="Account"> liste des congés</div>
-                                </a>
-                            </li>
-                            
-                        </ul>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="{{ path('app_reponse_conge_index') }}" class="menu-link">
-                                    <div data-i18n="Account"> liste des réponses congé</div>
+                                <a href="{{ path('app_conge_index') }}" class="menu-link">
+                                    <div data-i18n="Account">Ma liste des congés</div>
                                 </a>
                             </li>
                             
@@ -226,6 +218,33 @@
                     </ul>
                 </li>
                 {% endif %}
+                {% if is_granted("ROLE_SUPER_ADMIN") %}
+                <li class="menu-header small text-uppercase">
+                    <span class="menu-header-text">Super-Admin Panel</span>
+                </li>
+                <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="Account Settings">Gestion des congés</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="{{ path('app_conge_indexb') }}" class="menu-link">
+                                    <div data-i18n="Account"> liste des congés</div>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="{{ path('app_reponse_conge_index') }}" class="menu-link">
+                                    <div data-i18n="Account"> liste des réponses congé</div>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                    {% endif %}
             </ul>
         </aside>
         <!-- / Menu -->
