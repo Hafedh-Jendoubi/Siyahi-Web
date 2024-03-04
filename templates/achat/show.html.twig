@@ -1,4 +1,4 @@
-{% extends 'back.html.twig' %}
+{% extends 'back_base.html.twig' %}
 
 {% block title %}Achat{% endblock %}
 
@@ -22,10 +22,6 @@
             <tr>
                 <th>Description</th>
                 <td>{{ achat.Description }}</td>
-            </tr>
-            <tr>
-                <th>Prix</th>
-                <td>{{ achat.Prix }}</td>
             </tr>
         </tbody>
     </table>

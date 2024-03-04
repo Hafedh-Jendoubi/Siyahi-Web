@@ -1,9 +1,30 @@
-{% extends 'back.html.twig' %}
+{% extends 'back_base.html.twig' %}
 
 {% block title %}DemandeAchat index{% endblock %}
 
 {% block body %}
     <h1>DemandeAchat index</h1>
+ {# Barre de recherche #}
+
+
+ <input id="search-input" type="form-control" placeholder="Search...">
+<title>AJAX Search Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#search-input").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("table tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <form action="{{ path('search_demande_achat') }}" method="GET">
+        <input type="text" name="search" placeholder="Recherche par Nom ou Prénom...">
+        <button type="submit">Rechercher</button>
+    </form>
 
     <table class="table">
         <thead>
@@ -35,7 +56,7 @@
                 <td>{{ demande_achat.TypePaiement }}</td>
                 <td>{{ demande_achat.CIN }}</td>
                 <td>{{ demande_achat.Adresse }}</td>
-                <td>{{ demande_achat.User }}</td>
+                <td>{{ demande_achat.User.firstName ~ " " ~ demande_achat.User.lastName}}</td>
                 <td>{{ demande_achat.Achat }}</td>
                
                 <td style="{% if demande_achat.etatdemande == 'en cours de traitement' %}color: yellow;{% elseif demande_achat.etatdemande == 'demande accepter' %}color: green;{% elseif demande_achat.etatdemande == 'demande refu' %}color: red;{% endif %}">
@@ -49,7 +70,6 @@
                 </td>
                 <td>
                     <a href="{{ path('app_demande_achat_show', {'id': demande_achat.id}) }}">show</a>
-                    <a href="{{ path('app_demande_achat_edit', {'id': demande_achat.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

@@ -28,10 +28,6 @@ class Achat
     #[Assert\NotBlank (message:"veuillez saisir la description de l'Achat ")]
     private ?string $Description = null;
 
-    #[ORM\Column]
-    #[Assert\NotBlank (message:"veuillez saisir le prix de l'Achat ")]
-    private ?float $Prix = null;
-
     #[ORM\OneToMany(mappedBy: 'Achat', targetEntity: DemandeAchat::class)]
     private Collection $DemandeAchat;
 
@@ -82,18 +78,6 @@ class Achat
     public function setDescription(string $Description): static
     {
         $this->Description = $Description;
-
-        return $this;
-    }
-
-    public function getPrix(): ?float
-    {
-        return $this->Prix;
-    }
-
-    public function setPrix(float $Prix): static
-    {
-        $this->Prix = $Prix;
 
         return $this;
     }

@@ -22,6 +22,21 @@ class DemandeAchatController extends AbstractController
             'demande_achats' => $demandeAchatRepository->findAll(),
         ]);
     } 
+    #[Route('/demandeachat/search', name: 'app_demande_achat_search', methods: ['GET'])]
+    public function search(Request $request, DemandeAchatRepository $demandeAchatRepository): Response
+    {
+        // Récupération du terme de recherche depuis la requête
+        $searchTerm = $request->query->get('search');
+
+        // Recherche des demandes d'achat correspondant au terme de recherche
+        $demandeAchats = $demandeAchatRepository->findBySearchTerm($searchTerm);
+
+        // Affichage des résultats de recherche
+        return $this->render('demande_achat/search_results.html.twig', [
+            'demande_achats' => $demandeAchats,
+        ]);
+    }
+
 
     #[Route('/{idachat}/new', name: 'app_demande_achat_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager,Achat $idachat): Response

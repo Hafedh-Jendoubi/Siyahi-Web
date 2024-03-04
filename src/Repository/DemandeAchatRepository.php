@@ -20,6 +20,17 @@ class DemandeAchatRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, DemandeAchat::class);
     }
+    public function findBySearchTerm($searchTerm)
+    {
+        return $this->createQueryBuilder('da')
+            ->where('da.Nom LIKE :searchTerm')
+            ->orWhere('da.Prenom LIKE :searchTerm')
+            ->setParameter('searchTerm', '%' . $searchTerm . '%')
+            ->getQuery()
+            ->getResult();
+    }
+}
+
 
 //    /**
 //     * @return DemandeAchat[] Returns an array of DemandeAchat objects
@@ -45,4 +56,4 @@ class DemandeAchatRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-}
+

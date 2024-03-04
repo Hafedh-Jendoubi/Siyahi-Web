@@ -1,0 +1,45 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}Réponses aux Réclamations{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Réponses aux Réclamations</h1>
+
+        {% if reponse_reclamations is not empty %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Description</th>
+                        <th>Date de Création</th>
+                        <th>Auteur</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reponse_reclamation in reponse_reclamations %}
+                        <tr>
+                            <td>{{ reponse_reclamation.id }}</td>
+                            <td>{{ reponse_reclamation.Description }}</td>
+                            <td>{{ reponse_reclamation.dateCreation ? reponse_reclamation.dateCreation|date('Y-m-d') : '' }}</td>
+                            <td>{{ reponse_reclamation.auteur }}</td>
+                            <td>
+                                <a href="{{ path('app_reponse_reclamation_show', {'id': reponse_reclamation.id}) }}" class="btn btn-info btn-sm"><span class="fas fa-eye"></span> Voir</a>
+                                <a href="{{ path('app_reponse_reclamation_edit', {'id': reponse_reclamation.id}) }}" class="btn btn-primary btn-sm"><span class="fas fa-edit"></span> Modifier</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="alert alert-info" role="alert">
+                Aucun enregistrement trouvé.
+            </div>
+        {% endif %}
+
+        <div class="text-center">
+            <a href="{{ path('app_reponse_reclamation_new') }}" class="btn btn-primary"><span class="fas fa-plus"></span> Nouvelle Réponse</a>
+        </div>
+    </div>
+{% endblock %}

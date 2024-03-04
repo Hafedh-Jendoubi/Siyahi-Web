@@ -8,10 +8,6 @@
   margin-top: 12px;
 }
 
-.text-danger {
-  color: red; /* Assurez-vous que la couleur rouge est correctement définie */
-}
-
 .app-brand-logo.demo svg {
   width: 22px;
   height: 38px;

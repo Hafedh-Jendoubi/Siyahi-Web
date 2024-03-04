@@ -26,6 +26,7 @@ class DemandeAchat
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $DateDemande = null;
 
+
     #[ORM\Column(length: 255)]
     #[Assert\Length(min:8)]
     #[Assert\Length(max:12)]

@@ -4,19 +4,37 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 180, unique: true)]
+    private ?string $email = null;
+
+    #[ORM\Column]
+    private array $roles = ["ROLE_USER"];
+
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
     #[ORM\Column(length: 15)]
+    #[Assert\NotBlank(message:"First Name is required.")]
     private ?string $First_Name = null;
 
     #[ORM\Column(length: 20)]
@@ -37,9 +55,6 @@ class User
     #[ORM\Column]
     private ?\DateTimeImmutable $Created_At = null;
 
-    #[ORM\Column(length: 15)]
-    private ?string $Role = null;
-
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: ReponseConge::class)]
     private Collection $reponseConges;
 
@@ -55,19 +70,24 @@ class User
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: ReponseCredit::class)]
     private Collection $reponseCredits;
 
+    #[ORM\OneToMany(mappedBy: 'User', targetEntity: Commande::class)]
+    private Collection $commandes;
+
+    #[ORM\OneToMany(mappedBy: 'User', targetEntity: Achat::class)]
+    private Collection $achats;
+
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: CompteClient::class)]
     private Collection $compteClients;
 
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: Service::class)]
     private Collection $services;
 
-    #[ORM\OneToMany(mappedBy: 'User', targetEntity: DemandeAchat::class)]
-    private Collection $DemandeAchat;
+    #[ORM\Column(length: 255)]
+    private ?string $old_email = null;
 
-    public function __toString()
-    {
-        return $this->Address;
-    }
+    #[ORM\Column(length: 1)]
+    private ?string $activity = null;
+
     public function __construct()
     {
         $this->reponseConges = new ArrayCollection();
@@ -75,16 +95,88 @@ class User
         $this->reponseReclamations = new ArrayCollection();
         $this->credits = new ArrayCollection();
         $this->reponseCredits = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
+        $this->achats = new ArrayCollection();
         $this->compteClients = new ArrayCollection();
         $this->services = new ArrayCollection();
-        $this->Commande = new ArrayCollection();
-        $this->DemandeAchat = new ArrayCollection();
     }
-
-    
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @deprecated since Symfony 5.3, use getUserIdentifier instead
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
     }
 
     public function getFirstName(): ?string
@@ -167,18 +259,6 @@ class User
     public function setCreatedAt(\DateTimeImmutable $Created_At): static
     {
         $this->Created_At = $Created_At;
-
-        return $this;
-    }
-
-    public function getRole(): ?string
-    {
-        return $this->Role;
-    }
-
-    public function setRole(string $Role): static
-    {
-        $this->Role = $Role;
 
         return $this;
     }
@@ -333,7 +413,65 @@ class User
         return $this;
     }
 
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
 
+    public function addCommande(Commande $commande): static
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes->add($commande);
+            $commande->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): static
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getUser() === $this) {
+                $commande->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Achat>
+     */
+    public function getAchats(): Collection
+    {
+        return $this->achats;
+    }
+
+    public function addAchat(Achat $achat): static
+    {
+        if (!$this->achats->contains($achat)) {
+            $this->achats->add($achat);
+            $achat->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAchat(Achat $achat): static
+    {
+        if ($this->achats->removeElement($achat)) {
+            // set the owning side to null (unless already changed)
+            if ($achat->getUser() === $this) {
+                $achat->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 
     /**
      * @return Collection<int, CompteClient>
@@ -396,33 +534,46 @@ class User
     }
 
     /**
-     * @return Collection<int, DemandeAchat>
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @see UserInterface
      */
-    public function getDemandeAchat(): Collection
+    public function getSalt(): ?string
     {
-        return $this->DemandeAchat;
+        return null;
     }
 
-    public function addDemandeAchat(DemandeAchat $demandeAchat): static
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
     {
-        if (!$this->DemandeAchat->contains($demandeAchat)) {
-            $this->DemandeAchat->add($demandeAchat);
-            $demandeAchat->setUser($this);
-        }
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    public function getOldEmail(): ?string
+    {
+        return $this->old_email;
+    }
+
+    public function setOldEmail(string $old_email): static
+    {
+        $this->old_email = $old_email;
 
         return $this;
     }
 
-    public function removeDemandeAchat(DemandeAchat $demandeAchat): static
+    public function getActivity(): ?string
     {
-        if ($this->DemandeAchat->removeElement($demandeAchat)) {
-            // set the owning side to null (unless already changed)
-            if ($demandeAchat->getUser() === $this) {
-                $demandeAchat->setUser(null);
-            }
-        }
+        return $this->activity;
+    }
+
+    public function setActivity(string $activity): static
+    {
+        $this->activity = $activity;
 
         return $this;
     }
-
 }

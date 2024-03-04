@@ -28,7 +28,6 @@ class AchatType extends AbstractType
             ->add('Description', TextareaType::class, [
                 'attr' => ['rows' => 5], // spécifiez le nombre de lignes
             ])
-            ->add('Prix')
         ;
     }
 

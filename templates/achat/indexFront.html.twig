@@ -1,7 +1,7 @@
-{% extends 'front.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
-<h2 style="text-align: center;">Bienvenue sur notre Site web Siyah</h2>
+<h2 style="text-align: center;">Bienvenue sur notre Site web Siyahi</h2>
 
 <br>
 <br>
@@ -43,7 +43,7 @@
                         <img src="{{ asset('uploads/' ~achat.Image)}}" style="width:400px; height:300px; " alt="">
                     </div>
                     <div class="details-container"> <!-- Ajout d'une classe pour les détails -->
-                        <h3>Vous souhaitez acheter une  {{ achat.Type }} </h3   >
+                        <h3>Vous souhaitez acheter une  {{ achat.Type }} ? </h3   >
                         <p><strong style="color:#696969"> {{ achat.Description }}</strong></p>
                         <p><a class="event-details" href="{{ path('app_demande_achat_new',{'idachat':achat.id}) }}" >Plus de détails</a></p>
                     </div>

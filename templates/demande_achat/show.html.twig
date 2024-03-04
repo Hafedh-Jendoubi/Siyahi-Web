@@ -1,4 +1,4 @@
-{% extends 'back.html.twig' %}
+{% extends 'back_base.html.twig' %}
 
 {% block title %}DemandeAchat{% endblock %}
 
@@ -27,6 +27,7 @@
                 <th>NumTel</th>
                 <td>{{ demande_achat.numTel }}</td>
             </tr>
+          
             <tr>
                 <th>TypePaiement</th>
                 <td>{{ demande_achat.TypePaiement }}</td>

@@ -14,23 +14,6 @@ body {
   color: #444444;
 }
 
-.filters {
-  display: flex;
-}
-
-.b-filter {
-  margin-right: 10px; /* Espacement entre les filtres */
-}
-
-.icon {
-  width: 50px; /* Largeur de l'icône */
-  height: 50px; /* Hauteur de l'icône */
-}
-
-.name {
-  display: block; /* Afficher le nom sur une nouvelle ligne */
-}
-
 a {
   color: #106eea;
   text-decoration: none;
