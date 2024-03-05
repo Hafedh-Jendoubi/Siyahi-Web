@@ -139,6 +139,7 @@ public function edit(Request $request, int $id, ReponseCreditRepository $Reponse
     {
         $ReponseCredit = $ReponseCreditRepository->find($id);
         $data = [
+            'LogoSrc'=> $this->imageToBase64($this->getParameter('kernel.project_dir') . '/public/front/assets/img/s-logo.png'),
             'Credit'      => $ReponseCredit->getCredit(),
             'solde_a_payer'      => $ReponseCredit->getSoldeAPayer(),
             'description'         => $ReponseCredit->getDescription(),
@@ -173,5 +174,12 @@ $options = new Options();
                 'Content-Type' => 'application/pdf',
             ]
         );
+}
+private function imageToBase64($path): string
+{
+    $type = pathinfo($path, PATHINFO_EXTENSION);
+    $data = file_get_contents($path);
+    $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+    return $base64;
 }
 }
