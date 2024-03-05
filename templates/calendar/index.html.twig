@@ -1,0 +1,31 @@
+{# calendar/index.html.twig #}
+{% extends 'back_base.html.twig' %}
+
+{% block title %}Calendar{% endblock %}
+
+{% block body %}
+    <h1>Calendar Page</h1>
+
+    <div id="calendar"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                // Configurations du calendrier ici
+                plugins: [ 'dayGrid' ],
+                defaultView: 'dayGridMonth',
+                events: [
+                    {% for reponse_conge in reponse_conges %}
+                        {
+                            title: '{{ reponse_conge.description }}',
+                            start: '{{ reponse_conge.DateDebut|date('Y-m-d') }}',
+                            end: '{{ reponse_conge.DateFin|date('Y-m-d') }}'
+                        },
+                    {% endfor %}
+                ]
+            });
+            calendar.render();
+        });
+    </script>
+{% endblock %}

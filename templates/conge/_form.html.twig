@@ -27,6 +27,11 @@
                         {{ form_errors(form.Description) }}
                     </div>
                     <div class="form-group">
+                        {{ form_label(form.Type_conge, 'Type_conge') }}
+                        {{ form_widget(form.Type_conge, {'attr': {'class': 'form-control', 'placeholder': 'Entrez une description'}}) }}
+                        {{ form_errors(form.Type_conge) }}
+                    </div>
+                    <div class="form-group">
                         {{ form_label(form.Date_Debut, 'Date de début') }}
                         {{ form_widget(form.Date_Debut, {'attr': {'class': 'form-control'}}) }}
                         {{ form_errors(form.Date_Debut) }}
@@ -35,6 +40,10 @@
                         {{ form_label(form.Date_Fin, 'Date de fin') }}
                         {{ form_widget(form.Date_Fin, {'attr': {'class': 'form-control'}}) }}
                         {{ form_errors(form.Date_Fin) }}
+                        <div class="form-group">
+                        {{ form_label(form.Date_demande, 'Date de la demande') }}
+                        {{ form_widget(form.Date_demande, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.Date_demande) }}
                     </div>
                     <div class="form-group">
                         {{ form_label(form.Justification, 'Justification') }}

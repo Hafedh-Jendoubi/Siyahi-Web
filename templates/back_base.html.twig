@@ -81,6 +81,39 @@
                     <span class="menu-header-text">Staff Panel</span>
                 </li>
                     <li class="menu-item">
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="Account Settings">Gestion des credits</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="{{ path('app_credit_indexb') }}" class="menu-link">
+                                    <div data-i18n="Account">Liste des credits</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{ path('app_reponse_credit_index') }}" class="menu-link">
+                                    <div data-i18n="Account">Liste des reponses</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="Account Settings">Gestion des congés</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="{{ path('app_conge_index') }}" class="menu-link">
+                                    <div data-i18n="Account">Ma liste des congés</div>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                    <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-user"></i>
                             <div data-i18n="Account Settings">User Section</div>
@@ -98,6 +131,28 @@
                                     <div data-i18n="Account">Ma liste des Congés </div>
                                 </a>
                             </li>
+                        </ul>
+                        
+                    </li>
+                    <li class="menu-item">
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="Account Settings">Gestion Achat </div>
+                        </a>
+                        <ul class="menu-sub">
+
+                            <li class="menu-item">
+                                <a href="{{ path('app_achat_index') }}" class="menu-link">
+                                    <div data-i18n="Account">Achat</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{ path('app_demande_achat_index')}}" class="menu-link">
+                                    <div data-i18n="Notifications">Demande d'Achat</div>
+                                </a>
+                            </li>
+
                         </ul>
                     </li>
                     <li class="menu-item">
@@ -161,6 +216,20 @@
                 <li class="menu-header small text-uppercase">
                     <span class="menu-header-text">Admin Panel</span>
                 </li>
+                <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="Account Settings">Gestion des congés</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="{{ path('app_conge_index') }}" class="menu-link">
+                                    <div data-i18n="Account">Ma liste des congés</div>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </li>
                 <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons bx bx-user"></i>
