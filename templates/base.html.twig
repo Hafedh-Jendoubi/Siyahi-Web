@@ -17,6 +17,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
     {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
         <!-- Vendor CSS Files -->
         <link href="{{ asset('front/assets/vendor/aos/aos.css') }}" rel="stylesheet">
         <link href="{{ asset('front/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -54,6 +55,46 @@
         <div class="container d-flex align-items-center justify-content-between">
 
             <h1 class="logo"><a href="{{ path('app_staff') }}#hero">Siyahi Bank<span>.</span></a></h1>
+            <div class="tradingview-widget-container__widget"></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+  {
+  "symbols": [
+    {
+      "description": "",
+      "proName": "FX_IDC:TNDEUR"
+    },
+    {
+      "description": "",
+      "proName": "FX_IDC:TNDGBP"
+    },
+    {
+      "description": "",
+      "proName": "FX_IDC:TNDUSD"
+    },
+    {
+      "description": "",
+      "proName": "FX_IDC:TNDBRX"
+    },
+    {
+      "description": "",
+      "proName": "FX_IDC:SAREUR"
+    },
+    {
+      "description": "",
+      "proName": "FX:USDJPY"
+    },
+    {
+      "description": "",
+      "proName": "FX_IDC:DZDUSD"
+    }
+  ],
+  "showSymbolLogo": true,
+  "isTransparent": false,
+  "displayMode": "adaptive",
+  "colorTheme": "light",
+  "locale": "en"
+}
+  </script>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt=""></a>-->
 
@@ -166,6 +207,7 @@
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
     <!-- Vendor JS Files -->
     <script src="{{ asset('front/assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
     <script src="{{ asset('front/assets/vendor/aos/aos.js') }}"></script>

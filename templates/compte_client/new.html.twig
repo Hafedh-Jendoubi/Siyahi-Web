@@ -4,18 +4,42 @@
 
 {% block body %}
     <h1>Créer un nouveau CompteClient</h1>
+    <title>Création du compte</title>
 
     {{ include('compte_client/_form.html.twig') }}
 
     <a class="btn btn-primary d-block mx-auto" style="width:200px;" href="{{ path('app_compte_client_index') }}">Retour à la liste</a>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const form = document.querySelector('form[name="compte_client"]');
-            form.addEventListener('submit', function (event) {
-                event.preventDefault(); // Prevent the default form submission
+    {# Add SweetAlert JavaScript #}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+   <script>
+        document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector('form[name="compte_client"]');
+        const submitButton = form.querySelector('button[type="submit"]');
+        const serviceSelect = form.querySelector('#compte_client_service'); // Use the correct ID
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Check your conditions here
+            const selectedOption = serviceSelect.value;
+            const solde = parseFloat(document.getElementById('compte_client_Solde').value);
+
+            console.log('Service:', selectedOption);
+            console.log('Solde:', solde);
+
+            // Conditions for showing an error
+            if ((selectedOption === '2' && solde <= 10000) || (selectedOption === '4' && solde <= 30000)) {
+                console.log('Showing error message');
+                Swal.fire({
+                    title: 'Erreur!',
+                    text: 'Ce service n\'est pas disponible.',
+                    icon: 'error'
+                });
+            } else {
                 // Use SweetAlert for confirmation
+                console.log('Showing confirmation message');
                 Swal.fire({
                     title: 'Confirmer l\'ajout?',
                     showCancelButton: true,
@@ -24,11 +48,17 @@
                     icon: 'question'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // If user confirms, proceed with form submission
+                        // If the user confirms, proceed with form submission
                         form.submit();
                     }
                 });
-            });
+            }
         });
-    </script>
+    });
+
+</script>
+
+
+
+
 {% endblock %}

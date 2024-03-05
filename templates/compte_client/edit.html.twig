@@ -4,10 +4,11 @@
 
 {% block body %}
     <h1>Edit CompteClient</h1>
+    <title>Modifier Compte</title>
 
     {{ include('compte_client/_form.html.twig', {'button_label': 'Enregistrer'}) }}
 
-    <a class="btn btn-primary d-block mx-auto" style="width:200px;" href="{{ path('app_compte_client_index') }}">Retour à la liste</a>
+    <a class="btn btn-primary d-block mx-auto"  href="{{ path('app_compte_client_index') }}">Retour à la liste</a>
 
     {{ include('compte_client/_delete_form.html.twig') }}
 {% endblock %}

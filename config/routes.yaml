@@ -4,3 +4,7 @@
 app_service_delete:
     path: /service/delete/{id}
     controller: App\Controller\ServiceController::delete
+
+currency_ticker:
+    path: /currency-ticker
+    controller: App\Controller\CurrencyController::index

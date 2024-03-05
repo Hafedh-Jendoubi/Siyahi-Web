@@ -21,30 +21,23 @@ class CompteClientController extends AbstractController
         $sortOrder = $request->query->get('sortOrder', 'asc');
     
         // Adjust the sorting fields based on your entity properties
-        $sortableFields = ['id', 'service', 'rib', 'created_at', 'solde'];
+        $sortableFields = ['id', 'service.name', 'rib', 'createdAt', 'Solde'];
     
         // Validate if the provided sortBy parameter is a valid sortable field
         if (!in_array($sortBy, $sortableFields)) {
-            $sortBy = 'id'; // Default to 'id' if invalid sortBy parameter is provided
+            $sortBy = 'id'; // Default to 'id' if an invalid sortBy parameter is provided
         }
     
-        // Handle special cases for 'created_at', 'solde', and associations
-        $sortParts = explode('.', $sortBy);
-        $sortField = end($sortParts);
-    
-        // Check if it's an association
-        if (count($sortParts) > 1) {
-            $compteClients = $compteClientRepository->findByWithJoin([$sortField => $sortOrder], ['service']);
-        } else {
-            // Handle special cases for 'created_at' and 'solde'
-            if ($sortField === 'created_at') {
-                $compteClients = $compteClientRepository->findBy([], [$sortBy => $sortOrder]);
-            } elseif ($sortField === 'solde') {
-                $compteClients = $compteClientRepository->findBy([], [$sortBy => $sortOrder]);
-            } else {
-                $compteClients = $compteClientRepository->findBy([], [$sortBy => $sortOrder]);
-            }
+        // Handle special cases for 'createdAt' and 'service.name'
+        if ($sortBy === 'createdAt') {
+            $sortBy = 'created_at'; // Assuming the actual field name is 'created_at'
+        } elseif ($sortBy === 'service.name') {
+            $sortBy = 'service.name'; // Adjust based on your actual relationship
+        } elseif ($sortBy === 'solde') {
+            $sortBy = 'solde'; // Explicitly use 'solde' for sorting
         }
+    
+        $compteClients = $compteClientRepository->findBy([], [$sortBy => $sortOrder]);
     
         return $this->render('compte_client/index.html.twig', [
             'compte_clients' => $compteClients,
@@ -52,36 +45,49 @@ class CompteClientController extends AbstractController
             'currentSort' => ['field' => $sortBy, 'order' => $sortOrder],
         ]);
     }
+    
+
+
 
     #[Route('/new', name: 'app_compte_client_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, CompteClientRepository $compteClientRepository): Response
+public function new(Request $request, EntityManagerInterface $entityManager, CompteClientRepository $compteClientRepository): Response
 {
     $compteClient = new CompteClient();
     $form = $this->createForm(CompteClientType::class, $compteClient);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-        // Check if RIB already exists
-        $existingCompteClient = $compteClientRepository->findOneBy(['rib' => $compteClient->getRib()]);
+        // Vérifier le solde en fonction du service choisi
+        $service = $compteClient->getService()->getName();
+        $solde = $compteClient->getSolde();
 
-        if ($existingCompteClient) {
-            // RIB already exists, handle accordingly (e.g., show an error message)
-            // You might want to customize this part based on your needs
-            $this->addFlash('error', 'This RIB already exists.');
+        // Vérifier les conditions pour les services Business et VIP
+        if ($service === 'Business' && $solde <= 10000) {
+            $this->addFlash('error', 'Le service Business nécessite un solde supérieur à 10000.');
+            // Redirect back to the new page
             return $this->redirectToRoute('app_compte_client_new');
+        } elseif ($service === 'VIP' && $solde <= 30000) {
+            $this->addFlash('error', 'Le service VIP nécessite un solde supérieur à 30000.');
+            // Redirect back to the new page
+            return $this->redirectToRoute('app_compte_client_new');
+        } else {
+            // If all conditions are met, persist the entity
+            $entityManager->persist($compteClient);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_compte_client_index', [], Response::HTTP_SEE_OTHER);
         }
-
-        $entityManager->persist($compteClient);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('app_compte_client_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    return $this->renderForm('compte_client/new.html.twig', [
+    // If any validation fails, stay on the same page and ask the user to correct the solde
+    return $this->render('compte_client/new.html.twig', [
         'compte_client' => $compteClient,
-        'form' => $form,
+        'form' => $form->createView(),
     ]);
 }
+
+    
+
 
     #[Route('/{id}', name: 'app_compte_client_show', methods: ['GET'])]
     public function show(CompteClient $compteClient): Response
