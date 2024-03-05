@@ -1,6 +1,4 @@
-{% extends 'base_back.html.twig' %}
-
-{% block title %}ReponseCredit{% endblock %}
+{% extends 'back_base.html.twig' %}
 
 {% block body %}
     <h1>ReponseCredit</h1>
@@ -11,10 +9,12 @@
                 <th>Id</th>
                 <td>{{ reponse_credit.id }}</td>
             </tr>
-             <tr>
+            {% if reponse_credit.credit is not null %}
+            <tr>
                 <th>Credit_Id</th>
                 <td>{{ reponse_credit.credit.id }}</td>
             </tr>
+            {% endif %}
             <tr>
                 <th>Solde_a_payer</th>
                 <td>{{ reponse_credit.soldeAPayer }}</td>

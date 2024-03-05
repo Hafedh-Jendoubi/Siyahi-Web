@@ -1,0 +1,12 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}New Achat{% endblock %}
+
+{% block body %}
+    <h1>Create new Achat</h1>
+    {{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+
+    {{ include('achat/_form.html.twig') }}
+
+    <a href="{{ path('app_achat_index') }}">back to list</a>
+{% endblock %}

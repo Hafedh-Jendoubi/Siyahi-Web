@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ FirstName ~ " " ~ LastName ~ " PDF"}}</title>
+    <style type="text/css">
+        * {
+            font-family: Verdana, Arial, sans-serif;
+        }
+        table{
+            font-size: small;
+        }
+        tfoot tr td{
+            font-weight: bold;
+            font-size: x-small;
+        }
+        td{
+            text-align: center;
+            height: 50px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div>
+    <img src="{{ LogoSrc }}" alt="" width="200" height="200" style="margin-top: 50px;">
+    <img src="{{ ImageSrc }}" alt="" width="150" height="150" style="border-radius: 75px; margin-left: 350px; margin-bottom: 35px;">
+</div>
+<hr>
+<br><br>
+<table width="100%" border="1">
+    <thead style="background-color: lightblue;">
+    <tr>
+        <th>Labels</th>
+        <th>Information</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row">First Name</th>
+        <td>{{ FirstName }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Last Name</th>
+        <td>{{ LastName }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Gender</th>
+        {% if Gender == "M" %}
+            <td>Male</td>
+        {% else %}
+            <td>Female</td>
+        {% endif %}
+    </tr>
+    <tr>
+        <th scope="row">Phone Number</th>
+        <td>{{ PhoneNumber }}</td>
+    </tr>
+    <tr>
+        <th scope="row">CIN</th>
+        <td>{{ CIN }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Address</th>
+        <td>{{ Address }}</td>
+    </tr>
+    <tr>
+        <th scope="row">Email</th>
+        <td>{{ Email }}</td>
+    </tr>
+    </tbody>
+</table>
+<br><br><hr>
+<div class="container text-center">
+    <div class="row">
+        <div class="col">
+            <img src="{{ QR }}" style="margin-top: 50px; margin-left: 580px;"/>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Demande de Credit{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -46,11 +45,19 @@
                         {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Entrez une description'}}) }}
                         {{ form_errors(form.description) }}
                     </div>
+
                     <div class="form-group">
-                        {{ form_label(form.User, 'Utilisateur') }}
-                        {{ form_widget(form.User, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.User) }}
+                        {{ form_label(form.Contrat, 'Garantie') }}
+                        {{ form_widget(form.Contrat, {'attr': {'class': 'form-control', 'placeholder': 'Entrez (un contrat de travaille, hypothéque) favorisant votre demande '}}) }}
+                        {{ form_errors(form.Contrat) }}
                     </div>
+                    
+                  <div class="form-group">
+							{{ form_label(form.captcha, 'Validateur') }}
+                            {{form_widget(form.captcha, {'attr': {'class': 'form-control', 'placeholder': '  Pour garantir la sécurité, veuillez recopier le mot affiché ci-dessus'}}) }}										
+                            {{ form_errors(form.captcha) }}
+					</div>
+                    <br>
                     <div class="form-group text-center">
                         {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
                     </div>

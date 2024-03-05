@@ -45,6 +45,9 @@ class Credit
     #[ORM\ManyToOne(inversedBy: 'credits')]
     private ?User $User = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $Contrat = null;
+
     public function __construct()
     {
         $this->reponseCredits = new ArrayCollection();
@@ -141,6 +144,18 @@ class Credit
     public function setUser(?User $User): static
     {
         $this->User = $User;
+
+        return $this;
+    }
+
+    public function getContrat(): ?string
+    {
+        return $this->Contrat;
+    }
+
+    public function setContrat(?string $Contrat): static
+    {
+        $this->Contrat = $Contrat;
 
         return $this;
     }

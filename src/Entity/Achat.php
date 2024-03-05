@@ -3,8 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\AchatRepository;
-use Doctrine\DBAL\Types\Types;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AchatRepository::class)]
 class Achat
@@ -14,67 +16,98 @@ class Achat
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?float $Montant = null;
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank (message:"veuillez saisir l'image de l'Achat ")]
+    private $Image = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $Date = null;
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank (message:"veuillez saisir le type de l'Achat ")]
+    private ?string $Type = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Commande $Commande = null;
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank (message:"veuillez saisir la description de l'Achat ")]
+    private ?string $Description = null;
 
-    #[ORM\ManyToOne(inversedBy: 'achats')]
-    private ?User $User = null;
+    #[ORM\OneToMany(mappedBy: 'Achat', targetEntity: DemandeAchat::class)]
+    private Collection $DemandeAchat;
+
+    public function __construct()
+    {
+        $this->DemandeAchat = new ArrayCollection();
+    }
+
+    public function __ToString() {
+        return $this->Type;
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getMontant(): ?float
+    public function getImage()
     {
-        return $this->Montant;
+        return $this->Image;
     }
 
-    public function setMontant(float $Montant): static
+    public function setImage($Image)
     {
-        $this->Montant = $Montant;
+        $this->Image = $Image;
 
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getType(): ?string
     {
-        return $this->Date;
+        return $this->Type;
     }
 
-    public function setDate(\DateTimeInterface $Date): static
+    public function setType(string $Type): static
     {
-        $this->Date = $Date;
+        $this->Type = $Type;
 
         return $this;
     }
 
-    public function getCommande(): ?Commande
+
+    public function getDescription(): ?string
     {
-        return $this->Commande;
+        return $this->Description;
     }
 
-    public function setCommande(?Commande $Commande): static
+    public function setDescription(string $Description): static
     {
-        $this->Commande = $Commande;
+        $this->Description = $Description;
 
         return $this;
     }
 
-    public function getUser(): ?User
+    /**
+     * @return Collection<int, DemandeAchat>
+     */
+    public function getDemandeAchat(): Collection
     {
-        return $this->User;
+        return $this->DemandeAchat;
     }
 
-    public function setUser(?User $User): static
+    public function addDemandeAchat(DemandeAchat $demandeAchat): static
     {
-        $this->User = $User;
+        if (!$this->DemandeAchat->contains($demandeAchat)) {
+            $this->DemandeAchat->add($demandeAchat);
+            $demandeAchat->setAchat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemandeAchat(DemandeAchat $demandeAchat): static
+    {
+        if ($this->DemandeAchat->removeElement($demandeAchat)) {
+            // set the owning side to null (unless already changed)
+            if ($demandeAchat->getAchat() === $this) {
+                $demandeAchat->setAchat(null);
+            }
+        }
 
         return $this;
     }
