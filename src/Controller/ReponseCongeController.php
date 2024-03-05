@@ -157,7 +157,7 @@ public function delete(ManagerRegistry $managerRegistry, $id, ReponseCongeReposi
     {
         $reponseConges = $reponseCongeRepository->find($id);
         $data = [
-            'LogoSrc'=> $this->imageToBase64($this->getParameter('kernel.project_dir') . '/public/front/assets/img/s-logo.png'),
+           
            
             'description'         => $reponseConges->getDescription(),
             'DateDebut'         => $reponseConges->getDateDebut(),
