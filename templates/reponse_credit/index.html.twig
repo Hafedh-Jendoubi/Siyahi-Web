@@ -16,6 +16,18 @@
                 <th>actions</th>
             </tr>
         </thead>
+        {%  for message in app.flashes('AddReponseCredit')  %}
+                            <div class="alert alert-success" role="alert">
+                                {{message}}                               </div>
+                        {% endfor %}
+                        {%  for message in app.flashes('updateReponseCredit')  %}
+                            <div class="alert alert-primary" role="alert">
+                                {{message}}                               </div>
+                        {% endfor %}
+                        {%  for message in app.flashes('deleteReponseCredit')  %}
+                            <div class="alert alert-danger" role="alert">
+                                {{message}}                               </div>
+                        {% endfor %}
         <tbody>
         {% for reponse_credit in reponse_credits %}
             <tr>
@@ -31,6 +43,8 @@
                     <a class="btn btn-primary" style="width: 110px; " href="{{ path('app_reponse_credit_edit', {'id': reponse_credit.id}) }}">Modifier</a>
                     <br>
                     {{ include('reponse_credit/_delete_form.html.twig') }}
+                    
+                    <a class="btn btn-outline-secondary" href="{{ path('app_reponse_credit_pdf', {'id': reponse_credit.id}) }}">Télécharger en PDF</a>
                 </td>
             </tr>
         {% else %}
@@ -40,6 +54,21 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="pagination">
+        {{ knp_pagination_render(reponse_credits, 'credit/my_custom_template.html.twig') }}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#search-input").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("table tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
 
     <a  class="btn btn-success" style="width: 110px; " href="{{ path('app_reponse_credit_new') }}">Créer</a>
 {% endblock %}

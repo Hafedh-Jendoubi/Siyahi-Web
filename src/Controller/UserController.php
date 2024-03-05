@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\ReponseConge;
 use App\Entity\User;
 use App\Form\EditUserType;
 use App\Form\SearchUserType;
@@ -10,8 +9,6 @@ use App\Form\UpdateUserType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use phpDocumentor\Reflection\DocBlock\Tags\Method;
-use phpDocumentor\Reflection\PseudoTypes\LowercaseString;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +17,6 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\String\ByteString;
 
 class UserController extends AbstractController
 {
@@ -79,9 +75,9 @@ class UserController extends AbstractController
             $hashedPassword = $passwordHasher->hashPassword($user, $pass);
             $user->setPassword($hashedPassword);
             if($user->getGender() == "M")
-                $user->setImage("http://localhost/img/7f9183c93cb4803aefc8262447c4efc9.png");
+                $user->setImage("7f9183c93cb4803aefc8262447c4efc9.png");
             else
-                $user->setImage("http://localhost/img/b56ef85920323ead69e5f0d1ca13a0cd.png");
+                $user->setImage("b56ef85920323ead69e5f0d1ca13a0cd.png");
             $user->setActivity('T');
             $email = (new TemplatedEmail())
                 ->from(new Address('no-reply@siyahi.tn'))
@@ -129,7 +125,7 @@ class UserController extends AbstractController
                 );
                 dump($image);
 
-                $user->setImage('http://localhost/img/' . $fichier);
+                $user->setImage($fichier);
             }
             $em->flush();
             return $this->redirectToRoute("admin_users");
@@ -156,7 +152,7 @@ class UserController extends AbstractController
                         $fichier
                     );
                     dump($image);
-                    $user->setImage('http://localhost/img/' . $fichier);
+                    $user->setImage($fichier);
                 }
                 $encodedPassword = $passwordHasher->hashPassword(
                     $user,
@@ -178,7 +174,7 @@ class UserController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getUser(); //$user has the logged in user
         $user_details = $repository->findOneByEmail($user->getUserIdentifier()); //$user_details got the details of the logged in user
-        if ($user_details[0]->getRoles()[0] != "ROLE_ADMIN") {
+        if ($user_details[0]->getRoles()[0] != "ROLE_ADMIN" && $user_details[0]->getRoles()[0] != "ROLE_SUPER_ADMIN") {
             if ($id == $user_details[0]->getId()) //It makes sure that you can't have access to other users account details
                 return $this->renderForm("user/infoUser.html.twig", array('user' => $user));
             else
@@ -209,5 +205,13 @@ class UserController extends AbstractController
         $em->flush();
 
         return $this->redirectToRoute("admin_users");
+    }
+
+    #[Route('/admin/chart', name: 'users_chart')]
+    public function userStatistics(UserRepository $repository): Response
+    {
+
+
+        return $this->render('user/chart.html.twig');
     }
 }

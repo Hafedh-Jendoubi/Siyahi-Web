@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1 >Credit Statistics</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            {{ include('credit/statistics.html.twig') }}
+        </div>
+        <div class="col-md-6">
+            <div style="max-width: 800px;">
+                <canvas id="creditChart" width="300" height="200"></canvas>
+            </div>
+            <canvas id="creditChart"></canvas>
+            {% block javascripts %}
+                {{ parent() }}
+
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var creditsByYear = {{ creditsByYear|json_encode|raw }};
+                        var labels = Object.keys(creditsByYear);
+                        var data = Object.values(creditsByYear);
+                        
+                        // Calculer la somme totale des crédits
+                        var totalCredits = data.reduce((a, b) => a + b, 0);
+                        
+                        // Convertir les crédits en pourcentage
+                        var dataInPercentage = data.map(credit => (credit / totalCredits) * 100);
+
+                        var ctx = document.getElementById('creditChart').getContext('2d');
+                        var chart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: '% de Crédits par année',
+                                    data: dataInPercentage,  // Utiliser les données en pourcentage
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.8)',
+                                        'rgba(54, 162, 235, 0.8)',
+                                        'rgba(255, 206, 86, 0.8)',
+                                        // Ajoutez plus de couleurs ici si vous avez plus d'années
+                                    ],
+                                }],
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        max: 100,  // Définir une valeur maximale de l'axe Y à 100
+                                        ticks: {
+                                            callback: function(value) {
+                                                return value + '%';  // Ajouter le symbole de pourcentage
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+            <a href="{{ path('app_credit_indexb') }}">retourner à la list</a>
+
+  {% endblock %}
+{% endblock %}
+
