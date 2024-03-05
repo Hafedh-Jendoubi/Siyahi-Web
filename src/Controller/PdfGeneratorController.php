@@ -21,7 +21,7 @@ class PdfGeneratorController extends AbstractController
     {
         $user = $repository->find($id);
         $writer = new PngWriter();
-        $qrCode = QrCode::create('http://192.168.1.16:8000/account/' . $id)
+        $qrCode = QrCode::create('http://192.168.1.18:8000/account/' . $id)
             ->setEncoding(new Encoding('UTF-8'))
             ->setSize(120)
             ->setMargin(0)
