@@ -25,7 +25,8 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Swift_Mailer;
 use Swift_Message;
-
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 
 
@@ -61,7 +62,7 @@ class ReponseCreditController extends AbstractController
 
     
             $accountSid = 'ACd4df0fc05c27caa57a1852fe00965381';
-            $authToken = 'dcf6eaf3135478e6b3d141daa2771e23';
+            $authToken = '6b5eb306fd16fd7fdc62557327684a2d';
             $client = new Client($accountSid, $authToken);
             $client->messages->create('+21658405717', // replace with admin's phone number // $message = $client->messages->create('+' . $form->get('tel')->getData(), // replace with admin's phone number
 
@@ -101,7 +102,7 @@ public function edit(Request $request, int $id, ReponseCreditRepository $Reponse
     $ReponseCredit= $ReponseCreditRepository->find($id);
 
     if (!$ReponseCredit) {
-        throw $this->createNotFoundException('Le congé demandé n\'existe pas');
+        throw $this->createNotFoundException('Le credit demandé n\'existe pas');
     }
 
     $form = $this->createForm(ReponseCredit1Type::class, $ReponseCredit);
@@ -133,4 +134,44 @@ public function edit(Request $request, int $id, ReponseCreditRepository $Reponse
         return $this->redirectToRoute('app_reponse_credit_index');
     }
 
+    #[Route('/pdf/{id}', name: 'app_reponse_credit_pdf')]
+    public function generatePdf( int $id,ReponseCreditRepository $ReponseCreditRepository): Response
+    {
+        $ReponseCredit = $ReponseCreditRepository->find($id);
+        $data = [
+            'Credit'      => $ReponseCredit->getCredit(),
+            'solde_a_payer'      => $ReponseCredit->getSoldeAPayer(),
+            'description'         => $ReponseCredit->getDescription(),
+            'date_debutPaiement'         => $ReponseCredit->getDateDebutPaiement(),
+            'nbr_moisPaiement' => $ReponseCredit->getNbrMoisPaiement(),
+            
+            
+        ];
+
+$options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isRemoteEnabled', true);
+        $dompdf = new Dompdf($options);
+
+        // Construction du contenu HTML du PDF
+        $html =  $this->renderView('reponse_credit/pdf.html.twig', $data);
+
+        // Chargement du contenu HTML dans Dompdf
+        $dompdf->loadHtml($html);
+
+        // Réglage du format du papier et du style (optionnel)
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Rendu du PDF
+        $dompdf->render();
+
+        // Envoi du PDF en réponse
+        return new Response(
+            $dompdf->output(),
+            Response::HTTP_OK,
+            [
+                'Content-Type' => 'application/pdf',
+            ]
+        );
+}
 }
