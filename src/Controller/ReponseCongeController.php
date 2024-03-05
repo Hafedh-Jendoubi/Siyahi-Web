@@ -195,31 +195,26 @@ public function delete(ManagerRegistry $managerRegistry, $id, ReponseCongeReposi
             ]
         );
     }
-    private function imageToBase64($path): string
-    {
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);
-        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-        return $base64;
+    
+    #[Route('/calendar1', name: 'calendar')]
+public function calendar(ManagerRegistry $doctrine): Response
+{
+    $evenements = $doctrine->getRepository(ReponseConge::class)->findAll();
+    $rdvs = [];
+
+    foreach ($evenements as $evenement) {
+        $rdvs[] = [
+            'id'          => $evenement->getId(),
+            'title'       => $evenement->getDescription(), // Utiliser la description comme titre de l'événement
+            'description' => 'Du ' . $evenement->getDateDebut()->format('Y-m-d') . ' au ' . $evenement->getDateFin()->format('Y-m-d'), // Description affichant la durée de congé
+            'start'       => $evenement->getDateDebut()->format('Y-m-d'), // Utiliser la date de début
+            'end'         => $evenement->getDateFin()->modify('+1 day')->format('Y-m-d'), // Utiliser la date de fin (+1 jour pour inclure la journée de fin)
+        ];
     }
-    #[Route('/calendar1', name: 'calendar1')]
-    public function calendar(ManagerRegistry $doctrine): Response
-    {
-        $evenements = $doctrine->getRepository(ReponseConge::class)->findAll();
-        $rdvs = [];
 
-        foreach ($evenements as $evenement) {
-            $rdvs[] = [
-                'id'          => $evenement->getId(),
-                'title'       => $evenement->getConge(),
-                'description' => $evenement->getDescription(),
-                'start'       => $evenement->getDateDebut()->format('Y-m-d H:i:s'), // Adjust the format if needed
-                'end'         => $evenement->getDateFin()->format('Y-m-d H:i:s'),   // Adjust the format if needed
-            ];
-        }
+    $data = json_encode($rdvs);
 
-        $data = json_encode($rdvs);
+    return $this->render('reponse_conge/calendar.html.twig', compact('data'));
+}
 
-        return $this->render('reponse_conge\calendar.html.twig', compact('data'));
-    }
 }

@@ -36,6 +36,26 @@
             });
         });
     </script>
+    <div id="google_translate_element"></div>
+<script type="text/javascript">
+    function translateToFrench() {
+        var el = document.getElementById("google_translate_element").querySelector(".goog-te-combo");
+        el.value = "fr";
+        el.dispatchEvent(new Event('change'));
+    }
+
+    function translateToEnglish() {
+        var el = document.getElementById("google_translate_element").querySelector(".goog-te-combo");
+        el.value = "en";
+        el.dispatchEvent(new Event('change'));
+    }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'fr', includedLanguages: 'en', autoDisplay: false}, 'google_translate_element');
+    }
+</script>
     <h1><center>Liste des demandes de congé</center></h1>
 
     <table class="table">
