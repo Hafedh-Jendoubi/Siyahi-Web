@@ -75,7 +75,19 @@
             </tr>
         {% endfor %}
         </tbody>
+
     </table>
+    <div class="pagination">
+        {{ knp_pagination_render(conges, 'conge/my_custom_template.html.twig') }}
+    </div>
+    
+    <div class="d-flex justify-content-between">
+    
+        
+        <a href="{{ path('app_conge_indexb', {'sortBy': 'date'}) }}" class="btn btn-secondary">Tri par date</a>
+    
+</div>
+
 
     
 {% endblock %}

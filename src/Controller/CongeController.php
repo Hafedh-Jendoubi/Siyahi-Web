@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security as CoreSecurity;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/conge')]
 class CongeController extends AbstractController
@@ -21,24 +22,42 @@ class CongeController extends AbstractController
 
      
     #[Route('/', name: 'app_conge_index', methods: ['GET'])]
-    public function index(CongeRepository $congeRepository,CoreSecurity $security): Response
+    public function index(Request $request, CoreSecurity $security,  CongeRepository $reponseCongeRepository, PaginatorInterface $paginator): Response
     {
         $user = $security->getUser();
-
-       
-        
+        $pagination = $paginator->paginate(
+            $reponseCongeRepository->findBy(['User' => $user]),
+            $request->query->getInt('page', 1),
+            2
+        );
         return $this->render('conge/index.html.twig', [
-            'conges' => $congeRepository->findBy(['User'=>$user]),
+            'conges' => $pagination,
         ]);
     }
     #[Route('/i', name: 'app_conge_indexb', methods: ['GET'])]
-    public function index1(CongeRepository $congeRepository): Response
+    public function index1(CongeRepository $congeRepository,Request $request ,PaginatorInterface $paginator): Response
     {
+        $sortBy = $request->query->get('sortBy');
+        if ($sortBy === 'date') {
+            $pagination = $paginator->paginate(
+                $congeRepository->findSortedByDate(),
+                $request->query->getInt('page', 1),
+                2
+            );
         
-        return $this->render('conge/indexback.html.twig', [
-            'conges' => $congeRepository->findAll(),
-        ]);
+    } else {
+        $pagination = $paginator->paginate(
+            $congeRepository->findAll(),
+            $request->query->getInt('page', 1),
+            2
+        );
     }
+        return $this->render('conge/indexback.html.twig', [
+            
+            'conges' => $pagination,
+        ]);
+    
+}
 
     #[Route('/new', name: 'app_conge_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager,CoreSecurity $security): Response

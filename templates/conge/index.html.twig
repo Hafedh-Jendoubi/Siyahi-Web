@@ -78,6 +78,9 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="pagination">
+        {{ knp_pagination_render(conges, 'conge/my_custom_template.html.twig') }}
+    </div>
 
     <a  class="btn btn-success" style="width: 110px; " href="{{ path('app_conge_new') }}">ajouter</a>
 {% endblock %}

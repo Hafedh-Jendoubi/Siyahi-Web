@@ -202,6 +202,24 @@ public function delete(ManagerRegistry $managerRegistry, $id, ReponseCongeReposi
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
         return $base64;
     }
-    
+    #[Route('/calendar1', name: 'calendar1')]
+    public function calendar(ManagerRegistry $doctrine): Response
+    {
+        $evenements = $doctrine->getRepository(ReponseConge::class)->findAll();
+        $rdvs = [];
 
+        foreach ($evenements as $evenement) {
+            $rdvs[] = [
+                'id'          => $evenement->getId(),
+                'title'       => $evenement->getConge(),
+                'description' => $evenement->getDescription(),
+                'start'       => $evenement->getDateDebut()->format('Y-m-d H:i:s'), // Adjust the format if needed
+                'end'         => $evenement->getDateFin()->format('Y-m-d H:i:s'),   // Adjust the format if needed
+            ];
+        }
+
+        $data = json_encode($rdvs);
+
+        return $this->render('reponse_conge\calendar.html.twig', compact('data'));
+    }
 }
