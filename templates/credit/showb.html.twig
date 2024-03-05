@@ -44,7 +44,8 @@
     </table>
         <a href="{{ path('app_credit_indexb') }}">retourner à la list</a>
             <br>
-
-    <a  class="btn btn-success" style="width: 110px; " href="{{ path('app_reponse_credit_new') }}">Traiter</a>
+        {% if credit.reponseCredits is empty %}
+            <a  class="btn btn-success" style="width: 110px; " href="{{ path('app_reponse_credit_new') }}">Traiter</a>
+        {% endif %}
 
 {% endblock %}
