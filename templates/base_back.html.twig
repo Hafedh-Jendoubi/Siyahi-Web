@@ -6,7 +6,7 @@
         data-theme="theme-default"
         data-assets-path="../assets/"
         data-template="vertical-menu-template-free"
->
+
 <head>
     <meta charset="utf-8" />
     <meta
@@ -30,7 +30,7 @@
             href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
             rel="stylesheet"
     />
-
+{% block stylesheets %}
     <!-- Icons. Uncomment required icon fonts -->
     <link rel="stylesheet" href="{{ asset('back/assets/vendor/fonts/boxicons.css') }}" />
 
@@ -44,7 +44,7 @@
     <link rel="stylesheet" href="{{ asset('back/assets/vendor/libs/apex-charts/apex-charts.css') }}" />
 
     <!-- Page CSS -->
-
+ {% endblock %}
     <!-- Helpers -->
     <script src="{{ asset('back/assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('back/assets/js/config.js') }}"></script>
@@ -56,8 +56,8 @@
     <div class="layout-container">
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
             <div class="app-brand demo">
-                <a href="{{ path('app_home') }}" class="app-brand-link">
-                    <span class="app-brand-text demo menu-text fw-bolder ms-2"> Siyahi</span>
+                
+                    <span class="app-brand-text demo menu-text fw-bolder ms-2">Siyahi</span>
                 </a>
 
                 <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -70,156 +70,40 @@
             <ul class="menu-inner py-1">
                 <!-- Dashboard -->
                 <li class="menu-item">
-                    <a href="{{ path('app_home') }}" class="menu-link">
+                    
                         <i class="menu-icon tf-icons bx bx-home-circle"></i>
                         <div data-i18n="Analytics">Dashboard</div>
                     </a>
                 </li>
 
-                {% if is_granted("ROLE_STAFF") %}
                 <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">Staff Panel</span>
-                </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-user"></i>
-                            <div data-i18n="Account Settings">User Section</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="{{ path('addUser') }}" class="menu-link">
-                                    <div data-i18n="Account">Add New User</div>
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="{{ path('app_conge_index') }}"class="menu-link">
-                                    <div data-i18n="Account">Ma liste des Congés </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-credit-card"></i>
-                            <div data-i18n="Account Settings">Gestion des credits</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="{{ path('app_credit_indexb') }}" class="menu-link">
-                                    <div data-i18n="Account">Liste des credits</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="{{ path('app_reponse_credit_index') }}" class="menu-link">
-                                    <div data-i18n="Account">Liste des reponses</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-purchase-tag"></i>
-                            <div data-i18n="Account Settings">Gestion Achat </div>
-                        </a>
-                        <ul class="menu-sub">
-
-                            <li class="menu-item">
-                                <a href="{{ path('app_achat_index') }}" class="menu-link">
-                                    <div data-i18n="Account">Achat</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="{{ path('app_demande_achat_index')}}" class="menu-link">
-                                    <div data-i18n="Notifications">Demande d'Achat</div>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon bx bx-message-rounded-error"></i>
-                            <div data-i18n="Account Settings">Reclamation Section</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="{{ path('app_reclamation_index') }}" class="menu-link">
-                                    <div data-i18n="Account">List Reclamation</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="{{ path('app_reponse_reclamation_index') }}" class="menu-link">
-                                    <div data-i18n="Notifications">repondre Reclamation</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                {% endif %}
-                {% if is_granted("ROLE_ADMIN") %}
-                <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">Admin Panel</span>
+                    <span class="menu-header-text">Pages</span>
                 </li>
                 <li class="menu-item">
+                    <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-user"></i>
-                        <div data-i18n="Account Settings">User Section</div>
+                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                        <div data-i18n="Account Settings">Gestion des credits</div>
                     </a>
                     <ul class="menu-sub">
                         <li class="menu-item">
-                            <a href="{{ path('admin_users') }}" class="menu-link">
-                                <div data-i18n="Account">Users List</div>
+                            <a href="{{ path('app_credit_indexb') }}" class="menu-link">
+                                <div data-i18n="Account">Liste des credits</div>
                             </a>
                         </li>
-                    </ul>
-                    <ul class="menu-sub">
                         <li class="menu-item">
-                            <a href="{{ path('users_chart') }}" class="menu-link">
-                                <div data-i18n="Account">Users Chart</div>
+                            <a href="{{ path('app_reponse_credit_index') }}" class="menu-link">
+                                <div data-i18n="Account">Liste des reponses</div>
                             </a>
                         </li>
-                    </ul>
-                </li>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bxs-widget"></i>
-                        <div data-i18n="Account Settings">Service Section</div>
-                    </a>
-                    <ul class="menu-sub">
                         <li class="menu-item">
                             <a href="#" class="menu-link">
-                                <div data-i18n="Account">Services List</div>
+                                <div data-i18n="Notifications">Notifications</div>
                             </a>
                         </li>
+                      
                     </ul>
                 </li>
-                {% endif %}
-                {% if is_granted("ROLE_SUPER_ADMIN") %}
-                    <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text">Super Admin Panel</span>
-                    </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-user"></i>
-                            <div data-i18n="Account Settings">User Section</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="{{ path('app_conge_indexb') }}"class="menu-link">
-                                    <div data-i18n="Account">La liste des Congés </div>
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="{{ path('app_reponse_conge_index') }}"class="menu-link">
-                                    <div data-i18n="Account">La liste des Réponses Congé </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                {% endif %}
             </ul>
         </aside>
         <!-- / Menu -->
@@ -240,19 +124,17 @@
 
                 <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
                     <!-- Search -->
-                        <input id="search-input" class="form-control border-0 shadow-none" type="form-control" placeholder="Search...">
-                           <title>AJAX Search Example</title>
-                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                            <script>
-                                $(document).ready(function() {
-                                    $("#search-input").on("keyup", function() {
-                                        var value = $(this).val().toLowerCase();
-                                        $("table tr").filter(function() {
-                                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                                        });
-                                    });
-                                });
-                            </script>   
+                    <div class="navbar-nav align-items-center">
+                        <div class="nav-item d-flex align-items-center">
+                            <i class="bx bx-search fs-4 lh-0"></i>
+                            <input
+                                    type="text"
+                                    class="form-control border-0 shadow-none"
+                                    placeholder="Search..."
+                                    aria-label="Search..."
+                            />
+                        </div>
+                    </div>
                     <!-- /Search -->
 
                     <ul class="navbar-nav flex-row align-items-center ms-auto">
@@ -260,7 +142,7 @@
                         <li class="nav-item lh-1 me-3">
                             <a
                                     class="github-button"
-                                    href=""
+                                    href="https://github.com/themeselection/sneat-html-admin-template-free"
                                     data-icon="octicon-star"
                                     data-size="large"
                                     data-show-count="true"
@@ -273,7 +155,7 @@
                         <li class="nav-item navbar-dropdown dropdown-user dropdown">
                             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                 <div class="avatar avatar-online">
-                                    <img src="{{ asset('front/assets/img/team/hafedh.jpg') }}" alt class="w-px-40 h-auto rounded-circle" />
+                                    <img src="{{ asset('front/assets/img/team/ahmed.jpg') }}" alt class="w-px-40 h-auto rounded-circle" />
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
@@ -282,11 +164,11 @@
                                         <div class="d-flex">
                                             <div class="flex-shrink-0 me-3">
                                                 <div class="avatar avatar-online">
-                                                    <img src="{{ asset('front/assets/img/team/hafedh.jpg') }}" alt class="w-px-40 h-auto rounded-circle" />
+                                                    <img src="{{ asset('front/assets/img/team/ahmed.jpg') }}" alt class="w-px-40 h-auto rounded-circle" />
                                                 </div>
                                             </div>
                                             <div class="flex-grow-1">
-                                                <span class="fw-semibold d-block">Jendoubi Hafedh</span>
+                                                <span class="fw-semibold d-block">Bettaieb Ahmed</span>
                                                 <small class="text-muted">Admin</small>
                                             </div>
                                         </div>
@@ -311,7 +193,7 @@
                                     <div class="dropdown-divider"></div>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ path('app_user') }}">
+                                    
                                         <i class="bx bx-power-off me-2"></i>
                                         <span class="align-middle">Log Out</span>
                                     </a>

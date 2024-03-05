@@ -1,0 +1,33 @@
+{% block body %}
+
+    <div id="chart" style="width: 500px; height: 300px;"></div>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Date');
+            data.addColumn('number', 'Count');
+            data.addRows([
+                {% for statistic in statistics %}
+                    ['{{ statistic.date.format("Y-m-d") }}', {{ statistic.count }}],
+                {% endfor %}
+            ]);
+
+            var options = {
+                title: 'Nombre de credits par date',
+                width: 800,
+                height: 500,
+                legend: { position: 'none' },
+                hAxis: { title: 'Date' },
+                vAxis: { title: 'Count' }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('chart'));
+            chart.draw(data, options);
+        }
+    </script>
+{% endblock %}

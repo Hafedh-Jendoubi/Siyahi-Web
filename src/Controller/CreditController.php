@@ -12,129 +12,199 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security as CoreSecurity;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/credit')]
 class CreditController extends AbstractController
 {
     #[Route('/', name: 'app_credit_index', methods: ['GET'])]
-    public function index(CreditRepository $creditRepository,CoreSecurity $security): Response
+    public function index(Request $request, CreditRepository $creditRepository, CoreSecurity $security, PaginatorInterface $paginator): Response
     {
         $user = $security->getUser();
+        $pagination = $paginator->paginate(
+            $creditRepository->findBy(['User' => $user]),
+            $request->query->getInt('page', 1),
+            3
+        );
 
         return $this->render('credit/index.html.twig', [
-            'credits' => $creditRepository->findBy(['User'=>$user]),
+            'credits' => $pagination,
         ]);
     }
+    
     #[Route('/b', name: 'app_credit_indexb', methods: ['GET'])]
-    public function indexb(CreditRepository $creditRepository): Response
-    {
-        return $this->render('credit/indexb.html.twig', [
-            'credits' => $creditRepository->findAll(),
-        ]);
+    public function indexb(Request $request, CreditRepository $creditRepository, PaginatorInterface $paginator): Response
+{
+    $sortBy = $request->query->get('sortBy');
+    $minSolde = $request->query->get('minSolde');
+    $maxSolde = $request->query->get('maxSolde');
+
+    // Vérifiez si les valeurs minSolde et maxSolde sont définies
+    if ($minSolde !== null && $maxSolde !== null) {
+        $pagination = $paginator->paginate(
+            $creditRepository->findByPriceRange($minSolde, $maxSolde),
+            $request->query->getInt('page', 1),
+            4
+        );
+    } else {
+        // Si les valeurs minSolde et maxSolde ne sont pas définies, effectuez le tri en fonction de la valeur de $sortBy
+        if ($sortBy === 'montant') {
+            $pagination = $paginator->paginate(
+                $creditRepository->findSortedByMontant(),
+                $request->query->getInt('page', 1),
+                4
+            );
+        } elseif ($sortBy === 'date') {
+            $pagination = $paginator->paginate(
+                $creditRepository->findSortedByDate(),
+                $request->query->getInt('page', 1),
+                4
+            );
+        } else {
+            $pagination = $paginator->paginate(
+                $creditRepository->findAll(),
+                $request->query->getInt('page', 1),
+                4
+            );
+        }
     }
 
+    return $this->render('credit/indexb.html.twig', [
+        'credits' => $pagination,
+    ]);
+}
+
+
+#[Route('/{id}', name: 'app_credit_show', methods: ['GET'], requirements: ['id' => '\d+'])]
+public function show(int $id, CreditRepository $creditRepository): Response
+{
+    $credit = $creditRepository->find($id);
+   
+    return $this->render('credit/show.html.twig', [
+        'credit' => $credit,
+    ]);
+}
+
+   
+    #[Route('b/{id}', name: 'app_credit_showb', methods: ['GET'])]
+    public function showb(int $id, CreditRepository $creditRepository): Response
+    {
+        $credit = $creditRepository->find($id);
+
+        if (!$credit) {
+            throw $this->createNotFoundException('Le crédit demandé n\'existe pas');
+        }
+
+        return $this->render('credit/showb.html.twig', [
+            'credit' => $credit,
+        ]);
+    }
+   
     #[Route('/new', name: 'app_credit_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,CoreSecurity $security): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, CoreSecurity $security ): Response
     {
         $credit = new Credit();
         $form = $this->createForm(Credit1Type::class, $credit);
         $form->handleRequest($request);
-        
-          
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $credit->setUser($security->getUser());
-            $Contrat = $form->get('Contrat')->getData();
-        if ($Contrat) {
-            // Gérez le stockage du fichier
-            $newFilename = uniqid().'.'.$Contrat->guessExtension();
-            $Contrat->move(
-                $this->getParameter('Credit_directory'),
-                $newFilename
-            );
-            $credit->setContrat($newFilename);
+            
+            // Vérifier si l'entité est nouvelle
+            if ($credit->getId() === null) {
+                // Vérifier si le champ Contrat est défini
+                if ($form->has('Contrat') && $form->get('Contrat')->getData()) {
+                    $Contrat = $form->get('Contrat')->getData();
+                    // Gérez le stockage du fichier
+                    $newFilename = uniqid().'.'.$Contrat->guessExtension();
+                    $Contrat->move(
+                        $this->getParameter('Credit_directory'),
+                        $newFilename
+                    );
+                    $credit->setContrat($newFilename);
+                }
+               
+                $entityManager->persist($credit);
+                $entityManager->flush();
+               
+                $this->addFlash('AddCredit', 'Votre crédit a été ajouté avec succès');
+    
+                return $this->redirectToRoute('app_credit_index', [], Response::HTTP_SEE_OTHER);
+            }
         }
-            $entityManager->persist($credit);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_credit_index', [], Response::HTTP_SEE_OTHER);
-        }
-
+    
         return $this->renderForm('credit/new.html.twig', [
             'credit' => $credit,
             'form' => $form,
         ]);
     }
-     
-
-    #[Route('/{id}', name: 'app_credit_show', methods: ['GET'])]
-    public function show(int $id,CreditRepository $creditRepository): Response
-    {
-        $credit = $creditRepository->find($id);
-
-    if (!$credit) {
-        throw $this->createNotFoundException('Le credit demandé n\'existe pas');
-    }
-        return $this->render('credit/show.html.twig', [
-            'credit' => $credit,
-        ]);
-    }
-    #[Route('b/{id}', name: 'app_credit_showb', methods: ['GET'])]
-    public function showb(int $id,CreditRepository $creditRepository): Response
-    {
-        $credit = $creditRepository->find($id);
-
-    if (!$credit) {
-        throw $this->createNotFoundException('Le credit demandé n\'existe pas');
-    }
-        return $this->render('credit/showb.html.twig', [
-            'credit' => $credit,
-        ]);
-    }
 
     #[Route('/{id}/edit', name: 'app_credit_edit', methods: ['GET', 'POST'])]
-public function edit(Request $request, int $id, CreditRepository $CreditRepository, EntityManagerInterface $entityManager): Response
-{
-       $credit= $CreditRepository->find($id);
-    if (!$credit) {
-        throw $this->createNotFoundException('Le credit demandé n\'existe pas');
-    }
-
-    $form = $this->createForm(Credit1Type::class, $credit);
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-        $Contrat = $form->get('Contrat')->getData();
-
-        if ($Contrat) {
-            // Gérez le stockage du fichier
-            $newFilename = uniqid().'.'.$Contrat->guessExtension();
-            $Contrat->move(
-                $this->getParameter('Credit_directory'),
-                $newFilename
-            );
-            $credit->setContrat($newFilename);
+    public function edit(Request $request, int $id, CreditRepository $creditRepository, EntityManagerInterface $entityManager): Response
+    {
+        $credit = $creditRepository->find($id);
+        if (!$credit) {
+            throw $this->createNotFoundException('Le crédit demandé n\'existe pas');
         }
 
-        $entityManager->flush();
+        $form = $this->createForm(Credit1Type::class, $credit);
+        $form->handleRequest($request);
 
-        return $this->redirectToRoute('app_credit_index', [], Response::HTTP_SEE_OTHER);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $Contrat = $form->get('Contrat')->getData();
+
+            if ($Contrat) {
+                $newFilename = uniqid().'.'.$Contrat->guessExtension();
+                $Contrat->move(
+                    $this->getParameter('Credit_directory'),
+                    $newFilename
+                );
+                $credit->setContrat($newFilename);
+            }
+
+            $entityManager->flush();
+            $this->addFlash('updateCredit', 'Votre crédit a été modifié avec succès');
+
+            return $this->redirectToRoute('app_credit_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('credit/edit.html.twig', [
+            'credit' => $credit,
+            'form' => $form,
+        ]);
     }
 
-    return $this->renderForm('credit/edit.html.twig', [
-        'credit' => $credit,
-        'form' => $form,
-    ]);
-}
-
     #[Route('/{id}', name: 'app_credit_delete', methods: ['POST'])]
-public function deleteUser(ManagerRegistry $managerRegistry, $id, CreditRepository $CreditRepository)
-{
-    $user = $CreditRepository->find($id);
-    $em = $managerRegistry->getManager();
-    $em->remove($user);
-    $em->flush();
+    public function deleteUser(ManagerRegistry $managerRegistry, $id, CreditRepository $CreditRepository)
+    {
+        $user = $CreditRepository->find($id);
+        $em = $managerRegistry->getManager();
+        $em->remove($user);
+        $em->flush();
+        $this->addFlash('deleteCredit', 'Votre crédit a été supprimé avec succès');
+        return $this->redirectToRoute('app_credit_index');
+    } 
 
-    return $this->redirectToRoute('app_credit_index');
-}
+    #[Route('/credits/statistics3', name: 'credit_statistics3')]
+    public function statistics3(CreditRepository $creditRepository): Response
+    {
+        $statistics = $creditRepository->getCreditStatistics();
+        $credits = $creditRepository->findAllCredits();
+
+        $creditsByYear = [];
+        foreach ($credits as $credit) {
+            $year = $credit->getDateDebutPaiement()->format('Y');
+            if (!isset($creditsByYear[$year])) {
+                $creditsByYear[$year] = 0;
+            }
+            $creditsByYear[$year]++;
+        }
+
+        return $this->render('credit/statistics2.html.twig', [
+            'statistics' => $statistics,
+            'creditsByYear' => $creditsByYear,
+        ]);
+    }
+
+   
 }

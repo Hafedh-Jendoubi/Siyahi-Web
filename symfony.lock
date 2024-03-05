@@ -1,4 +1,7 @@
 {
+    "cmen/google-charts-bundle": {
+        "version": "6.0.0"
+    },
     "doctrine/annotations": {
         "version": "2.0",
         "recipe": {
@@ -40,6 +43,12 @@
     },
     "endroid/qr-code-bundle": {
         "version": "5.0.1"
+    },
+    "gregwar/captcha-bundle": {
+        "version": "v1.0.0"
+    },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v5.9.0"
     },
     "phpunit/phpunit": {
         "version": "9.6",
@@ -122,7 +131,7 @@
             "./src/Kernel.php"
         ]
     },
-    "symfony/lock": {
+    "symfony/google-mailer": {
         "version": "5.4",
         "recipe": {
             "repo": "github.com/symfony/recipes",

@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
-    <h1>Listes de mes Credit</h1>
+    <h1>Listes de mes Crédits</h1>
 
+    <input id="search-input" class="form-control border-0 shadow-none" type="form-control" placeholder="Search...">
     <table class="table">
         <thead>
             <tr>
@@ -13,39 +13,74 @@
                 <th>Nbr_mois_paiement</th>
                 <th>Description</th>
                 <th>Contrat</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
+        {%  for message in app.flashes('updateCredit')  %}
+                            <div class="alert alert-primary" role="alert">
+                                {{message}}                               </div>
+                        {% endfor %}
+                        {%  for message in app.flashes('AddCredit')  %}
+                            <div class="alert alert-success" role="alert">
+                                {{message}}                               </div>
+                        {% endfor %}
+                        {%  for message in app.flashes('deleteCredit')  %}
+                            <div class="alert alert-danger" role="alert">
+                                {{message}}                               </div>
+                        {% endfor %}
         <tbody>
-        {% for credit in credits %}
-            <tr>
-                <td>{{ credit.id }}</td>
-                <td>{{ credit.soldeDemande }}</td>
-                <td>{{ credit.dateDebutPaiement ? credit.dateDebutPaiement|date('Y-m-d') : '' }}</td>
-                <td>{{ credit.nbrMoisPaiement }}</td>
-                <td>{{ credit.description }}</td>
-                <td>
-                {% if credit.Contrat is not null %}
-                    <img src="{{ asset('uploads/credit/' ~ credit.Contrat) }}" alt="Contrat "style="width:200px;">
-                {% else %}
-                    Aucun Contrat n'est trouvé
-                {% endif %}
-                </td>
-                <td>
-                    <a  class="btn btn-info" style="width: 110px; "  href="{{ path('app_credit_show', {'id': credit.id}) }}">Détailles</a>
-                    <br>
-                    <a class="btn btn-primary" style="width: 110px; " href="{{ path('app_credit_edit', {'id': credit.id}) }}">Modifier</a>
-                    <br>
-                    {{ include('credit/_delete_form.html.twig') }}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">La liste est vide</td>
-            </tr>
-        {% endfor %}
+            {% for credit in credits %}
+                <tr>
+                    <td>{{ credit.id }}</td>
+                    <td>{{ credit.soldeDemande }}</td>
+                    <td>{{ credit.dateDebutPaiement ? credit.dateDebutPaiement|date('Y-m-d') : '' }}</td>
+                    <td>{{ credit.nbrMoisPaiement }}</td>
+                    <td>{{ credit.description }}</td>
+                    <td>
+                        {% if credit.Contrat is not null %}
+                            <img src="{{ asset('uploads/credit/' ~ credit.Contrat) }}" class="image-cercle" alt="Contrat" style="width:100px;">
+                        {% else %}
+                            Aucun Contrat n'est trouvé
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a class="btn btn-info" style="width: 110px;" href="{{ path('app_credit_show', {'id': credit.id}) }}">Détailles</a>
+                        <br>
+                          {% if credit.reponseCredits is empty %}
+                        <a class="btn btn-primary" style="width: 110px;" href="{{ path('app_credit_edit', {'id': credit.id}) }}">Modifier</a>
+                        <br>
+                        {% endif %}
+
+
+                        {% if credit.reponseCredits is empty %}
+                        {{ include('credit/_delete_form.html.twig') }}
+                        {% endif %}
+
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">La liste est vide</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 
+    <div class="pagination">
+        {{ knp_pagination_render(credits, 'credit/my_custom_template.html.twig') }}
+    </div>
     <a class="btn btn-success" href="{{ path('app_credit_new') }}">Créer</a>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#search-input").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("table tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    
 {% endblock %}

@@ -5,3 +5,6 @@ search_demande_achat:
   path: /demande_achat/search
   controller: App\Controller\DemandeAchatController::search
   methods: GET
+gregwar_captcha_routing:
+    resource: "@GregwarCaptchaBundle/Resources/config/routing/routing.yml"
+    prefix: /_gcb
