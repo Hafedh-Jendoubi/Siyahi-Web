@@ -214,4 +214,11 @@ class UserController extends AbstractController
 
         return $this->render('user/chart.html.twig');
     }
+    #[Route('/admin/chart', name: 'users_chart1')]
+    public function userStatistics3(UserRepository $repository): Response
+    {
+
+
+        return $this->render('user/chart.html.twig');
+    }
 }
