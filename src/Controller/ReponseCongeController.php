@@ -151,6 +151,16 @@ public function delete(ManagerRegistry $managerRegistry, $id, ReponseCongeReposi
 
     return $this->redirectToRoute('app_reponse_conge_index');
 }
+#[Route('/d/{id}', name: 'app_reponse_conge_delete1')]
+public function delete1(ManagerRegistry $managerRegistry, $id, ReponseCongeRepository $repository)
+{
+    $user = $repository->find($id);
+    $em = $managerRegistry->getManager();
+    $em->remove($user);
+    $em->flush();
+
+    return $this->redirectToRoute('app_reponse_conge_index');
+}
 
     #[Route('/pdf/{id}', name: 'app_reponse_conge_pdf')]
     public function generatePdf( int $id,ReponseCongeRepository $reponseCongeRepository): Response
