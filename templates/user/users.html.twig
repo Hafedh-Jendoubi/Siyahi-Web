@@ -21,6 +21,19 @@
                 });
             </script>
 
+            <input id="search-input" type="form-control" placeholder="Search..." style="width: 400px; border-radius: 10px;" >
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $("#search-input").on("keyup", function() {
+                        var value = $(this).val().toLowerCase();
+                        $("table tbody tr").filter(function() {
+                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                        });
+                    });
+                });
+            </script>
+
             <!-- Basic Bootstrap Table -->
             <br><br>
             <div class="card">
@@ -78,6 +91,9 @@
                                                 {% else %}
                                                     Admin
                                                 {% endif %}
+<<<<<<< HEAD
+                                                <a class="dropdown-item" href="{{ path('pdf_generator', { id: user.id}) }}"><i class="bx bxs-file-pdf me-1"></i> PDF</a>
+=======
                                             {% endfor %}
                                         </td>
                                         <td>
@@ -95,6 +111,7 @@
                                                     {% endif %}
                                                     <a class="dropdown-item" href="{{ path('pdf_generator', { id: user.id}) }}"><i class="bx bxs-file-pdf me-1"></i> PDF</a>
                                                 </div>
+>>>>>>> 1eb9a52f0663fb241d1d4b4209a8e1cec0024c37
                                             </div>
                                         </td>
                                     {% endif %}

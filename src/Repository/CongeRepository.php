@@ -20,23 +20,13 @@ class CongeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Conge::class);
     }
-    public function paginationQuery()
-    {
-        return $this->createQueryBuilder('p')
-            ->orderBy('p.id', 'ASC')
-            ->getQuery()
-        ;
-    }
-    public function searchByKeyword($keyword)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.title LIKE :keyword OR p.content LIKE :keyword')
-            ->setParameter('keyword', '%'.$keyword.'%')
-            ->orderBy('p.id', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
     
+    public function findSortedByDate()
+    {
+        return $this->createQueryBuilder('s')
+        ->orderBy('s.Date_Debut','DESC')
+            ->getQuery()->getResult();
+    }
 
 //    /**
 //     * @return Conge[] Returns an array of Conge objects

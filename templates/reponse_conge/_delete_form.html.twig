@@ -1,5 +1,5 @@
-<form action="{{ path('app_conge_delete', {'id': conge.id}) }}" method="post">
+<form action="{{ path('app_reponse_conge_delete', {'id': reponse_conge.id}) }}" method="post">
     <input type="hidden" name="_method" value="DELETE">
-    {{ csrf_token('delete' ~ conge.id) }}
+    {{ csrf_token('delete' ~ reponse_conge.id) }}
     <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">Delete</button>
 </form>

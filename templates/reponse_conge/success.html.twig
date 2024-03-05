@@ -1,0 +1,16 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}Confirmation{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+                <p><a href="{{ path('app_reponse_conge_index') }}">Retour à la liste des réponses de congé</a></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
