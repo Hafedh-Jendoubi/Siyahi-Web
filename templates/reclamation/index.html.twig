@@ -1,9 +1,10 @@
-{% extends 'back_base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Reclamation index{% endblock %}
 
 {% block body %}
     <h1>Reclamation index</h1>
+    <input id="search-input" class="form-control border-0 shadow-none" type="form-control" placeholder="Search...">
 
     <div class="table-responsive">
         <table class="table table-bordered table-hover">
@@ -53,7 +54,21 @@
             {% endfor %}
             </tbody>
         </table>
+         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#search-input").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("table tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
     </div>
 
     <a href="{{ path('app_reclamation_new') }}" class="btn btn-success"><span class="fas fa-plus"></span> Nouvelle Réclamation</a>
+<div class="pagination">
+        {{ knp_pagination_render(reclamations, 'reclamation/my_custom_template.html.twig') }}
+    </div>
 {% endblock %}

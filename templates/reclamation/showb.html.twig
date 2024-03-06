@@ -1,0 +1,47 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}Détails de la Réclamation{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Détails de la Réclamation</h1>
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th scope="row">Id</th>
+                    <td>{{ reclamation.id }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Object</th>
+                    <td>{{ reclamation.Object }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Description</th>
+                    <td>{{ reclamation.Description }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Date de Création</th>
+                    <td>{{ reclamation.dateCreation ? reclamation.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Auteur</th>
+                    <td>{{ reclamation.auteur }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Statut</th>
+                    <td>{{ reclamation.status }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Email</th>
+                    <td>{{ reclamation.email }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="text-center">
+            <a href="{{ path('app_reclamation_indexb') }}" class="btn btn-secondary"><span class="fas fa-arrow-left"></span> Retour à la Liste</a>
+        </div>
+
+    </div>
+{% endblock %}

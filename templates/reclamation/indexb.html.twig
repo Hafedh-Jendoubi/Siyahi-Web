@@ -1,0 +1,58 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}Reclamation indexb{% endblock %}
+
+{% block body %}
+    <h1>Reclamation index</h1>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Object</th>
+                    <th>Description</th>
+                    <th>Date de Création</th>
+                    <th>Auteur</th>
+                    <th>Status</th>
+                    <th>Email</th>
+                    <th>Réponse</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for reclamation in reclamations %}
+                <tr>
+                    <td>{{ reclamation.id }}</td>
+                    <td>{{ reclamation.Object }}</td>
+                    <td>{{ reclamation.Description }}</td>
+                    <td>{{ reclamation.dateCreation ? reclamation.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ reclamation.auteur }}</td>
+                    <td>{{ reclamation.status }}</td>
+                    <td>{{ reclamation.email }}</td>
+
+                    <td>
+                        {% if reclamation.reponseReclamations is not empty %}
+                            {# Si la réclamation a des réponses, affichez la première #}
+                            {{ reclamation.reponseReclamations[0].Description }}
+                        {% else %}
+                            {# Sinon, affichez un message indiquant qu'il n'y a pas de réponse #}
+                            Aucune réponse
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <a href="{{ path('app_reclamation_showb', {'id': reclamation.id}) }}" class="btn btn-info btn-sm"><span class="fas fa-eye"></span> Voir</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">Aucun enregistrement trouvé.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+     
+    </div>
+
+{% endblock %}

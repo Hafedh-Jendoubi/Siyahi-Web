@@ -19,6 +19,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\SentMessage;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 
@@ -26,14 +27,18 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 class ReponseCongeController extends AbstractController
 {
     #[Route('/', name: 'app_reponse_conge_index', methods: ['GET'])]
-    public function index(ReponseCongeRepository $reponseCongeRepository,Security $security): Response
+    public function index(Request $request,ReponseCongeRepository $reponseCongeRepository,Security $security,PaginatorInterface $paginator): Response
     {
         $user = $security->getUser();
 
-       
+        $pagination = $paginator->paginate(
+            $reponseCongeRepository->findBy(['User' => $user]),
+            $request->query->getInt('page', 1),
+            2
+        );
         
         return $this->render('reponse_conge/index.html.twig', [
-            'reponse_conges' => $reponseCongeRepository->findBy(['User'=>$user]),
+            'reponse_conges' => $pagination,
         ]);
     }
 
