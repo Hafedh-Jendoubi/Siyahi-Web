@@ -21,8 +21,6 @@
         new google.translate.TranslateElement({pageLanguage: 'fr', includedLanguages: 'en', autoDisplay: false}, 'google_translate_element');
     }
 </script>
-
-
     <h1>Liste des réponses congé</h1>
 
     <table class="table">
@@ -64,9 +62,11 @@
     </table>
 
     <div>
+<div class="pagination">
+        {{ knp_pagination_render(reponse_conges, 'conge/my_custom_template.html.twig') }}
+    </div>
 
 
     <a class="btn btn-outline-success" style="width: 110px; " href="{{ path('app_reponse_conge_new') }}">Ajouter</a>
       <a  class="btn btn-outline-secondary" style="width: 100px; " href="{{ path('calendar') }}">calendrier</a><br>
-                 
 {% endblock %}
