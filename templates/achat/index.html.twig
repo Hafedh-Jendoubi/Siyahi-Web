@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for achat in page %}
+                {% for achat in pages %}
                     <tr>
                         <td>{{ achat.id }}</td>
                         <td><img src="{{ asset('uploads/' ~ achat.Image) }}" style="width: 150px; height: 150px;" alt=""/></td>
@@ -39,7 +39,11 @@
         <div class="text-center">
             <a href="{{ path('app_achat_new') }}" class="btn btn-primary">Create New</a>
         </div>
-        
-        {{ knp_pagination_render(page) }}
+                <br>
+
+          <div class="pagination;align cneter">
+        {{ knp_pagination_render(pages,'achat/my_custom_template.html.twig') }}
+        </div>
+
     </div>
 {% endblock %}

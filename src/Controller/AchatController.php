@@ -14,27 +14,47 @@ use Knp\Component\Pager\PaginatorInterface;
 #[Route('/achat')]
 class AchatController extends AbstractController
 {
+   /* #[Route('/', name: 'app_credit_index', methods: ['GET'])]
+    public function index1(Request $request, CreditRepository $creditRepository, CoreSecurity $security, PaginatorInterface $paginator): Response
+    {
+        $user = $security->getUser();
+        $pagination = $paginator->paginate(
+            $creditRepository->findBy(['User' => $user]),
+            $request->query->getInt('page', 1),
+            3
+        );
+
+        return $this->render('credit/index.html.twig', [
+            'credits' => $pagination,
+        ]);
+    }*/
     #[Route('/', name: 'app_achat_index', methods: ['GET'])]
     public function index(AchatRepository $achatRepository ,PaginatorInterface $paginator,EntityManagerInterface $entityManager ,Request $request): Response
     {
         $a= $entityManager->getRepository(Achat::class)->findAll();
         $page = $paginator->paginate(
-            $a,
+            $achatRepository->findAll(),
             $request->query->getInt('page', 1),
             3
         );
         return $this->render('achat/index.html.twig', [
-            'achats' => $achatRepository->findAll(),
-            'page' => $page
+            
+            'pages' => $page
         ]);
     }
 
     #[Route('/front', name: 'app_achat_indexFront', methods: ['GET'])]
-    public function indexFront(AchatRepository $achatRepository): Response
+    public function indexFront(AchatRepository $achatRepository,PaginatorInterface $paginator,EntityManagerInterface $entityManager ,Request $request): Response
     {
-
+        $a= $entityManager->getRepository(Achat::class)->findAll();
+        $page = $paginator->paginate(
+            $achatRepository->findAll(),
+            $request->query->getInt('page', 1),
+            3
+        );
         return $this->render('achat/indexFront.html.twig', [
-            'achats' => $achatRepository->findAll(),
+            
+            'pages' => $page
         ]);
     }
 

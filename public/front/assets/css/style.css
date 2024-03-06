@@ -1049,22 +1049,6 @@ section {
   color: #eee;
 }
 
-.testimonials .swiper-pagination {
-  margin-top: 20px;
-  position: relative;
-}
-
-.testimonials .swiper-pagination .swiper-pagination-bullet {
-  width: 12px;
-  height: 12px;
-  background-color: rgba(255, 255, 255, 0.5);
-  opacity: 1;
-}
-
-.testimonials .swiper-pagination .swiper-pagination-bullet-active {
-  background-color: #106eea;
-}
-
 @media (min-width: 992px) {
   .testimonials .testimonial-item p {
     width: 80%;
