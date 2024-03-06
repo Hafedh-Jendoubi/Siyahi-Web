@@ -48,10 +48,7 @@ security:
         - { path: ^/home, roles: ROLE_STAFF }
         - { path: ^/staff, roles: ROLE_STAFF }
         - { path: ^/admin, roles: ROLE_ADMIN }
-<<<<<<< HEAD
-=======
         - { path: ^/super_admin, roles: ROLE_SUPER_ADMIN }
->>>>>>> 7ceaf174d827fd9d9c23ae4ada7aca90286f7c21
 
 when@test:
     security:
