@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\ReponseCredit;
+use App\Entity\Credit;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -24,17 +25,19 @@ class ReponseCredit1Type extends AbstractType
             ->add('nbr_moisPaiement')
             ->add('description')
             ->add('credit', EntityType::class, [
-                'class' => 'App\Entity\credit', // Replace with the actual namespace of your Author entity
-                'choice_label' => 'id', // Assuming Author entity has a method getFullName() that returns the author's full name
-                'placeholder' => 'Select an credit', // Optional, adds an empty option at the top
-                'required' => true,]) // Set to true if the author selection is mandatory
-
-           
-                ->add('submit',SubmitType::class,[
-                    'label'=>"confirmer",
-                ])  
-            ;
-        ;
+                'class' => Credit::class,
+                'choice_label' => 'id',
+                'placeholder' => 'Select a credit',
+                'required' => true,
+                'query_builder' => function (\Doctrine\ORM\EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->leftJoin('c.reponseCredits', 'r')
+                        ->where('r.id IS NULL');
+                },
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Confirmer',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

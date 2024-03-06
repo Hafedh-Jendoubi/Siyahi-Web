@@ -12,7 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Captcha\Bundle\CaptchaBundle\Validator\Constraints\ValidCaptcha;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 class Credit1Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -45,7 +46,7 @@ class Credit1Type extends AbstractType
                 'required' => false,
                 // Ajoutez d'autres options selon vos besoins
             ])
-        
+            
            /* ->add('User', EntityType::class, [
                 'class' => 'App\Entity\User', // Replace with the actual namespace of your Author entity
                 'choice_label' => 'First_Name', // Assuming Author entity has a method getFullName() that returns the author's full name
@@ -55,6 +56,13 @@ class Credit1Type extends AbstractType
                 ->add('submit',SubmitType::class,[
                     'label'=>"confirmer",
                 ])  
+                ->add('captcha', CaptchaType::class,[
+                    'attr' => [
+                       
+                        'class' => "form-control"
+                    ],
+                    ]
+                )
             ;
                 ;
     }

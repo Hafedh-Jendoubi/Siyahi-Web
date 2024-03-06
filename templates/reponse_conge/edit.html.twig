@@ -3,6 +3,25 @@
 
 
 {% block body %}
+<<<<<<< HEAD
+=======
+<div id="google_translate_element"></div>
+<script type="text/javascript">
+    
+
+    function translateToEnglish() {
+        var el = document.getElementById("google_translate_element").querySelector(".goog-te-combo");
+        el.value = "en";
+        el.dispatchEvent(new Event('change'));
+    }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'fr', includedLanguages: 'en', autoDisplay: false}, 'google_translate_element');
+    }
+</script>
+>>>>>>> 7ceaf174d827fd9d9c23ae4ada7aca90286f7c21
     <h1><center>Modifier une réponse congé</center></h1>
 
     {{ include('reponse_conge/_form.html.twig', {'button_label': 'Update'}) }}

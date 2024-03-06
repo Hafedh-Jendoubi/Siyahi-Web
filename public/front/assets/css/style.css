@@ -1788,5 +1788,11 @@ section {
     float: none;
     text-align: center;
     padding: 2px 0;
-  }
+  } 
+}
+.image-cercle {
+  border-radius: 50%;
+  width: 100px; /* Ajustez la taille en fonction de vos besoins */
+  height: 100px; /* Ajustez la taille en fonction de vos besoins */
+  object-fit: cover;
 }

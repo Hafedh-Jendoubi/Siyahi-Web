@@ -7,6 +7,7 @@ use App\Entity\User;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -19,6 +20,12 @@ class Conge1Type extends AbstractType
     {
         $builder
             ->add('Description')
+            ->add('Type_conge')
+            ->add('Date_demande', DateTimeType::class, [
+                'data' => new \DateTime(),
+                'years' => range(date("Y"), date("Y") + 10),
+                'widget' => 'single_text',
+            ])
             ->add('Date_Debut', DateType::class, [
                 'data' => new \DateTime(),
                 'years' => range(date("Y"), date("Y") + 10),
