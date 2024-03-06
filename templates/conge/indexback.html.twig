@@ -1,0 +1,113 @@
+{% extends 'back_base.html.twig' %}
+
+
+
+{% block body %}
+<div id="google_translate_element"></div>
+<script type="text/javascript">
+    function translateToFrench() {
+        var el = document.getElementById("google_translate_element").querySelector(".goog-te-combo");
+        el.value = "fr";
+        el.dispatchEvent(new Event('change'));
+    }
+
+    function translateToEnglish() {
+        var el = document.getElementById("google_translate_element").querySelector(".goog-te-combo");
+        el.value = "en";
+        el.dispatchEvent(new Event('change'));
+    }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'fr', includedLanguages: 'en', autoDisplay: false}, 'google_translate_element');
+    }
+</script>
+<input id="search-input" type="form-control" placeholder="Search...">
+<title>AJAX Search Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#search-input").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("table tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <div id="google_translate_element"></div>
+<script type="text/javascript">
+    function translateToFrench() {
+        var el = document.getElementById("google_translate_element").querySelector(".goog-te-combo");
+        el.value = "fr";
+        el.dispatchEvent(new Event('change'));
+    }
+
+    function translateToEnglish() {
+        var el = document.getElementById("google_translate_element").querySelector(".goog-te-combo");
+        el.value = "en";
+        el.dispatchEvent(new Event('change'));
+    }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'fr', includedLanguages: 'en', autoDisplay: false}, 'google_translate_element');
+    }
+</script>
+    <h1><center>Liste des demandes de congé</center></h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>nom_staff</th>
+                <th>Date_Debut</th>
+                <th>Date_Fin</th>
+                <th>Justification</th>
+               
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for conge in conges %}
+            <tr>
+                <td>{{ conge.id }}</td>
+                
+                <td>{{ conge.Description }}</td>
+                <td>{{ conge.User.email }}</td>
+                <td>{{ conge.DateDebut ? conge.DateDebut|date('Y-m-d') : '' }}</td>
+                <td>{{ conge.DateFin ? conge.DateFin|date('Y-m-d') : '' }}</td>
+                <td>{% if conge.Justification is not null %}<img src="{{ asset('uploads/conge/' ~ conge.Justification) }}" alt="Justification "style="width:200px;"> {% else %}
+                    Aucun Contrat n'est trouvé
+                {% endif %}</td>
+               
+                <td>
+                    <a  class="btn btn-info" style="width: 110px; " href="{{ path('app_conge_show1', {'id': conge.id}) }}">Traité</a><br>
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+    <div class="pagination">
+        {{ knp_pagination_render(conges, 'conge/my_custom_template.html.twig') }}
+    </div>
+    
+    <div class="d-flex justify-content-between">
+    
+        
+        <a href="{{ path('app_conge_indexb', {'sortBy': 'date'}) }}" class="btn btn-secondary">Tri par date</a>
+    
+</div>
+
+
+    
+{% endblock %}

@@ -11,15 +11,32 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Security as CoreSecurity;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 #[Route('/reclamation')]
 class ReclamationController extends AbstractController
 {
+    
     #[Route('/', name: 'app_reclamation_index', methods: ['GET'])]
-    public function index(ReclamationRepository $reclamationRepository): Response
+    public function index(Request $request, ReclamationRepository $reclamationRepository, CoreSecurity $security, PaginatorInterface $paginator): Response
     {
+        $pagination = $paginator->paginate(
+            $reclamationRepository->findAll(),
+            $request->query->getInt('page', 1),
+            3
+        );
+
         return $this->render('reclamation/index.html.twig', [
+            'reclamations' => $pagination,
+        ]);
+    }
+
+    #[Route('/b', name: 'app_reclamation_indexb', methods: ['GET'])]
+    public function indexb(ReclamationRepository $reclamationRepository): Response
+    {
+        return $this->render('reclamation/indexb.html.twig', [
             'reclamations' => $reclamationRepository->findAll(),
         ]);
     }
@@ -50,8 +67,17 @@ class ReclamationController extends AbstractController
         /** */
             $reponse = $reclamation->getReponseReclamations();
 /*///**/
-        return $this->render('reclamation/show.html.twig', [
-            'reclamation' => $reclamation,
+        return $this->render('reclamation/show.html.twig', ['reclamation' => $reclamation,
+            'reponse' => $reponse,/*//*/
+        ]);
+    }
+    #[Route('/b/{id}', name: 'app_reclamation_showb', methods: ['GET'])]
+    public function showb(Reclamation $reclamation): Response
+    {
+        /** */
+            $reponse = $reclamation->getReponseReclamations();
+/*///**/
+        return $this->render('reclamation/showb.html.twig', ['reclamation' => $reclamation,
             'reponse' => $reponse,/*//*/
         ]);
     }

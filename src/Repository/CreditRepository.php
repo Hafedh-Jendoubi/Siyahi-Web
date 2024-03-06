@@ -45,4 +45,57 @@ class CreditRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public function findSortedByMontant()
+    {
+        return $this->createQueryBuilder('s')
+        ->orderBy('s.solde_demande','DESC')
+            ->getQuery()->getResult();
+    }
+
+public function findSortedByDate()
+    {
+        return $this->createQueryBuilder('s')
+        ->orderBy('s.date_debut_paiement','DESC')
+            ->getQuery()->getResult();
+    }
+
+    public function getCreditStatistics(): array
+    {
+        $queryBuilder = $this->createQueryBuilder('c')
+            ->select('c.date_debut_paiement AS date, COUNT(c.id) AS count')
+            ->groupBy('c.date_debut_paiement')
+            ->getQuery();
+
+        return $queryBuilder->getResult();
+    }
+    public function findAllCredits(): array
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->getQuery();
+
+        return $qb->getResult();
+    }
+    
+    public function findCreditsByYear(int $year): array
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->andWhere('YEAR(c.date_debut_paiement) = :year')
+            ->setParameter('year', $year)
+            ->getQuery();
+
+        return $qb->getResult();
+    }
+
+
+    public function findByPriceRange($minSolde, $maxSolde)
+{
+    return $this->createQueryBuilder('p')
+        ->where('p.solde_demande >= :minSolde')
+        ->andWhere('p.solde_demande <= :maxSolde')
+        ->setParameter('minSolde', $minSolde)
+        ->setParameter('maxSolde', $maxSolde)
+        ->getQuery()
+        ->getResult();
+}
 }

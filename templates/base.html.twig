@@ -5,16 +5,12 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    {% block title %} {% endblock %}
+    {% block title %} {% endblock %} <!-- Title -->
     <meta content="" name="description">
     <meta content="" name="keywords">
-<!--icons-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="...">
-<!--bootstrap-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
     <!-- Favicons -->
-    <link href="front/assets/img/favicon.png" rel="icon">
+    <link href="front/assets/img/logo.png" rel="icon">
     <link href="front/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
@@ -54,7 +50,7 @@
 </section>
 
 <!-- ======= Header ======= -->
- <header id="header" class="d-flex align-items-center">
+    <header id="header" class="d-flex align-items-center">
         <div class="container d-flex align-items-center justify-content-between">
 
             <h1 class="logo"><a href="{{ path('app_user') }}#hero">Siyahi Bank<span>.</span></a></h1>
@@ -73,9 +69,8 @@
                                 <li><a href="#">Operation</a></li>
                                 <li class="dropdown"><a href="#"><span>Credit</span> <i class="bi bi-chevron-right"></i></a>
                                     <ul>
-                                        <li><a href="#">Get Credit</a></li>
-                                        <li><a href="#">Current Credit Information</a></li>
-                                        <li><a href="#">Credits History</a></li>
+                                        <li><a href="{{ path('app_credit_new') }}">Avoir un Crédit</a></li>
+                                        <li><a href="{{ path('app_credit_index') }}">Historique</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="#">Achat</a></li>
@@ -100,10 +95,7 @@
             </nav><!-- .navbar -->
 
         </div>
-        
     </header>
-
-
 <!-- End Header -->
 
 <main id="main">

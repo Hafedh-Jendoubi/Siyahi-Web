@@ -18,12 +18,14 @@
                             {{ form_label(formUser.FirstName) }}
                             <div class="col-sm-10">
                                 {{ form_widget(formUser.FirstName, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(formUser.FirstName) }}
                             </div>
                         </div>
                         <div class="row mb-3">
                             {{ form_label(formUser.LastName) }}
                             <div class="col-sm-10">
                                 {{ form_widget(formUser.LastName, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(formUser.LastName) }}
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -36,18 +38,35 @@
                             {{ form_label(formUser.Address) }}
                             <div class="col-sm-10">
                                 {{ form_widget(formUser.Address, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(formUser.Address) }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            {{ form_label(formUser.oldemail) }}
+                            <div class="col-sm-10">
+                                {{ form_widget(formUser.oldemail, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(formUser.oldemail) }}
                             </div>
                         </div>
                         <div class="row mb-3">
                             {{ form_label(formUser.PhoneNumber) }}
                             <div class="col-sm-10">
                                 {{ form_widget(formUser.PhoneNumber, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(formUser.PhoneNumber) }}
                             </div>
                         </div>
                         <div class="row mb-3">
                             {{ form_label(formUser.CIN) }}
                             <div class="col-sm-10">
                                 {{ form_widget(formUser.CIN, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(formUser.CIN) }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            {{ form_label(formUser.image) }}
+                            <div class="col-sm-10">
+                                {{ form_widget(formUser.image, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(formUser.image) }}
                             </div>
                         </div>
                         <div class="col text-center">

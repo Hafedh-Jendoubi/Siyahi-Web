@@ -1,0 +1,19 @@
+{% if pageCount > 1 %}
+    <ul class="pagination custom-pagination">
+        {% if previous is defined %}
+            <li class="page-item"><a class="page-link" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">&laquo;</a></li>
+        {% endif %}
+
+        {% for pageNumber in pagesInRange %}
+            {% if pageNumber != current %}
+                <li class="page-item"><a class="page-link" href="{{ path(route, query|merge({(pageParameterName): pageNumber})) }}">{{ pageNumber }}</a></li>
+            {% else %}
+                <li class="page-item active"><span class="page-link">{{ pageNumber }}</span></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if next is defined %}
+            <li class="page-item"><a class="page-link" href="{{ path(route, query|merge({(pageParameterName): next})) }}">&raquo;</a></li>
+        {% endif %}
+    </ul>
+{% endif %}

@@ -1,0 +1,60 @@
+{% block stylesheets %}
+    <style>
+        /* Style personnalisé pour le titre "Demande de congé" */
+        .mt-4  {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        
+        <div class="row">
+       
+            <div class="col-md-6 offset-md-3">
+                {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
+                    <div class="form-group">
+                        {{ form_label(form.credit, 'Credit') }}
+                        {{ form_widget(form.credit, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.credit) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.solde_a_payer, ' Solde à payer') }}
+                        {{ form_widget(form.solde_a_payer, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le solde à payer'}}) }}
+                        {{ form_errors(form.solde_a_payer) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.date_debutPaiement, 'Date de début') }}
+                        {{ form_widget(form.date_debutPaiement, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.date_debutPaiement) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.nbr_moisPaiement, 'Nombre de mois de paiement') }}
+                        {{ form_widget(form.nbr_moisPaiement, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.nbr_moisPaiement) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.description, 'Description') }}
+                        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Entrez une description'}}) }}
+                        {{ form_errors(form.description) }}
+                    </div>
+                   
+                    <div class="form-group text-center">
+                        {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+    

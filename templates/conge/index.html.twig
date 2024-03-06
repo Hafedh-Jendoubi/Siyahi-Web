@@ -1,0 +1,106 @@
+{% extends 'back_base.html.twig' %}
+
+
+
+{% block body %}
+<div id="google_translate_element"></div>
+<script type="text/javascript">
+    function translateToFrench() {
+        var el = document.getElementById("google_translate_element").querySelector(".goog-te-combo");
+        el.value = "fr";
+        el.dispatchEvent(new Event('change'));
+    }
+
+    function translateToEnglish() {
+        var el = document.getElementById("google_translate_element").querySelector(".goog-te-combo");
+        el.value = "en";
+        el.dispatchEvent(new Event('change'));
+    }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'fr', includedLanguages: 'en', autoDisplay: false}, 'google_translate_element');
+    }
+</script>
+<div id="google_translate_element"></div>
+<script type="text/javascript">
+    function translateToFrench() {
+        var el = document.getElementById("google_translate_element").querySelector(".goog-te-combo");
+        el.value = "fr";
+        el.dispatchEvent(new Event('change'));
+    }
+
+    function translateToEnglish() {
+        var el = document.getElementById("google_translate_element").querySelector(".goog-te-combo");
+        el.value = "en";
+        el.dispatchEvent(new Event('change'));
+    }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'fr', includedLanguages: 'en', autoDisplay: false}, 'google_translate_element');
+    }
+</script>
+
+    <h1><center>Liste des demandes de congé</center></h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+
+                <th>Date_Debut</th>
+                <th>Date_Fin</th>
+                 <th>Type_conge</th>
+                  <th>Date_demande</th>
+
+
+                <th>Justification</th>
+                <th>status</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for conge in conges %}
+            <tr>
+                <td>{{ conge.id }}</td>
+                <td>{{ conge.Description }}</td>
+                <td>{{ conge.DateDebut ? conge.DateDebut|date('Y-m-d') : '' }}</td>
+                <td>{{ conge.DateFin ? conge.DateFin|date('Y-m-d') : '' }}</td>
+                <td>{{ conge.getTypeConge() }}</td>
+               <td>{{ conge.getDateDemande() ? conge.getDateDemande()|date('Y-m-d') : '' }}</td>
+
+
+                <td>{% if conge.Justification is not null %}<img src="{{ asset('uploads/conge/' ~ conge.Justification) }}" alt="Justification "style="width:200px;"> {% else %}
+                    Aucune justification n'est trouvé
+                {% endif %}
+</td>
+ <td>
+    {% if conge.status %}
+        <button type="button" class="btn btn-success">Confirmé</button>
+    {% else %}
+        <button type="button" class="btn btn-warning">En attente</button>
+    {% endif %}
+</td>
+                <td>
+                    <a class="btn btn-info" style="width: 110px; " href="{{ path('app_conge_show', {'id': conge.id}) }}">Détailles</a><br>
+                    <a  class="btn btn-primary" style="width: 110px; " href="{{ path('app_conge_edit', {'id': conge.id}) }}">modifier</a>
+                    {{ include('conge/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="pagination">
+        {{ knp_pagination_render(conges, 'conge/my_custom_template.html.twig') }}
+    </div>
+
+    <a  class="btn btn-success" style="width: 110px; " href="{{ path('app_conge_new') }}">ajouter</a>
+{% endblock %}

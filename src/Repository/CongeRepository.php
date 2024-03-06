@@ -20,6 +20,13 @@ class CongeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Conge::class);
     }
+    
+    public function findSortedByDate()
+    {
+        return $this->createQueryBuilder('s')
+        ->orderBy('s.Date_Debut','DESC')
+            ->getQuery()->getResult();
+    }
 
 //    /**
 //     * @return Conge[] Returns an array of Conge objects

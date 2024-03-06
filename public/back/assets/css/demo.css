@@ -2,7 +2,12 @@
 * demo.css
 * File include item demo only specific css only
 ******************************************************************************/
-
+.image-cercle {
+  border-radius: 50%;
+  width: 100px; /* Ajustez la taille en fonction de vos besoins */
+  height: 100px; /* Ajustez la taille en fonction de vos besoins */
+  object-fit: cover;
+}
 .menu .app-brand.demo {
   height: 64px;
   margin-top: 12px;

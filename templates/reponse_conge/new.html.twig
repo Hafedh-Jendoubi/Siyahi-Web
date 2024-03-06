@@ -1,0 +1,29 @@
+{% extends 'back_base.html.twig' %}
+
+
+
+{% block body %}
+<div id="google_translate_element"></div>
+<script type="text/javascript">
+    
+
+    function translateToEnglish() {
+        var el = document.getElementById("google_translate_element").querySelector(".goog-te-combo");
+        el.value = "en";
+        el.dispatchEvent(new Event('change'));
+    }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'fr', includedLanguages: 'en', autoDisplay: false}, 'google_translate_element');
+    }
+</script>
+
+    <h1><center>Céer une nouvelle  ReponseConge</center></h1>
+
+    {{ include('reponse_conge/_form.html.twig') }}
+    
+
+    <a href="{{ path('app_reponse_conge_index') }}">retour à la liste</a>
+{% endblock %}
