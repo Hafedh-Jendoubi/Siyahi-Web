@@ -1,51 +1,64 @@
 {% extends 'back_base.html.twig' %}
 
-{% block title %}DemandeAchat{% endblock %}
+{% block title %}Détails de la Demande{% endblock %}
 
 {% block body %}
-    <h1>DemandeAchat</h1>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Détails de la Demande</div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ demande_achat.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ demande_achat.Nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ demande_achat.Prenom }}</td>
-            </tr>
-            <tr>
-                <th>DateDemande</th>
-                <td>{{ demande_achat.DateDemande ? demande_achat.DateDemande|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>NumTel</th>
-                <td>{{ demande_achat.numTel }}</td>
-            </tr>
-          
-            <tr>
-                <th>TypePaiement</th>
-                <td>{{ demande_achat.TypePaiement }}</td>
-            </tr>
-            <tr>
-                <th>CIN</th>
-                <td>{{ demande_achat.CIN }}</td>
-            </tr>
-            <tr>
-                <th>Adresse</th>
-                <td>{{ demande_achat.Adresse }}</td>
-            </tr>
-        </tbody>
-    </table>
+                    <div class="card-body">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Id</th>
+                                    <td>{{ demande_achat.id }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Nom</th>
+                                    <td>{{ demande_achat.Nom }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Prénom</th>
+                                    <td>{{ demande_achat.Prenom }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Date de Demande</th>
+                                    <td>{{ demande_achat.DateDemande ? demande_achat.DateDemande|date('Y-m-d') : '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Numéro de Téléphone</th>
+                                    <td>{{ demande_achat.numTel }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Type de Paiement</th>
+                                    <td>{{ demande_achat.TypePaiement }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">CIN</th>
+                                    <td>{{ demande_achat.CIN }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Adresse</th>
+                                    <td>{{ demande_achat.Adresse }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-    <a href="{{ path('app_demande_achat_index') }}">back to list</a>
+                        <a href="{{ path('app_demande_achat_index') }}" class="btn btn-secondary">Retour à la Liste</a>
 
-    <a href="{{ path('app_demande_achat_edit', {'id': demande_achat.id}) }}">edit</a>
+                        <a href="{{ path('app_demande_achat_edit', {'id': demande_achat.id}) }}" class="btn btn-primary">Modifier</a>
 
-    {{ include('demande_achat/_delete_form.html.twig') }}
+                        <a href="{{ path('demandeachat_pdf', {'id': demande_achat.id}) }}" class="btn btn-success">Générer PDF</a>
+
+                       
+
+                        {{ include('demande_achat/_delete_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

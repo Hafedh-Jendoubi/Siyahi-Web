@@ -1,97 +1,128 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<h2 style="text-align: center;">Bienvenue sur notre Site web Siyahi</h2>
+    <h2 style="text-align: center;">Bienvenue sur notre Site web Siyahi</h2>
 
-<br>
-<br>
-<br>
+    <br>
+    <br>
+    <br>
 
-<style>
-    .event-details {
-        display: flex; /* Utilisation de Flexbox */
-        align-items: center; /* Alignement vertical au centre */
-    }
+    <style>
+        .event-details {
+            display: flex; /* Utilisation de Flexbox */
+            align-items: center; /* Alignement vertical au centre */
+        }
 
-    .event-details h3,
-    .event-details p {
-        margin-left: 150px; /* Marge gauche pour le titre et les paragraphes */
-    }
+        .event-details h3,
+        .event-details p {
+            margin-left: 150px; /* Marge gauche pour le titre et les paragraphes */
+        }
 
-    .event-image {
-        margin-left: 200px; /* Marge droite pour l'image */
-        border-radius: 1%; /* Rendre l'image ronde */
-        overflow: hidden; /* Masquer les parties de l'image qui dépassent du cadre rond */
-    }
+        .event-image {
+            margin-left: 200px; /* Marge droite pour l'image */
+            border-radius: 1%; /* Rendre l'image ronde */
+            overflow: hidden; /* Masquer les parties de l'image qui dépassent du cadre rond */
+        }
 
+        .details-container {
+            flex-grow: 1; /* Pour que le container des détails prenne autant d'espace que possible */
+        }
 
-    .details-container {
-        flex-grow: 1; /* Pour que le container des détails prenne autant d'espace que possible */
-    }
-</style>
+        /* Styles pour les étoiles */
+        .rating-container {
+            display: flex;
+            flex-direction: column; /* Affichage en colonne pour les étoiles et le bouton */
+            align-items: center;
+            margin-top: 10px;
+        }
 
-<div class="service">
-    <div class="container">
-        <div class="section-header text-center">
-            <div id="google_translate_element"></div>
-        </div>
-        <div class="row">
-            {% for achat in achats %}
-            <div class="col-lg-12 mb-4">
-                <div class="event-details"> <!-- Utilisation de la classe event-details -->
-                    <div class="event-image col-lg-3">
-                        <img src="{{ asset('uploads/' ~achat.Image)}}" style="width:400px; height:300px; " alt="">
-                    </div>
-                    <div class="details-container"> <!-- Ajout d'une classe pour les détails -->
-                        <h3>Vous souhaitez acheter une  {{ achat.Type }} ? </h3   >
-                        <p><strong style="color:#696969"> {{ achat.Description }}</strong></p>
-                        <p><a class="event-details" href="{{ path('app_demande_achat_new',{'idachat':achat.id}) }}" >Plus de détails</a></p>
-                    </div>
-                </div>
+        .stars-container {
+            display: inline-block;
+            font-size: 24px; /* Taille des étoiles */
+            color: #A0A0A0; /* Couleur des étoiles vides */
+        }
+
+        .stars-container .star {
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .stars-container .star:hover,
+        .stars-container .star.active {
+            color: #FFD700; /* Couleur des étoiles remplies */
+        }
+
+        .rating-message {
+            margin-top: 10px; /* Espacement entre les étoiles et le message */
+            font-size: 18px;
+            color: #333; /* Couleur du texte du message */
+        }
+
+        .btn-map {
+            background-color: #8a2be2; /* Couleur mauve */
+            margin-left: auto; /* Mise en forme du bouton au centre */
+            margin-right: auto; /* Mise en forme du bouton au centre */
+            display: block; /* Permet de centrer le bouton */
+            margin-top: 20px; /* Espacement entre les étoiles et le bouton */
+        }
+    </style>
+
+    <div class="service">
+        <div class="container">
+            <div class="section-header text-center">
+                <div id="google_translate_element"></div>
             </div>
-            {% else %}
-            <div class="col">
-                <p class="text-center">Aucun événement trouvé.</p>
+            <div class="row">
+                {% for achat in achats %}
+                    <div class="col-lg-12 mb-4">
+                        <div class="event-details"> <!-- Utilisation de la classe event-details -->
+                            <div class="event-image col-lg-3">
+                                <img src="{{ asset('uploads/' ~achat.Image)}}" style="width:400px; height:300px; " alt="">
+                            </div>
+                            <div class="details-container"> <!-- Ajout d'une classe pour les détails -->
+                                <h3>Vous souhaitez acheter une {{ achat.Type }} ? </h3>
+                                <p><strong style="color:#696969"> {{ achat.Description }}</strong></p>
+                                <!-- Conteneur pour les étoiles -->
+                                <div class="rating-container" id="rating_{{ achat.id }}">
+                                    <div class="stars-container">
+                                        <span class="star" data-value="1">&#9733;</span>
+                                        <span class="star" data-value="2">&#9733;</span>
+                                        <span class="star" data-value="3">&#9733;</span>
+                                        <span class="star" data-value="4">&#9733;</span>
+                                        <span class="star" data-value="5">&#9733;</span>
+                                    </div>
+                                    <div class="rating-message" id="rating_message_{{ achat.id }}">Vous avez noté 0 étoile</div>
+                                </div>
+                                <a href="{{ path('app_map') }}" class="btn btn-secondary btn-map" style="width:300px">Voir Sur la Carte </a>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const starsContainer = document.getElementById('rating_{{ achat.id }}');
+                            const stars = starsContainer.querySelectorAll('.star');
+                            const message = document.getElementById('rating_message_{{ achat.id }}');
+
+                            stars.forEach(star => {
+                                star.addEventListener('click', () => {
+                                    const value = parseInt(star.getAttribute('data-value'));
+                                    stars.forEach(s => s.classList.remove('active'));
+                                    for (let i = 0; i < value; i++) {
+                                        stars[i].classList.add('active');
+                                    }
+                                    message.textContent = `Vous avez noté ${value} étoile${value > 1 ? 's' : ''}`;
+                                });
+                            });
+                        });
+                    </script>
+                {% else %}
+                    <div class="col">
+                        <p class="text-center">Aucun événement trouvé.</p>
+                    </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
-</div>
-<br>
+    <br>
 
 {% endblock %}
-
-{# 
-<div class="service">
-    <div class="container">
-        <div class="section-header text-center">
-            <div id="google_translate_element"></div>
-        </div>
-        <div class="row">
-            {% for achat in achats %}
-            <div class="col-lg-12 mb-4">
-                <div class="event-details {% if loop.index is even %}flex-row-reverse{% endif %}"> <!-- Utilisation de la classe event-details -->
-                    <div class="event-image col-lg-3">
-                        <img src="{{ asset('uploads/' ~achat.Image)}}" style="width:400px; height:300px; " alt="">
-                    </div>
-                    <div class="details-container"> <!-- Ajout d'une classe pour les détails -->
-                        <h3>Vous souhaitez acheter une  {{ achat.Type }} </h3>
-                        <p><strong style="color:#696969"> Description:</strong> {{ achat.Description }}</p>
-                        <p><strong style="color:#696969" >Prix:</strong> {{ achat.Prix }} TND</p>
-                        <a class="event-details" href="{{ path('app_demande_achat_new',{'idachat':achat.id}) }}" >
-                            Plus de détails
-                        </a>
-                    </div>
-                </div>
-            </div>
-            {% else %}
-            <div class="col">
-                <p class="text-center">Aucun événement trouvé.</p>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</div>
-<br>
-
-{% endblock %}#}
