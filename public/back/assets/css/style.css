@@ -1,0 +1,26 @@
+/* public/css/styles.css */
+
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
+.ticker-container {
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.ticker {
+    display: inline-block;
+    animation: tickerMove linear infinite;
+    animation-duration: 20s; /* Adjust the duration based on your preference */
+}
+
+@keyframes tickerMove {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}

@@ -21,6 +21,46 @@ class CompteClientRepository extends ServiceEntityRepository
         parent::__construct($registry, CompteClient::class);
     }
 
+    public function findOneBy(array $criteria, array $orderBy = null): ?CompteClient
+{
+    $queryBuilder = $this->createQueryBuilder('c')
+        ->andWhere($this->buildCriteria($criteria));
+
+    // Check if $orderBy is provided and add ordering
+    if ($orderBy) {
+        foreach ($orderBy as $field => $direction) {
+            $queryBuilder->orderBy('c.' . $field, $direction);
+        }
+    }
+
+    // Limit the result to 1
+    $queryBuilder->setMaxResults(1);
+
+    return $queryBuilder->getQuery()->getOneOrNullResult();
+}
+
+
+    private function buildCriteria(array $criteria): string
+    {
+        $queryBuilder = $this->createQueryBuilder('c');
+        foreach ($criteria as $field => $value) {
+            $queryBuilder->andWhere("c.$field = :$field");
+        }
+
+        return $queryBuilder->getQuery()->getDQL();
+    }
+
+    // CompteClientRepository.php
+    public function findAllSortedBySolde($order = 'asc')
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.solde', $order)
+            ->getQuery()
+            ->getResult();
+    }
+
+}
+
 //    /**
 //     * @return CompteClient[] Returns an array of CompteClient objects
 //     */
@@ -45,4 +85,4 @@ class CompteClientRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-}
+

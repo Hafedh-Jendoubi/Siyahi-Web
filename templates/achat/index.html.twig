@@ -3,37 +3,46 @@
 {% block title %}Achat index{% endblock %}
 
 {% block body %}
-    <h1>Achat index</h1>
+    <h1 class="text-center mb-4">Liste des Achats</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Image</th>
-                <th>Type</th>
-                <th>Description</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for achat in achats %}
-            <tr>
-                <td>{{ achat.id }}</td>
-                <td><img src="{{ asset('uploads/' ~achat.Image) }}" style=" width:150px; height:150px; " alt=""/></td>
-                <td>{{ achat.Type }}</td>
-                <td>{{ achat.Description }}</td>
-                <td>
-                    <a href="{{ path('app_achat_show', {'id': achat.id}) }}">show</a>
-                    <a href="{{ path('app_achat_edit', {'id': achat.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for achat in pages %}
+                    <tr>
+                        <td>{{ achat.id }}</td>
+                        <td><img src="{{ asset('uploads/' ~ achat.Image) }}" style="width: 150px; height: 150px;" alt=""/></td>
+                        <td>{{ achat.Type }}</td>
+                        <td>{{ achat.Description }}</td>
+                        <td>
+                            <a href="{{ path('app_achat_show', {'id': achat.id}) }}" class="btn btn-success">Show</a>
+                            <a href="{{ path('app_achat_edit', {'id': achat.id}) }}" class="btn btn-primary">Edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <div class="text-center">
+            <a href="{{ path('app_achat_new') }}" class="btn btn-primary">Create New</a>
+        </div>
+            <br>
+          <div class="pagination;align cneter">
+        {{ knp_pagination_render(pages,'achat/my_custom_template.html.twig') }}
+        </div>
 
-    <a href="{{ path('app_achat_new') }}">Create new</a>
+    </div>
 {% endblock %}

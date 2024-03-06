@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="{{ asset('back/assets/vendor/css/core.css') }}" class="template-customizer-core-css" />
     <link rel="stylesheet" href="{{ asset('back/assets/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{{ asset('back/assets/css/demo.css') }}" />
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.min.css" rel="stylesheet">
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{ asset('back/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
@@ -81,6 +82,24 @@
                     <span class="menu-header-text">Staff Panel</span>
                 </li>
                     <li class="menu-item">
+                    <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                        <div data-i18n="Account Settings">Gestion des Comptes</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="{{ path('app_compte_client_index') }}" class="menu-link">
+                                <div data-i18n="Account">Liste des Comptes</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ path('app_compte_client_new') }}" class="menu-link">
+                                <div data-i18n="Notifications">Ajouter Compte Client</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-dock-top"></i>
@@ -217,6 +236,24 @@
                     <span class="menu-header-text">Admin Panel</span>
                 </li>
                 <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                        <div data-i18n="Account Settings">Gestion des Services</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="{{ path('app_service_index') }}" class="menu-link">
+                                <div data-i18n="Account">Liste des Services</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{ path('app_service_new') }}" class="menu-link">
+                                <div data-i18n="Notifications">Ajouter Service</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-dock-top"></i>
                             <div data-i18n="Account Settings">Gestion des congés</div>
@@ -308,21 +345,48 @@
                 </div>
 
                 <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-                    <!-- Search -->
-                        <input id="search-input" class="form-control border-0 shadow-none" type="form-control" placeholder="Search...">
-                           <title>AJAX Search Example</title>
-                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                            <script>
-                                $(document).ready(function() {
-                                    $("#search-input").on("keyup", function() {
-                                        var value = $(this).val().toLowerCase();
-                                        $("table tr").filter(function() {
-                                            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                                        });
-                                    });
-                                });
-                            </script>   
-                    <!-- /Search -->
+                    <!-- TradingView Widget BEGIN -->
+<!--<div class="tradingview-widget-container">-->
+  <div class="tradingview-widget-container__widget"></div>
+  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+  {
+  "symbols": [
+    {
+      "description": "",
+      "proName": "FX_IDC:TNDEUR"
+    },
+    {
+      "description": "",
+      "proName": "FX_IDC:TNDGBP"
+    },
+    {
+      "description": "",
+      "proName": "FX_IDC:TNDUSD"
+    },
+    {
+      "description": "",
+      "proName": "FX_IDC:TNDBRX"
+    },
+    {
+      "description": "",
+      "proName": "FX_IDC:SAREUR"
+    },
+    {
+      "description": "",
+      "proName": "FX:USDJPY"
+    },
+    {
+      "description": "",
+      "proName": "FX_IDC:DZDUSD"
+    }
+  ],
+  "showSymbolLogo": true,
+  "isTransparent": false,
+  "displayMode": "adaptive",
+  "colorTheme": "light",
+  "locale": "en"
+}
+  </script>
 
                     <ul class="navbar-nav flex-row align-items-center ms-auto">
                         <!-- Place this tag where you want the button to render. -->
@@ -417,6 +481,50 @@
 <!-- Core JS -->
 <!-- build:js assets/vendor/js/core.js -->
 <script src="{{ asset('back/assets/vendor/libs/jquery/jquery.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.5/dist/sweetalert2.all.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-button');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const form = this.closest('.delete-form');
+
+                Swal.fire({
+                    title: 'Êtes-vous sûr de supprimer ce service?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Oui',
+                    cancelButtonText: 'Non'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Submit the form using AJAX
+                        fetch(form.action, {
+                            method: form.method,
+                            body: new FormData(form),
+                        }).then(response => {
+                            if (response.ok) {
+                                Swal.fire('Supprimé avec succès', '', 'success')
+                                    .then(() => {
+                                        // Redirect after the Swal modal is closed
+                                        window.location.href = '{{ path('app_service_index') }}';
+                                    });
+                            } else {
+                                Swal.fire('Erreur lors de la suppression', '', 'error');
+                            }
+                        });
+                    } else {
+                        Swal.fire('Suppression annulée', '', 'info');
+                    }
+                });
+            });
+        });
+    });
+</script>
+
 <script src="{{ asset('back/assets/vendor/libs/popper/popper.js') }}"></script>
 <script src="{{ asset('back/assets/vendor/js/bootstrap.js') }}"></script>
 <script src="{{ asset('back/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>

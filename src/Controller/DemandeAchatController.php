@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controller;
-
 use App\Entity\DemandeAchat;
 use App\Entity\Achat;
 use App\Form\DemandeAchatType;
@@ -22,18 +21,33 @@ class DemandeAchatController extends AbstractController
             'demande_achats' => $demandeAchatRepository->findAll(),
         ]);
     } 
-    #[Route('/demandeachat/search', name: 'app_demande_achat_search', methods: ['GET'])]
-    public function search(Request $request, DemandeAchatRepository $demandeAchatRepository): Response
+    #[Route('/pdf/{id}', name: 'demandeachat_pdf')]
+    public function generatePdf($id, DemandeAchatRepository $demandeAchatRepository): Response
     {
-        // Récupération du terme de recherche depuis la requête
-        $searchTerm = $request->query->get('search');
-
-        // Recherche des demandes d'achat correspondant au terme de recherche
-        $demandeAchats = $demandeAchatRepository->findBySearchTerm($searchTerm);
-
-        // Affichage des résultats de recherche
-        return $this->render('demande_achat/search_results.html.twig', [
-            'demande_achats' => $demandeAchats,
+        // Récupérer la demande d'achat avec l'ID donné
+        $demandeAchat = $demandeAchatRepository->find($id);
+    
+        if (!$demandeAchat) {
+            throw $this->createNotFoundException('La demande d\'achat n\'existe pas.');
+        }
+    
+        // Générer le contenu HTML du PDF en utilisant le template Twig
+        $html = $this->renderView('demande_achat/pdf.html.twig', [
+            'demande_achat' => $demandeAchat,
+        ]);
+    
+        // Créer une instance de Dompdf
+        $pdfGenerator = new \Dompdf\Dompdf();
+    
+        // Charger le contenu HTML dans Dompdf
+        $pdfGenerator->loadHtml($html);
+    
+        // Rendre le PDF
+        $pdfGenerator->render();
+    
+        // Retourner le PDF comme une réponse
+        return new Response($pdfGenerator->output(), 200, [
+            'Content-Type' => 'application/pdf',
         ]);
     }
 

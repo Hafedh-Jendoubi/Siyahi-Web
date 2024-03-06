@@ -4,6 +4,7 @@
 
 {% block body %}
     <div class="container mt-4">
+<<<<<<< HEAD
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <h1 class="text-center mb-4">Nouvelle Réponse de Réclamation</h1>
@@ -17,5 +18,12 @@
                 </div>
             </div>
         </div>
+=======
+        <h1 class="mb-4">Nouvelle Réponse de Réclamation</h1>
+
+        {{ include('reponse_reclamation/_form.html.twig') }}
+
+        <a href="{{ path('app_reponse_reclamation_index') }}" class="btn btn-secondary"><span class="fas fa-arrow-left"></span> Retour à la Liste</a>
+>>>>>>> 5a276a0692a17fcdc5d392d533f6c3446e05d56c
     </div>
 {% endblock %}

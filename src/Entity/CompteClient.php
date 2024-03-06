@@ -5,9 +5,13 @@ namespace App\Entity;
 use App\Repository\CompteClientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\BigIntType;
 use Doctrine\ORM\Mapping as ORM;
+use PhpParser\Node\Expr\Cast\String_;
+use Doctrine\DBAL\Types\Types;
 
 #[ORM\Entity(repositoryClass: CompteClientRepository::class)]
+#[UniqueEntity(fields: ['RIB'], message: 'This RIB is already in use.')]
 class CompteClient
 {
     #[ORM\Id]
@@ -15,15 +19,17 @@ class CompteClient
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $Type = null;
+    #[ORM\ManyToOne(inversedBy: ' services de compte')]
+    private ?Service $service = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: "bigint", unique: true)]
     private ?int $RIB = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $Created_at = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\EqualTo("today", message:"La date de début doit être ultérieure à aujourd'hui")]
+    private ?\DateTimeInterface $Created_at = null;
 
+    
     #[ORM\Column]
     private ?float $Solde = null;
 
@@ -33,27 +39,24 @@ class CompteClient
     #[ORM\ManyToOne(inversedBy: 'compteClients')]
     private ?User $User = null;
 
-    public function __construct()
-    {
-        $this->services = new ArrayCollection();
-    }
-
+  
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getType(): ?string
+    public function getService(): ?Service
     {
-        return $this->Type;
+        return $this->service;
     }
 
-    public function setType(string $Type): static
+    public function setService(?Service $service): static
     {
-        $this->Type = $Type;
+        $this->service = $service;
 
         return $this;
     }
+
 
     public function getRIB(): ?int
     {
@@ -67,12 +70,13 @@ class CompteClient
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->Created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $Created_at): static
+    public function setCreatedAt(\DateTimeInterface $Created_at): static
     {
         $this->Created_at = $Created_at;
 
@@ -91,14 +95,7 @@ class CompteClient
         return $this;
     }
 
-    /**
-     * @return Collection<int, Service>
-     */
-    public function getServices(): Collection
-    {
-        return $this->services;
-    }
-
+   
     public function addService(Service $service): static
     {
         if (!$this->services->contains($service)) {
@@ -132,4 +129,20 @@ class CompteClient
 
         return $this;
     }
+
+    public function __toString(): string
+{
+    $typeString = is_object($this->service) ? $this->service->getName() : (string) $this->service;
+
+    return sprintf(
+        'CompteClient [ID: %d, Type: %s, RIB: %d, Created_at: %s, Solde: %f]',
+        $this->id,
+        $typeString,
+        $this->RIB,
+        $this->Created_at ? $this->Created_at->format('Y-m-d H:i:s') : 'null',
+        $this->Solde
+    );
+}
+
+
 }

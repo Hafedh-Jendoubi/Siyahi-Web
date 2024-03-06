@@ -1,0 +1,38 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}Compte Client{% endblock %}
+
+{% block body %}
+<title>Détails Compte</title>
+    <h1>Détails du Compte Client</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ compte_client.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ compte_client.service }}</td>
+            </tr>
+            <tr>
+                <th>RIB</th>
+                <td>{{ compte_client.RIB }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ compte_client.CreatedAt ? compte_client.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Solde</th>
+                <td>{{ compte_client.Solde }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary d-block mx-auto" style="width=200px"  href="{{ path('app_compte_client_index') }}">Retour à la liste</a>
+
+    <a class="btn btn-primary d-block mx-auto" style="width=200px; background-color: #FBA834; border-color: #FBA834; " href="{{ path('app_compte_client_edit', {'id': compte_client.id}) }}">Modifier</a>
+    {{ include('compte_client/_delete_form.html.twig') }}
+{% endblock %}

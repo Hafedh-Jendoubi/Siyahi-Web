@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('app_service_delete', {'id': service.id}) }}" class="delete-form">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ service.id) }}">
+    <button type="button" class="btn btn-success d-block mx-auto delete-button" style="width: 200px; background-color: #D04848; border-color: #D04848">Supprimer</button>
+</form>
+
+

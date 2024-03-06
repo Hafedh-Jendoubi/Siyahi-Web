@@ -1,0 +1,73 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}Liste des Services{% endblock %}
+
+{% block body %}
+    <h1>Liste des Services</h1>
+    <title>Services</title>
+
+    <div>
+        <label for="search-by">Rechercher par :</label>
+        <select id="search-by">
+            <option value="0">ID</option>
+            <option value="1">Nom</option>
+        </select>
+
+        <input id="search-input" type="text" class="form-control" placeholder="Rechercher...">
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for service in services %}
+            <tr>
+                <td>{{ service.id }}</td>
+                <td>{{ service.Name }}</td>
+                <td>{{ service.Description }}</td>
+                <td>
+                    <a class="btn btn-info" style="width: 110px;" href="{{ path('app_service_show', {'id': service.id}) }}">Afficher</a>
+                    <a class="btn btn-primary" style="width: 110px;" href="{{ path('app_service_edit', {'id': service.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Pas de Services</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-success d-block mx-auto" style="width: 200px;"  href="{{ path('app_service_new') }}">Créer</a>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#search-input").on("keyup", function () {
+                applySearch();
+            });
+
+            // Change event for the search-by dropdown
+            $("#search-by").on("change", function () {
+                $("#search-input").val(''); // Clear the input when changing search criteria
+                applySearch();
+            });
+
+            function applySearch() {
+                var value = $("#search-input").val().toLowerCase();
+                var searchBy = $("#search-by").val();
+
+                $("table tbody tr").each(function () {
+                    var rowData = $(this).find("td:eq(" + searchBy + ")").text().toLowerCase();
+                    $(this).toggle(rowData.indexOf(value) > -1);
+                });
+            }
+        });
+    </script>
+{% endblock %}
