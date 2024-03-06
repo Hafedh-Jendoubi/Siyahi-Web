@@ -43,8 +43,11 @@
                     <a class="btn btn-primary" style="width: 110px; " href="{{ path('app_reponse_credit_edit', {'id': reponse_credit.id}) }}">Modifier</a>
                     <br>
                     {{ include('reponse_credit/_delete_form.html.twig') }}
+<<<<<<< HEAD
+=======
                     
                     <a class="btn btn-outline-secondary" href="{{ path('app_reponse_credit_pdf', {'id': reponse_credit.id}) }}">Télécharger en PDF</a>
+>>>>>>> 7ceaf174d827fd9d9c23ae4ada7aca90286f7c21
                 </td>
             </tr>
         {% else %}
@@ -54,6 +57,8 @@
         {% endfor %}
         </tbody>
     </table>
+<<<<<<< HEAD
+=======
     <div class="pagination">
         {{ knp_pagination_render(reponse_credits, 'credit/my_custom_template.html.twig') }}
     </div>
@@ -69,6 +74,7 @@
             });
         });
     </script>
+>>>>>>> 7ceaf174d827fd9d9c23ae4ada7aca90286f7c21
 
     <a  class="btn btn-success" style="width: 110px; " href="{{ path('app_reponse_credit_new') }}">Créer</a>
 {% endblock %}

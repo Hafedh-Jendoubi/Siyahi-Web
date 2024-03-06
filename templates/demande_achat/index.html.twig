@@ -3,81 +3,89 @@
 {% block title %}DemandeAchat index{% endblock %}
 
 {% block body %}
-    <h1>DemandeAchat index</h1>
- {# Barre de recherche #}
+    <h1 class="text-center mb-4">Liste des Demandes d'Achat</h1>
 
+    <div class="container">
+        <div class="row justify-content-end mb-3">
+            <input id="search-input" type="text" class="form-control col-md-4" placeholder="Recherche par Nom, Prénom...">
+            <label class="col-md-2 col-form-label text-md-end">Filtrer par date :</label>
+            <input id="date-filter" type="date" class="form-control col-md-3">
+        </div>
+        
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $("#search-input").on("keyup", function () {
+                    var value = $(this).val().toLowerCase();
+                    var dateFilter = $("#date-filter").val().toLowerCase();
 
- <input id="search-input" type="form-control" placeholder="Search...">
-<title>AJAX Search Example</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $("#search-input").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("table tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    $("table tbody tr").filter(function () {
+                        var rowData = $(this).text().toLowerCase();
+                        var dateData = $(this).find("td:eq(3)").text().toLowerCase(); // Index de la colonne de la date
+                        $(this).toggle(rowData.indexOf(value) > -1 && (dateFilter === "" || dateData >= dateFilter));
+                    });
+                });
+
+                $("#date-filter").on("change", function () {
+                    var value = $(this).val().toLowerCase();
+                    var searchValue = $("#search-input").val().toLowerCase();
+
+                    $("table tbody tr").filter(function () {
+                        var rowData = $(this).text().toLowerCase();
+                        var dateData = $(this).find("td:eq(3)").text().toLowerCase(); // Index de la colonne de la date
+                        $(this).toggle(dateData >= value && (searchValue === "" || rowData.indexOf(searchValue) > -1));
+                    });
                 });
             });
-        });
-    </script>
+        </script>
 
-    <form action="{{ path('search_demande_achat') }}" method="GET">
-        <input type="text" name="search" placeholder="Recherche par Nom ou Prénom...">
-        <button type="submit">Rechercher</button>
-    </form>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>DateDemande</th>
-                <th>NumTel</th>
-                <th>TypePaiement</th>
-                <th>CIN</th>
-                <th>Adresse</th>
-                <th>User</th>
-                <th>Achat</th>
-                <th>Etat Demande</th>
-                <th>Accepter</th>
-                <th>Refuser</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for demande_achat in demande_achats %}
-            <tr>
-                <td>{{ demande_achat.id }}</td>
-                <td>{{ demande_achat.Nom }}</td>
-                <td>{{ demande_achat.Prenom }}</td>
-                <td>{{ demande_achat.DateDemande ? demande_achat.DateDemande|date('Y-m-d') : '' }}</td>
-                <td>{{ demande_achat.numTel }}</td>
-                <td>{{ demande_achat.TypePaiement }}</td>
-                <td>{{ demande_achat.CIN }}</td>
-                <td>{{ demande_achat.Adresse }}</td>
-                <td>{{ demande_achat.User.firstName ~ " " ~ demande_achat.User.lastName}}</td>
-                <td>{{ demande_achat.Achat }}</td>
-               
-                <td style="{% if demande_achat.etatdemande == 'en cours de traitement' %}color: yellow;{% elseif demande_achat.etatdemande == 'demande accepter' %}color: green;{% elseif demande_achat.etatdemande == 'demande refu' %}color: red;{% endif %}">
-                    {{ demande_achat.etatdemande }}
-                </td>
-                <td>
-                    <a href="{{ path('app_demande_achat_accepter', {'id': demande_achat.id}) }}">Accepter</a>
-                </td>
-                <td>
-                    <a href="{{ path('app_demande_achat_refuser', {'id': demande_achat.id}) }}">Refuser</a>
-                </td>
-                <td>
-                    <a href="{{ path('app_demande_achat_show', {'id': demande_achat.id}) }}">show</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="9">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Date de Demande</th>
+                    <th>Numéro de Téléphone</th>
+                    <th>Type de Paiement</th>
+                    <th>CIN</th>
+                    <th>Adresse</th>
+                    <th>Utilisateur</th>
+                    <th>Achat</th>
+                    <th>État de la Demande</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for demande_achat in demande_achats %}
+                    <tr>
+                        <td>{{ demande_achat.id }}</td>
+                        <td>{{ demande_achat.Nom }}</td>
+                        <td>{{ demande_achat.Prenom }}</td>
+                        <td>{{ demande_achat.DateDemande ? demande_achat.DateDemande|date('Y-m-d') : '' }}</td>
+                        <td>{{ demande_achat.numTel }}</td>
+                        <td>{{ demande_achat.TypePaiement }}</td>
+                        <td>{{ demande_achat.CIN }}</td>
+                        <td>{{ demande_achat.Adresse }}</td>
+                        <td>{{ demande_achat.User.firstName }} {{ demande_achat.User.lastName }}</td>
+                        <td>{{ demande_achat.Achat }}</td>
+                        <td style="{% if demande_achat.etatdemande == 'en cours de traitement' %}color: yellow;{% elseif demande_achat.etatdemande == 'demande accepter' %}color: green;{% elseif demande_achat.etatdemande == 'demande refu' %}color: red;{% endif %}">
+                            {{ demande_achat.etatdemande }}
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Actions">
+                                <a href="{{ path('app_demande_achat_accepter', {'id': demande_achat.id}) }}" class="btn btn-success">Accepter</a>
+                                <a href="{{ path('app_demande_achat_refuser', {'id': demande_achat.id}) }}" class="btn btn-danger">Refuser</a>
+                                <a href="{{ path('app_demande_achat_show', {'id': demande_achat.id}) }}" class="btn btn-primary">Show</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="12">Aucun enregistrement trouvé</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

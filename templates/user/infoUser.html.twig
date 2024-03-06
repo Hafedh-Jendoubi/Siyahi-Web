@@ -66,7 +66,11 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
+<<<<<<< HEAD
+                                <img src="{{ user.image }}" class="rounded-circle" width="250" height="250">
+=======
                                 <img src="{{ asset('uploads/user/' ~ user.image) }}" class="rounded-circle" width="250" height="250">
+>>>>>>> 7ceaf174d827fd9d9c23ae4ada7aca90286f7c21
                                 <div class="mt-3">
                                     {% if is_granted("ROLE_ADMIN") %}
                                     <h4>{{ user.FirstName ~ " " ~ user.LastName }}</h4>

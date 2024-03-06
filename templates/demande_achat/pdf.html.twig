@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demande d'achat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            text-align: center;
+            color: #4285f4;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .greeting {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Siyahi Bank</h1>
+        <h2 class="title">Demande avec ID : {{ demande_achat.id }}</h2>
+        <table>
+            <tr>
+                <th>NOM</th>
+                <td>{{ demande_achat.Nom }}</td>
+            </tr>
+            <tr>
+                <th>PRÉNOM</th>
+                <td>{{ demande_achat.Prenom }}</td>
+            </tr>
+            <tr>
+                <th>DATE DE DEMANDE</th>
+                <td>{{ demande_achat.DateDemande ? demande_achat.DateDemande|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>NUMÉRO DE TÉLÉPHONE</th>
+                <td>{{ demande_achat.numTel }}</td>
+            </tr>
+            <tr>
+                <th>TYPE DE PAIEMENT</th>
+                <td>{{ demande_achat.TypePaiement }}</td>
+            </tr>
+            <tr>
+                <th>CIN</th>
+                <td>{{ demande_achat.CIN }}</td>
+            </tr>
+            <tr>
+                <th>ADRESSE</th>
+                <td>{{ demande_achat.Adresse }}</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

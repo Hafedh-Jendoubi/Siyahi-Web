@@ -7,12 +7,16 @@
   top: 0px;
   z-index: 10;
 }
+<<<<<<< HEAD
+
+=======
 .image-cercle {
   border-radius: 50%;
   width: 100px; /* Ajustez la taille en fonction de vos besoins */
   height: 100px; /* Ajustez la taille en fonction de vos besoins */
   object-fit: cover;
 }
+>>>>>>> 7ceaf174d827fd9d9c23ae4ada7aca90286f7c21
 .bg-menu-theme .menu-header {
   position: relative;
 }

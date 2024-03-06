@@ -1,6 +1,8 @@
 {% extends 'back_base.html.twig' %}
 
 {% block body %}
+<<<<<<< HEAD
+=======
 <div id="google_translate_element"></div>
 <script type="text/javascript">
     function translateToFrench() {
@@ -23,6 +25,7 @@
 </script>
 
 
+>>>>>>> 7ceaf174d827fd9d9c23ae4ada7aca90286f7c21
     <h1>Liste des réponses congé</h1>
 
     <table class="table">
@@ -47,12 +50,17 @@
                 <td>
                      <a class="btn btn-outline-info" style="width: 100px; " href="{{ path('app_reponse_conge_show', {'id': reponse_conge.id}) }}">Détailles</a><br>
                     <a  class="btn btn-outline-primary" style="width: 100px; " href="{{ path('app_reponse_conge_edit', {'id': reponse_conge.id}) }}">modifier</a><br>
+<<<<<<< HEAD
+                    
+                    {{ include('reponse_conge/_delete_form.html.twig') }}
+=======
                      <a  class="btn btn-outline-danger" style="width: 100px; " onclick="return confirm('Are you sure you want to delete this item?')" href="{{ path('app_reponse_conge_delete1', {'id': reponse_conge.id}) }}">supprimer</a><br>
                     <a class="btn btn-outline-secondary" href="{{ path('app_reponse_conge_pdf', {'id': reponse_conge.id}) }}">Télécharger en PDF</a>
                   <form action="{{ path('app_reponse_conge_confirm', {'id': reponse_conge.id}) }}" method="post">
     <!-- Vos champs de formulaire -->
     <button type="submit">Confirmer</button>
 </form>
+>>>>>>> 7ceaf174d827fd9d9c23ae4ada7aca90286f7c21
                 </td>
             </tr>
         {% else %}
@@ -63,10 +71,17 @@
         </tbody>
     </table>
 
+<<<<<<< HEAD
+    
+
+
+    <a class="btn btn-outline-success" style="width: 110px; " href="{{ path('app_reponse_conge_new') }}">Ajouter</a> 
+=======
     <div>
 
 
     <a class="btn btn-outline-success" style="width: 110px; " href="{{ path('app_reponse_conge_new') }}">Ajouter</a>
       <a  class="btn btn-outline-secondary" style="width: 100px; " href="{{ path('calendar') }}">calendrier</a><br>
                  
+>>>>>>> 7ceaf174d827fd9d9c23ae4ada7aca90286f7c21
 {% endblock %}
