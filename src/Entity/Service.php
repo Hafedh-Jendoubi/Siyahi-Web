@@ -19,11 +19,11 @@ class Service
     #[ORM\Column(length: 255)]
     private ?string $Description = null;
 
-    #[ORM\ManyToOne(inversedBy: 'services')]
+    /*#[ORM\ManyToOne(inversedBy: 'services')]
     private ?CompteClient $Compte_Client = null;
 
     #[ORM\ManyToOne(inversedBy: 'services')]
-    private ?User $User = null;
+    private ?User $User = null;*/
 
     public function getId(): ?int
     {
@@ -54,7 +54,11 @@ class Service
         return $this;
     }
 
-    public function getCompteClient(): ?CompteClient
+    public function __toString(): string
+    {
+        return $this->getName(); // Assuming Service entity has a getName method
+    }
+/*public function getCompteClient(): ?CompteClient
     {
         return $this->Compte_Client;
     }
@@ -76,5 +80,5 @@ class Service
         $this->User = $User;
 
         return $this;
-    }
+    }*/
 }

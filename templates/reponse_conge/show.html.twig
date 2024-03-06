@@ -5,6 +5,9 @@
 {% block body %}
 <<<<<<< HEAD
 =======
+<<<<<<< HEAD
+=======
+>>>>>>> af179764f2540397b8b939c058db45c9f037e370
 <div id="google_translate_element"></div>
 <script type="text/javascript">
     
@@ -21,7 +24,10 @@
         new google.translate.TranslateElement({pageLanguage: 'fr', includedLanguages: 'en', autoDisplay: false}, 'google_translate_element');
     }
 </script>
+<<<<<<< HEAD
+=======
 >>>>>>> 7ceaf174d827fd9d9c23ae4ada7aca90286f7c21
+>>>>>>> af179764f2540397b8b939c058db45c9f037e370
     <h1>ReponseConge</h1>
 
     <table class="table">
@@ -51,6 +57,10 @@
 
     <a href="{{ path('app_reponse_conge_index') }}">retour à liste </a>
 <<<<<<< HEAD
+ <a  class="btn btn-outline-primary" style="width: 100px; " href="{{ path('app_reponse_conge_edit', {'id': reponse_conge.id}) }}">modifier</a><br>
+                     <a  class="btn btn-outline-danger" style="width: 100px; " onclick="return confirm('Are you sure you want to delete this item?')" href="{{ path('app_reponse_conge_delete1', {'id': reponse_conge.id}) }}">supprimer</a><br>
+=======
+<<<<<<< HEAD
 <a href="{{ path('app_reponse_conge_edit', {'id': reponse_conge.id}) }}">
     <img src="{{ asset('front/assets/img/team/edit.png') }}" alt="Modifier" style="width: 25px;">
  </a>
@@ -59,4 +69,5 @@
  <a  class="btn btn-outline-primary" style="width: 100px; " href="{{ path('app_reponse_conge_edit', {'id': reponse_conge.id}) }}">modifier</a><br>
                      <a  class="btn btn-outline-danger" style="width: 100px; " onclick="return confirm('Are you sure you want to delete this item?')" href="{{ path('app_reponse_conge_delete1', {'id': reponse_conge.id}) }}">supprimer</a><br>
 >>>>>>> 7ceaf174d827fd9d9c23ae4ada7aca90286f7c21
+>>>>>>> af179764f2540397b8b939c058db45c9f037e370
 {% endblock %}

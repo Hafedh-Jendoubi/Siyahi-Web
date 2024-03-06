@@ -14,3 +14,12 @@ app_reponse_conge_show:
 gregwar_captcha_routing:
     resource: "@GregwarCaptchaBundle/Resources/config/routing/routing.yml"
     prefix: /_gcb
+
+app_service_delete:
+    path: /service/delete/{id}
+    controller: App\Controller\ServiceController::delete
+
+currency_ticker:
+    path: /currency-ticker
+    controller: App\Controller\CurrencyController::index
+

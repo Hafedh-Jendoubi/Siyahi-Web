@@ -1,0 +1,35 @@
+{% extends 'back_base.html.twig' %}
+
+{% block title %}New Service{% endblock %}
+
+{% block body %}
+    <h1>Ajouter Service</h1>
+    <title>Ajouter Service</title>
+
+    {{ include('service/_form.html.twig') }}
+    <br>
+    <a class="btn btn-primary d-block mx-auto" style="width:200px;" href="{{ path('app_service_index') }}">back to list</a>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector('form[name="service"]');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                // Use SweetAlert for confirmation
+                Swal.fire({
+                    title: 'Confirmer l\'ajout?',
+                    showCancelButton: true,
+                    confirmButtonText: 'Oui',
+                    cancelButtonText: 'Non',
+                    icon: 'question'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // If user confirms, proceed with form submission
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
