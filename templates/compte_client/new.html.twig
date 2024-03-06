@@ -13,6 +13,8 @@
     {# Add SweetAlert JavaScript #}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
    <script>
         document.addEventListener("DOMContentLoaded", function () {
         const form = document.querySelector('form[name="compte_client"]');
@@ -30,7 +32,7 @@
             console.log('Solde:', solde);
 
             // Conditions for showing an error
-            if ((selectedOption === '2' && solde <= 10000) || (selectedOption === '4' && solde <= 30000)) {
+            if ((selectedOption === '0' && solde <= 10000) || (selectedOption === '5' && solde <= 30000)) {
                 console.log('Showing error message');
                 Swal.fire({
                     title: 'Erreur!',

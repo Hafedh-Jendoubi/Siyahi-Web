@@ -90,8 +90,9 @@ public function new(Request $request, EntityManagerInterface $entityManager, Com
 
 
     #[Route('/{id}', name: 'app_compte_client_show', methods: ['GET'])]
-    public function show(CompteClient $compteClient): Response
+    public function show(CompteClientRepository $repository, $id): Response
     {
+        $compteClient = $repository->find($id);
         return $this->render('compte_client/show.html.twig', [
             'compte_client' => $compteClient,
         ]);
@@ -116,8 +117,10 @@ public function new(Request $request, EntityManagerInterface $entityManager, Com
     }
 
     #[Route('/{id}', name: 'app_compte_client_delete', methods: ['POST'])]
-    public function delete(Request $request, CompteClient $compteClient, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, CompteClientRepository $repository,$id, EntityManagerInterface $entityManager): Response
     {
+        $compteClient = $repository->find($id);
+
         if ($this->isCsrfTokenValid('delete'.$compteClient->getId(), $request->request->get('_token'))) {
             $entityManager->remove($compteClient);
             $entityManager->flush();

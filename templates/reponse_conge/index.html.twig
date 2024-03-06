@@ -1,0 +1,72 @@
+{% extends 'back_base.html.twig' %}
+
+{% block body %}
+<div id="google_translate_element"></div>
+<script type="text/javascript">
+    function translateToFrench() {
+        var el = document.getElementById("google_translate_element").querySelector(".goog-te-combo");
+        el.value = "fr";
+        el.dispatchEvent(new Event('change'));
+    }
+
+    function translateToEnglish() {
+        var el = document.getElementById("google_translate_element").querySelector(".goog-te-combo");
+        el.value = "en";
+        el.dispatchEvent(new Event('change'));
+    }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'fr', includedLanguages: 'en', autoDisplay: false}, 'google_translate_element');
+    }
+</script>
+
+
+    <h1>Liste des réponses congé</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Congé_id</th>
+                <th>Description</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reponse_conge in reponse_conges %}
+            <tr>
+                <td>{{ reponse_conge.id }}</td>
+                <td>{{ reponse_conge.conge.id }}</td>
+                <td>{{ reponse_conge.description }}</td>
+                <td>{{ reponse_conge.DateDebut ? reponse_conge.DateDebut|date('Y-m-d') : '' }}</td>
+                <td>{{ reponse_conge.DateFin ? reponse_conge.DateFin|date('Y-m-d') : '' }}</td>
+                <td>
+                     <a class="btn btn-outline-info" style="width: 100px; " href="{{ path('app_reponse_conge_show', {'id': reponse_conge.id}) }}">Détailles</a><br>
+                    <a  class="btn btn-outline-primary" style="width: 100px; " href="{{ path('app_reponse_conge_edit', {'id': reponse_conge.id}) }}">modifier</a><br>
+                     <a  class="btn btn-outline-danger" style="width: 100px; " onclick="return confirm('Are you sure you want to delete this item?')" href="{{ path('app_reponse_conge_delete1', {'id': reponse_conge.id}) }}">supprimer</a><br>
+                    <a class="btn btn-outline-secondary" href="{{ path('app_reponse_conge_pdf', {'id': reponse_conge.id}) }}">Télécharger en PDF</a>
+                  <form action="{{ path('app_reponse_conge_confirm', {'id': reponse_conge.id}) }}" method="post">
+    <!-- Vos champs de formulaire -->
+    <button type="submit">Confirmer</button>
+</form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div>
+
+
+    <a class="btn btn-outline-success" style="width: 110px; " href="{{ path('app_reponse_conge_new') }}">Ajouter</a>
+      <a  class="btn btn-outline-secondary" style="width: 100px; " href="{{ path('calendar') }}">calendrier</a><br>
+                 
+{% endblock %}

@@ -1,6 +1,20 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+search_demande_achat:
+  path: /demande_achat/search
+  controller: App\Controller\DemandeAchatController::search
+  methods: GET
+app_reponse_conge_show:
+    path: '/reponse/conge/{id}'
+    controller: 'App\Controller\ReponseCongeController::show'
+    methods: ['GET']
+    requirements:
+        id: '\d+'
+gregwar_captcha_routing:
+    resource: "@GregwarCaptchaBundle/Resources/config/routing/routing.yml"
+    prefix: /_gcb
+
 app_service_delete:
     path: /service/delete/{id}
     controller: App\Controller\ServiceController::delete
@@ -8,3 +22,4 @@ app_service_delete:
 currency_ticker:
     path: /currency-ticker
     controller: App\Controller\CurrencyController::index
+

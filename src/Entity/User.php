@@ -4,19 +4,37 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 180, unique: true)]
+    private ?string $email = null;
+
+    #[ORM\Column]
+    private array $roles = ["ROLE_USER"];
+
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
     #[ORM\Column(length: 15)]
+    #[Assert\NotBlank(message:"First Name is required.")]
     private ?string $First_Name = null;
 
     #[ORM\Column(length: 20)]
@@ -36,9 +54,6 @@ class User
 
     #[ORM\Column]
     private ?\DateTimeImmutable $Created_At = null;
-
-    #[ORM\Column(length: 15)]
-    private ?string $Role = null;
 
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: ReponseConge::class)]
     private Collection $reponseConges;
@@ -67,6 +82,12 @@ class User
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: Service::class)]
     private Collection $services;
 
+    #[ORM\Column(length: 255)]
+    private ?string $old_email = null;
+
+    #[ORM\Column(length: 1)]
+    private ?string $activity = null;
+
     public function __construct()
     {
         $this->reponseConges = new ArrayCollection();
@@ -79,10 +100,83 @@ class User
         $this->compteClients = new ArrayCollection();
         $this->services = new ArrayCollection();
     }
-
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @deprecated since Symfony 5.3, use getUserIdentifier instead
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): static
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): static
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
     }
 
     public function getFirstName(): ?string
@@ -165,18 +259,6 @@ class User
     public function setCreatedAt(\DateTimeImmutable $Created_At): static
     {
         $this->Created_At = $Created_At;
-
-        return $this;
-    }
-
-    public function getRole(): ?string
-    {
-        return $this->Role;
-    }
-
-    public function setRole(string $Role): static
-    {
-        $this->Role = $Role;
 
         return $this;
     }
@@ -447,6 +529,50 @@ class User
                 $service->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    public function getOldEmail(): ?string
+    {
+        return $this->old_email;
+    }
+
+    public function setOldEmail(string $old_email): static
+    {
+        $this->old_email = $old_email;
+
+        return $this;
+    }
+
+    public function getActivity(): ?string
+    {
+        return $this->activity;
+    }
+
+    public function setActivity(string $activity): static
+    {
+        $this->activity = $activity;
 
         return $this;
     }

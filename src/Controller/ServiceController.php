@@ -29,6 +29,7 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
     $service = new Service();
     $form = $this->createForm(ServiceType::class, $service);
     $form->handleRequest($request);
+    dump('test');
 
     if ($form->isSubmitted() && $form->isValid()) {
         // Persist the new service entity
@@ -48,8 +49,10 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
 }
 
     #[Route('/{id}', name: 'app_service_show', methods: ['GET'])]
-    public function show(Service $service): Response
+    public function show(ServiceRepository $repository, $id): Response
     {
+        $service = $repository->find($id);
+        
         return $this->render('service/show.html.twig', [
             'service' => $service,
         ]);
@@ -73,9 +76,10 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
         ]);
     }
 
-    #[Route('/{id}', name: 'app_service_delete', methods: ['POST'])]
-    public function delete(Request $request, Service $service, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}', name: 'app_service_delete')]
+    public function delete(Request $request, ServiceRepository $repository,$id, EntityManagerInterface $entityManager): Response
     {
+        $service=$repository->find($id);
         if ($this->isCsrfTokenValid('delete'.$service->getId(), $request->request->get('_token'))) {
             $entityManager->remove($service);
             $entityManager->flush();
