@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    {% block title %} {% endblock %} <!-- Title -->
+    {% block title %} {% endblock %} <!-- Titre -->
     <meta content="" name="description">
     <meta content="" name="keywords">
 
-    <!-- Favicons -->
+    <!-- Icônes favorites -->
     <link href="front/assets/img/logo.png" rel="icon">
     <link href="front/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-    <!-- Google Fonts -->
+    <!-- Polices Google -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
     {% block stylesheets %}
-        <!-- Vendor CSS Files -->
+        <!-- Fichiers CSS des fournisseurs -->
         <link href="{{ asset('front/assets/vendor/aos/aos.css') }}" rel="stylesheet">
         <link href="{{ asset('front/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ asset('front/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
@@ -25,7 +25,7 @@
         <link href="{{ asset('front/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
         <link href="{{ asset('front/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
-        <!-- Template Main CSS File -->
+        <!-- Fichier CSS principal du modèle -->
         <link href="{{ asset('front/assets/css/style.css') }}" rel="stylesheet">
     {% endblock %}
 
@@ -33,7 +33,7 @@
 
 <body>
 
-<!-- ======= Top Bar ======= -->
+<!-- ======= Barre supérieure ======= -->
 <section id="topbar" class="d-flex align-items-center">
     <div class="container d-flex justify-content-center justify-content-md-between">
         <div class="contact-info d-flex align-items-center">
@@ -49,62 +49,72 @@
     </div>
 </section>
 
-<!-- ======= Header ======= -->
-    <header id="header" class="d-flex align-items-center">
-        <div class="container d-flex align-items-center justify-content-between">
+<!-- ======= En-tête ======= -->
+<header id="header" class="d-flex align-items-center">
+    <div class="container d-flex align-items-center justify-content-between">
 
-            <h1 class="logo"><a href="{{ path('app_user') }}#hero">Siyahi Bank<span>.</span></a></h1>
-            <!-- Uncomment below if you prefer to use an image logo -->
-            <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt=""></a>-->
+        <h1 class="logo"><a href="{{ path('app_user') }}#hero">Siyahi Bank<span>.</span></a></h1>
+        <!-- Décommentez ci-dessous si vous préférez utiliser un logo d'image -->
+        <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt=""></a>-->
 
-            <nav id="navbar" class="navbar">
-                <ul>
-                    <li><a class="nav-link scrollto" href="{{ path('app_user') }}#hero">Home</a></li>
-                    <li><a class="nav-link scrollto" href="{{ path('app_user') }}#about">About</a></li>
-                    <li><a class="nav-link scrollto" href="{{ path('app_user') }}#team">Team</a></li>
-                    <li><a class="nav-link scrollto" href="{{ path('app_user') }}#contact">Contact</a></li>
-                    {% if is_granted("ROLE_USER") %}
-                        <li class="dropdown"><a href="#"><span>Services</span> <i class="bi bi-chevron-down"></i></a>
-                            <ul>
-                                <li><a href="#">Operation</a></li>
-                                <li class="dropdown"><a href="#"><span>Credit</span> <i class="bi bi-chevron-right"></i></a>
-                                    <ul>
-                                        <li><a href="{{ path('app_credit_new') }}">Avoir un Crédit</a></li>
-                                        <li><a href="{{ path('app_credit_index') }}">Historique</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">Achat</a></li>
-                                <li><a href="#">Reclamation</a></li>
-                            </ul>
-                        </li>
-                    {% endif %}
-                    {% if is_granted("ROLE_USER") %}
-                        <li><a class="nav-link scrollto" href="{{ path('user_account', { id: app.user.id }) }}">Account</a></li>
-                    {% endif %}
-                    {% if is_granted("ROLE_STAFF") %}
-                        <li><a class="nav-link scrollto" href="{{ path('app_home') }}">Dashboard</a></li>
-                    {% endif %}
-                    <li><!-- Just to leave an empty space between Contact & Logout --></li>
-                    {% if is_granted("ROLE_USER") %}
-                        <li><a class="nav-link scrollto" href="{{ path('app_logout') }}">Logout</a></li>
-                    {% else %}
-                        <li><a class="nav-link scrollto" href="{{ path('app_login') }}">Login</a></li>
-                    {% endif %}
-                </ul>
-                <i class="bi bi-list mobile-nav-toggle"></i>
-            </nav><!-- .navbar -->
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li><a class="nav-link scrollto" href="{{ path('app_user') }}#hero">Accueil</a></li>
+                <li><a class="nav-link scrollto" href="{{ path('app_user') }}#about">À propos</a></li>
+                <li><a class="nav-link scrollto" href="{{ path('app_user') }}#team">Équipe</a></li>
+                <li><a class="nav-link scrollto" href="{{ path('app_user') }}#contact">Contact</a></li>
+                {% if is_granted("ROLE_USER") %}
+                    <li class="dropdown"><a href="#"><span>Services</span> <i class="bi bi-chevron-down"></i></a>
+                        <ul>
+                            <li class="dropdown"><a href="#"><span>Opérations</span><i class="bi bi-chevron-right"></i></a>
+                                <ul>
+                                    <li><a href="{{ path('app_compte_client_show_front', {id: app.user.id}) }}">Visiter Compte</a></li>
+                                    <li><a href="{{ path('app_compte_client_transfer') }}">Transferer</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown"><a href="#"><span>Crédit</span> <i class="bi bi-chevron-right"></i></a>
+                                <ul>
+                                    <li><a href="{{ path('app_credit_new') }}">Obtenir un crédit</a></li>
+                                    <li><a href="{{ path('app_credit_index') }}">Historique</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="{{ path('app_achat_indexFront') }}">Achat</a></li>
+                            <li class="dropdown"><a href="#"><span>Réclamation</span> <i class="bi bi-chevron-right"></i></a>
+                                <ul>
+                                    <li><a href="{{ path('app_reclamation_new') }}">Envoyer une réclamation</a></li>
+                                    <li><a href="{{ path('app_reclamation_index') }}">Liste des réclamations</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
+                {% if is_granted("ROLE_USER") or is_granted("ROLE_STAFF") %}
+                    <li><a class="nav-link scrollto" href="{{ path('user_account', { id: app.user.id }) }}">Compte</a></li>
+                {% endif %}
+                {% if is_granted("ROLE_STAFF") %}
+                    <li><a class="nav-link scrollto" href="{{ path('app_home') }}">Tableau de bord</a></li>
+                {% endif %}
+                <li><!-- Juste pour laisser un espace vide entre Contact & Déconnexion --></li>
+                {% if is_granted("ROLE_USER") or is_granted("ROLE_STAFF") %}
+                    <li><a class="nav-link scrollto" href="{{ path('app_logout') }}">Déconnexion</a></li>
+                {% else %}
+                    <li><a class="nav-link scrollto" href="{{ path('app_login') }}">Connexion</a></li>
+                {% endif %}
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
 
-        </div>
-    </header>
-<!-- End Header -->
+    </div>
+</header>
+<!-- Fin de l'en-tête -->
 
 <main id="main">
     {% block body %}
 
     {% endblock %}
-</main><!-- End #main -->
+</main><!-- Fin #main -->
 
-<!-- ======= Footer ======= -->
+<!-- ======= Pied de page ======= -->
 <footer id="footer">
 
     <hr>
@@ -113,39 +123,39 @@
             <div class="row">
 
                 <div class="col-lg-3 col-md-6 footer-contact">
-                    <h3>Siyahi Bank<span>.</span></h3>
+                    <h3>Banque Siyahi<span>.</span></h3>
                     <p>
                         ESPRIT Bloc IJK <br>
                         La Gazelle, Ariana <br>
-                        Tunisia <br><br>
-                        <strong>Phone:</strong> +216 95 052 214<br>
+                        Tunisie <br><br>
+                        <strong>Téléphone:</strong> +216 95 052 214<br>
                         <strong>Email:</strong> siyahi-info@siyahi.tn<br>
                     </p>
                 </div>
 
                 <div class="col-lg-3 col-md-6 footer-links">
-                    <h4>Useful Links</h4>
+                    <h4>Liens utiles</h4>
                     <ul>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Accueil</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">À propos de nous</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Conditions d'utilisation</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Politique de confidentialité</a></li>
                     </ul>
                 </div>
 
                 <div class="col-lg-3 col-md-6 footer-links">
-                    <h4>Our Services</h4>
+                    <h4>Nos services</h4>
                     <ul>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Conception Web</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Développement Web</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Gestion de produit</a></li>
                         <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-                        <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                        <li><i class="bx bx-chevron-right"></i> <a href="#">Design graphique</a></li>
                     </ul>
                 </div>
 
                 <div class="col-lg-3 col-md-6 footer-links">
-                    <h4>Our Social Networks</h4>
+                    <h4>Nos réseaux sociaux</h4>
                     <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
                     <div class="social-links mt-3">
                         <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
@@ -159,13 +169,13 @@
             </div>
         </div>
     </div>
-</footer><!-- End Footer -->
+</footer><!-- Fin du pied de page -->
 
 <div id="preloader"></div>
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 {% block javascripts %}
-    <!-- Vendor JS Files -->
+    <!-- Fichiers JS des fournisseurs -->
     <script src="{{ asset('front/assets/vendor/purecounter/purecounter_vanilla.js') }}"></script>
     <script src="{{ asset('front/assets/vendor/aos/aos.js') }}"></script>
     <script src="{{ asset('front/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -175,7 +185,7 @@
     <script src="{{ asset('front/assets/vendor/waypoints/noframework.waypoints.js') }}"></script>
     <script src="{{ asset('front/assets/vendor/php-email-form/validate.js') }}"></script>
 
-    <!-- Template Main JS File -->
+    <!-- Fichier JS principal du modèle -->
     <script src="{{ asset('front/assets/js/main.js') }}"></script>
 {% endblock %}
 

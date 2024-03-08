@@ -22,4 +22,3 @@ app_service_delete:
 currency_ticker:
     path: /currency-ticker
     controller: App\Controller\CurrencyController::index
-

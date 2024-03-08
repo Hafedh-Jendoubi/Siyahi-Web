@@ -9,6 +9,10 @@
     <table class="table">
         <tbody>
             <tr>
+                <th>Nom et prenom</th>
+                <td>{{ compte_client.user }}</td>
+            </tr>
+            <tr>
                 <th>Id</th>
                 <td>{{ compte_client.id }}</td>
             </tr>
@@ -21,8 +25,8 @@
                 <td>{{ compte_client.RIB }}</td>
             </tr>
             <tr>
-                <th>Created_at</th>
-                <td>{{ compte_client.CreatedAt ? compte_client.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <th>Date de Creation</th>
+                <td>{{ compte_client.CreatedAt ? compte_client.CreatedAt|date('Y-m-d ') : '' }}</td>
             </tr>
             <tr>
                 <th>Solde</th>

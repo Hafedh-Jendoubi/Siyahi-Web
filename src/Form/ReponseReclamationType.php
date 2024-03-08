@@ -26,15 +26,6 @@ class ReponseReclamationType extends AbstractType
                 new NotBlank(['message' => 'Le champ Description ne peut pas être vide.']),
             ],
         ])
-        ->add('dateCreation' ,DateType::class, [
-            // ...
-            'constraints' => [
-                new LessThanOrEqual([
-                    'value' => new \DateTime(),
-                    'message' => 'La date de création ne peut pas être différent à aujourd\'hui.',
-                ]),
-            ],
-        ])
         ->add('auteur', null, [
             'constraints' => [
                 new NotBlank(['message' => 'Le champ auteur ne peut pas être vide.']),

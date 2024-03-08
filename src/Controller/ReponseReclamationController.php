@@ -33,6 +33,7 @@ class ReponseReclamationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($reponseReclamation);
+            $reponseReclamation->setDateCreation(new \DateTimeImmutable());
             $entityManager->flush();
 
             return $this->redirectToRoute('app_reponse_reclamation_index', [], Response::HTTP_SEE_OTHER);

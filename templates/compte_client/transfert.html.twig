@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Transfert d'argent</h1>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <form method="post" action="{{ path('app_compte_client_transfer') }}" id="transferForm">
+            <div class="mb-3">
+                <label for="recipientRIB" class="form-label">RIB du destinataire :</label>
+                <input type="text" class="form-control" id="recipientRIB" name="recipientRIB" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="amount" class="form-label">Montant à transférer :</label>
+                <input type="number" class="form-control" id="amount" name="amount" required>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="confirmTransfer()">Transférer</button>
+        </form>
+    </div>
+
+    <script>
+        function confirmTransfer() {
+            Swal.fire({
+                title: 'Êtes-vous sûr de faire le transfert?',
+                showCancelButton: true,
+                confirmButtonText: 'Oui',
+                cancelButtonText: 'Non',
+                icon: 'question'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit the form
+                    var form = document.getElementById('transferForm');
+                    form.submit();
+                } else {
+                    // SweetAlert for canceled transfer
+                    Swal.fire({
+                        title: 'Transfert annulé',
+                        icon: 'info'
+                    });
+                }
+            });
+        }
+    </script>
+{% endblock %}

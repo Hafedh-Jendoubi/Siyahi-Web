@@ -1,18 +1,8 @@
 <!DOCTYPE html>
-<html
-        lang="en"
-        class="light-style layout-menu-fixed"
-        dir="ltr"
-        data-theme="theme-default"
-        data-assets-path="../assets/"
-        data-template="vertical-menu-template-free"
->
+<html lang="fr" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../assets/" data-template="vertical-menu-template-free">
 <head>
     <meta charset="utf-8" />
-    <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
     {% block title %}
 
@@ -23,18 +13,15 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('back/assets/img/favicon/favicon.ico') }}" />
 
-    <!-- Fonts -->
+    <!-- Polices -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-            href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-            rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
 
-    <!-- Icons. Uncomment required icon fonts -->
+    <!-- Icônes. Décommentez les polices d'icônes requises -->
     <link rel="stylesheet" href="{{ asset('back/assets/vendor/fonts/boxicons.css') }}" />
 
-    <!-- Core CSS -->
+    <!-- CSS principal -->
     <link rel="stylesheet" href="{{ asset('back/assets/vendor/css/core.css') }}" class="template-customizer-core-css" />
     <link rel="stylesheet" href="{{ asset('back/assets/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{{ asset('back/assets/css/demo.css') }}" />
@@ -44,15 +31,15 @@
     <link rel="stylesheet" href="{{ asset('back/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
     <link rel="stylesheet" href="{{ asset('back/assets/vendor/libs/apex-charts/apex-charts.css') }}" />
 
-    <!-- Page CSS -->
+    <!-- CSS de la page -->
 
-    <!-- Helpers -->
+    <!-- Aide -->
     <script src="{{ asset('back/assets/vendor/js/helpers.js') }}"></script>
     <script src="{{ asset('back/assets/js/config.js') }}"></script>
 </head>
 
 <body>
-<!-- Layout wrapper -->
+<!-- Wrapper de mise en page -->
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
@@ -73,47 +60,30 @@
                 <li class="menu-item">
                     <a href="{{ path('app_home') }}" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                        <div data-i18n="Analytics">Dashboard</div>
+                        <div data-i18n="Analytics">Tableau de bord</div>
                     </a>
                 </li>
 
                 {% if is_granted("ROLE_STAFF") %}
-                <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">Staff Panel</span>
-                </li>
-                    <li class="menu-item">
-                    <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                        <div data-i18n="Account Settings">Gestion des Comptes</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="{{ path('app_compte_client_index') }}" class="menu-link">
-                                <div data-i18n="Account">Liste des Comptes</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="{{ path('app_compte_client_new') }}" class="menu-link">
-                                <div data-i18n="Notifications">Ajouter Compte Client</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Panneau du personnel</span>
+                    </li>
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                            <div data-i18n="Account Settings">Gestion des credits</div>
+                            <i class="menu-icon tf-icons bx bx-user"></i>
+                            <div data-i18n="Account Settings">Gestion utilisateur</div>
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item">
-                                <a href="{{ path('app_credit_indexb') }}" class="menu-link">
-                                    <div data-i18n="Account">Liste des credits</div>
+                                <a href="{{ path('addUser') }}" class="menu-link">
+                                    <div data-i18n="Account">Ajouter nouvel utilisateur</div>
                                 </a>
                             </li>
+                        </ul>
+                        <ul class="menu-sub">
                             <li class="menu-item">
-                                <a href="{{ path('app_reponse_credit_index') }}" class="menu-link">
-                                    <div data-i18n="Account">Liste des reponses</div>
+                                <a href="{{ path('app_conge_index') }}" class="menu-link">
+                                    <div data-i18n="Account">Ma liste des congés </div>
                                 </a>
                             </li>
                         </ul>
@@ -121,6 +91,42 @@
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="Account Settings">Gestion des comptes</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="{{ path('app_compte_client_index') }}" class="menu-link">
+                                    <div data-i18n="Account">Liste des comptes</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{ path('app_compte_client_new') }}" class="menu-link">
+                                    <div data-i18n="Notifications">Ajouter compte client</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-credit-card"></i>
+                            <div data-i18n="Account Settings">Gestion des crédits</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="{{ path('app_credit_indexb') }}" class="menu-link">
+                                    <div data-i18n="Account">Liste des crédits</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="{{ path('app_reponse_credit_index') }}" class="menu-link">
+                                    <div data-i18n="Account">Liste des réponses</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-stopwatch"></i>
                             <div data-i18n="Account Settings">Gestion des congés</div>
                         </a>
                         <ul class="menu-sub">
@@ -129,67 +135,7 @@
                                     <div data-i18n="Account">Ma liste des congés</div>
                                 </a>
                             </li>
-                            
-                        </ul>
-                    </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-user"></i>
-                            <div data-i18n="Account Settings">User Section</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="{{ path('addUser') }}" class="menu-link">
-                                    <div data-i18n="Account">Add New User</div>
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="{{ path('app_conge_index') }}"class="menu-link">
-                                    <div data-i18n="Account">Ma liste des Congés </div>
-                                </a>
-                            </li>
-                        </ul>
-                        
-                    </li>
-                    <li class="menu-item">
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                            <div data-i18n="Account Settings">Gestion Achat </div>
-                        </a>
-                        <ul class="menu-sub">
 
-                            <li class="menu-item">
-                                <a href="{{ path('app_achat_index') }}" class="menu-link">
-                                    <div data-i18n="Account">Achat</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="{{ path('app_demande_achat_index')}}" class="menu-link">
-                                    <div data-i18n="Notifications">Demande d'Achat</div>
-                                </a>
-                            </li>
-
-                        </ul>
-                    </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-credit-card"></i>
-                            <div data-i18n="Account Settings">Gestion des credits</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="{{ path('app_credit_indexb') }}" class="menu-link">
-                                    <div data-i18n="Account">Liste des credits</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="{{ path('app_reponse_credit_index') }}" class="menu-link">
-                                    <div data-i18n="Account">Liste des reponses</div>
-                                </a>
-                            </li>
                         </ul>
                     </li>
                     <li class="menu-item">
@@ -215,17 +161,17 @@
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon bx bx-message-rounded-error"></i>
-                            <div data-i18n="Account Settings">Reclamation Section</div>
+                            <div data-i18n="Account Settings">Gestion Reclamation</div>
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item">
-                                <a href="{{ path('app_reclamation_index') }}" class="menu-link">
-                                    <div data-i18n="Account">List Reclamation</div>
+                                <a href="{{ path('app_reponse_reclamation_index') }}" class="menu-link">
+                                    <div data-i18n="Account">List Réponses Reclamation</div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="{{ path('app_reponse_reclamation_index') }}" class="menu-link">
-                                    <div data-i18n="Notifications">repondre Reclamation</div>
+                                <a href="{{ path('app_reponse_reclamation_new') }}" class="menu-link">
+                                    <div data-i18n="Notifications">Repondre Reclamation</div>
                                 </a>
                             </li>
                         </ul>
@@ -233,11 +179,45 @@
                 {% endif %}
                 {% if is_granted("ROLE_ADMIN") %}
                 <li class="menu-header small text-uppercase">
-                    <span class="menu-header-text">Admin Panel</span>
+                    <span class="menu-header-text">Panneau du Admin</span>
                 </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-user"></i>
+                            <div data-i18n="Account Settings">Gestion Utilisateur</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="{{ path('admin_users') }}" class="menu-link">
+                                    <div data-i18n="Account">La liste des utilisateurs</div>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="{{ path('users_chart') }}" class="menu-link">
+                                    <div data-i18n="Account">Statistique Utilisateurs</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-stopwatch"></i>
+                            <div data-i18n="Account Settings">Gestion des congés</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="{{ path('app_conge_index') }}" class="menu-link">
+                                    <div data-i18n="Account">Ma liste des congés</div>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
                 <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                        <i class="menu-icon tf-icons bx bxs-widget"></i>
                         <div data-i18n="Account Settings">Gestion des Services</div>
                     </a>
                     <ul class="menu-sub">
@@ -253,62 +233,15 @@
                         </li>
                     </ul>
                 </li>
-                <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                            <div data-i18n="Account Settings">Gestion des congés</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="{{ path('app_conge_index') }}" class="menu-link">
-                                    <div data-i18n="Account">Ma liste des congés</div>
-                                </a>
-                            </li>
-                            
-                        </ul>
-                    </li>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bx-user"></i>
-                        <div data-i18n="Account Settings">User Section</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="{{ path('admin_users') }}" class="menu-link">
-                                <div data-i18n="Account">Users List</div>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="{{ path('users_chart') }}" class="menu-link">
-                                <div data-i18n="Account">Users Chart</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class="menu-icon tf-icons bx bxs-widget"></i>
-                        <div data-i18n="Account Settings">Service Section</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="#" class="menu-link">
-                                <div data-i18n="Account">Services List</div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
                 {% endif %}
                 {% if is_granted("ROLE_SUPER_ADMIN") %}
                     <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text">Super Admin Panel</span>
+                        <span class="menu-header-text">Panneau du Super Admin</span>
                     </li>
                     <li class="menu-item">
                         <a href="javascript:void(0);" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-user"></i>
-                            <div data-i18n="Account Settings">User Section</div>
+                            <div data-i18n="Account Settings">Gestion Utilisateurs</div>
                         </a>
                         <ul class="menu-sub">
                             <li class="menu-item">
@@ -389,24 +322,11 @@
   </script>
 
                     <ul class="navbar-nav flex-row align-items-center ms-auto">
-                        <!-- Place this tag where you want the button to render. -->
-                        <li class="nav-item lh-1 me-3">
-                            <a
-                                    class="github-button"
-                                    href=""
-                                    data-icon="octicon-star"
-                                    data-size="large"
-                                    data-show-count="true"
-                                    aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
-                            >Star</a
-                            >
-                        </li>
-
                         <!-- User -->
                         <li class="nav-item navbar-dropdown dropdown-user dropdown">
                             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                 <div class="avatar avatar-online">
-                                    <img src="{{ asset('front/assets/img/team/hafedh.jpg') }}" alt class="w-px-40 h-auto rounded-circle" />
+                                    <img src="{{ asset('front/assets/img/s-logo.png') }}" alt class="w-px-40 h-auto rounded-circle" />
                                 </div>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
@@ -415,12 +335,12 @@
                                         <div class="d-flex">
                                             <div class="flex-shrink-0 me-3">
                                                 <div class="avatar avatar-online">
-                                                    <img src="{{ asset('front/assets/img/team/hafedh.jpg') }}" alt class="w-px-40 h-auto rounded-circle" />
+                                                    <img src="{{ asset('front/assets/img/s-logo.png') }}" alt class="w-px-40 h-auto rounded-circle" />
                                                 </div>
                                             </div>
                                             <div class="flex-grow-1">
-                                                <span class="fw-semibold d-block">Jendoubi Hafedh</span>
-                                                <small class="text-muted">Admin</small>
+                                                <span class="fw-semibold d-block">Employé de Siyahi</span>
+                                                <small class="text-muted">Personnel</small>
                                             </div>
                                         </div>
                                     </a>
@@ -429,24 +349,9 @@
                                     <div class="dropdown-divider"></div>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="bx bx-user me-2"></i>
-                                        <span class="align-middle">My Profile</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="bx bx-cog me-2"></i>
-                                        <span class="align-middle">Settings</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="dropdown-divider"></div>
-                                </li>
-                                <li>
                                     <a class="dropdown-item" href="{{ path('app_user') }}">
                                         <i class="bx bx-power-off me-2"></i>
-                                        <span class="align-middle">Log Out</span>
+                                        <span class="align-middle">Déconnexion</span>
                                     </a>
                                 </li>
                             </ul>

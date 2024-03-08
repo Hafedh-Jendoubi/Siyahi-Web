@@ -62,7 +62,7 @@ class ReponseCreditController extends AbstractController
 
     
             $accountSid = 'ACd4df0fc05c27caa57a1852fe00965381';
-            $authToken = 'ce4c9a5c334eac472b1eb544fdb32f17';
+            $authToken = '45693adc098b60bd3d49bc43a0fb8f98';
             $client = new Client($accountSid, $authToken);
             $client->messages->create('+21658405717', // replace with admin's phone number // $message = $client->messages->create('+' . $form->get('tel')->getData(), // replace with admin's phone number
 

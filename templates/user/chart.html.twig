@@ -6,7 +6,7 @@
     <div class="content-wrapper">
         <!-- Content -->
         <div class="container-xxl flex-grow-1 container-p-y">
-            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Admin Panel /</span> Users Chart</h4>
+            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Panneau du Admin /</span> Statistique Utilisateurs</h4>
             <div style="width: 600px; height: 600px; align-self: center; margin-left: 350px;">
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                 <canvas id="userChart" width="300" height="300"></canvas>
@@ -15,7 +15,7 @@
                     var userChart = new Chart(ctx, {
                         type: 'pie',
                         data: {
-                            labels: ["Staff", "Admin", "Clients"],
+                            labels: ["Personnel", "Administrateur", "Clients"],
                             datasets: [{
                                 label: 'User Statistics',
                                 data: [4, 1, 6],

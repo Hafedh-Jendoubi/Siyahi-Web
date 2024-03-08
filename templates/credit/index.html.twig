@@ -3,7 +3,7 @@
 {% block body %}
     <h1>Listes de mes Crédits</h1>
 
-    <input id="search-input" class="form-control border-0 shadow-none" type="form-control" placeholder="Search...">
+    
     <table class="table">
         <thead>
             <tr>
@@ -70,17 +70,5 @@
         {{ knp_pagination_render(credits, 'credit/my_custom_template.html.twig') }}
     </div>
     <a class="btn btn-success" href="{{ path('app_credit_new') }}">Créer</a>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $("#search-input").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("table tbody tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
     
 {% endblock %}

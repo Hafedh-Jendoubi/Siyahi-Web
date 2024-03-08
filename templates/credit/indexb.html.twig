@@ -22,6 +22,19 @@
         <button  class="btn btn-secondary" style="width: 80px;height: 38px" type="c-btn">Filter</button>
     </form>
 
+    <input id="search-input" class="form-control border-0 shadow-none" type="form-control" placeholder="Search...">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#search-input").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("table tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
     <h1>Listes des credits</h1>
 
     <table class="table">

@@ -79,7 +79,7 @@
             overflow: hidden;
             transition: .5s;
             margin-top: 40px;
-            margin-left: 104px;
+            margin-left: 30px;
             letter-spacing: 4px
         }
 
@@ -190,7 +190,7 @@
 </head>
 <body>
 <div class="login-box">
-    <h2>Login</h2>
+    <h2>Connexion</h2>
     <form class="login100-form validate-form" method="post" novalidate>
         {% if error %}
             <div class="alert">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -201,18 +201,18 @@
         </div>
         <div class="user-box">
             <input type="password" name="_password" id="password" class="input100" autocomplete="current-password" required>
-            <label>Password</label>
+            <label>Mot de passe</label>
         </div>
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-        <a href="{{ path('app_forgot_password_request') }}">Forgot Password?</a>
+        <a href="{{ path('app_forgot_password_request') }}">Mot de passe oublié ?</a>
         <center><button type="submit">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            Login
-        </button></center>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Connexion
+            </button></center>
     </form>
-    </div>
+</div>
 </body>
 </html>

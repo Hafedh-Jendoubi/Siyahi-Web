@@ -20,7 +20,15 @@ class DemandeAchatController extends AbstractController
         return $this->render('demande_achat/index.html.twig', [
             'demande_achats' => $demandeAchatRepository->findAll(),
         ]);
-    } 
+    }
+
+    private function imageToBase64($path): string
+    {
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        return $base64;
+    }
     #[Route('/pdf/{id}', name: 'demandeachat_pdf')]
     public function generatePdf($id, DemandeAchatRepository $demandeAchatRepository): Response
     {
@@ -33,7 +41,7 @@ class DemandeAchatController extends AbstractController
     
         // Générer le contenu HTML du PDF en utilisant le template Twig
         $html = $this->renderView('demande_achat/pdf.html.twig', [
-            'demande_achat' => $demandeAchat,
+            'demande_achat' => $demandeAchat
         ]);
     
         // Créer une instance de Dompdf

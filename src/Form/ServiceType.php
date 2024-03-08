@@ -20,7 +20,7 @@ class ServiceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Name', TextType::class, ['attr' => ['placeholder' => 'Name*'],
+            ->add('Name', TextType::class, ['attr' => ['placeholder' => 'Nom*'],
             'constraints' => [
                 new NotBlank(['message' => 'Service Name cannot be blank.']),
                 new Regex([

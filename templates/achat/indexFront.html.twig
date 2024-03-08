@@ -82,7 +82,7 @@
                             <div class="details-container"> <!-- Ajout d'une classe pour les détails -->
                                 <h3>Vous souhaitez acheter une {{ achat.Type }} ? </h3>
                                 <p><strong style="color:#696969"> {{ achat.Description }}</strong></p>
-                                 <p><a class="event-details" href="{{ path('app_demande_achat_new',{'idachat':achat.id}) }}" >Plus de détails</a></p>
+                                 <p><a class="event-details" href="{{ path('app_demande_achat_new',{'idachat':achat.id}) }}" >Remplir ce formulaire pour avoir l'offre.</a></p>
                                 <!-- Conteneur pour les étoiles -->
                                 <div class="rating-container" id="rating_{{ achat.id }}">
                                     <div class="stars-container">

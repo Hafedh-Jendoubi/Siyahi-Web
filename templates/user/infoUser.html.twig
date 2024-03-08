@@ -97,7 +97,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Full Name</h6>
+                                    <h6 class="mb-0">Nom et Prénom</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     {{ user.FirstName ~ " " ~ user.LastName }}
@@ -106,7 +106,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Gender</h6>
+                                    <h6 class="mb-0">Genre</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     {% if user.gender == "M" %}
@@ -128,7 +128,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Phone</h6>
+                                    <h6 class="mb-0">Numéro du Téléphone</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     (+216) {{ user.PhoneNumber }}
@@ -137,7 +137,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Address</h6>
+                                    <h6 class="mb-0">Addresse</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     {{ user.address }}
@@ -146,7 +146,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <a class="btn btn-info" href="{{ path('editUser', { id: app.user.id }) }}">Edit</a>
+                                    <a class="btn btn-info" href="{{ path('editUser', { id: app.user.id }) }}">Modifier</a>
                                 </div>
                             </div>
                         </div>

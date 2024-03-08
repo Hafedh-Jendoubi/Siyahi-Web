@@ -39,6 +39,10 @@ class CompteClient
     #[ORM\ManyToOne(inversedBy: 'compteClients')]
     private ?User $User = null;
 
+
+
+    
+
   
     public function getId(): ?int
     {
@@ -95,6 +99,11 @@ class CompteClient
         return $this;
     }
 
+    public function addSolde(float $Solde):static{
+        $this->Solde=$this->Solde+$Solde;
+        return $this;
+    }
+
    
     public function addService(Service $service): static
     {
@@ -143,6 +152,5 @@ class CompteClient
         $this->Solde
     );
 }
-
 
 }

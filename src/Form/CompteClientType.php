@@ -34,7 +34,7 @@ class CompteClientType extends AbstractType
         ->add('service', ChoiceType::class, [
             'choices' => $this->getAvailableServices(),
             'choice_label' => 'name',
-            'placeholder' => 'Choose a Service',
+            'placeholder' => 'Choisir un Service',
             'constraints' => [
                 new NotBlank([
                     'message' => 'Please choose a service.',
@@ -49,6 +49,7 @@ class CompteClientType extends AbstractType
             ]
         ])
         ->add('Created_at', DateType::class, [
+            'label' => 'Date de Creation',
             'data' => new \DateTime(),
             'years' => range(date("Y"), date("Y") + 10),
             'widget' => 'single_text',

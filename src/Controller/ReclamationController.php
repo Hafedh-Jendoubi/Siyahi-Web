@@ -25,7 +25,7 @@ class ReclamationController extends AbstractController
         $pagination = $paginator->paginate(
             $reclamationRepository->findAll(),
             $request->query->getInt('page', 1),
-            3
+            2
         );
 
         return $this->render('reclamation/index.html.twig', [

@@ -13,9 +13,9 @@ security:
     #This makes sure that Admin have access to everything that Staff does, and it goes on like that. "Heritage"
     role_hierarchy:
         ROLE_USER: ROLE_USER
-        ROLE_STAFF: [ROLE_STAFF, ROLE_USER]
+        ROLE_STAFF: ROLE_STAFF
         ROLE_ADMIN: ROLE_STAFF
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN]
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

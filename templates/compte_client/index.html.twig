@@ -63,7 +63,7 @@
                 <td>{{ compte_client.CreatedAt ? compte_client.CreatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ compte_client.Solde }}</td>
                 <td>
-                    <a class="btn btn-info" style="width: 110px;" href="{{ path('app_compte_client_show', {'id': compte_client.id}) }}">Afficher</a>
+                    <a class="btn btn-info" style="width: 110px;" href="{{ path('app_compte_client_show_back', {'id': compte_client.id}) }}">Afficher</a>
                     <a class="btn btn-primary" style="width: 110px;" href="{{ path('app_compte_client_edit', {'id': compte_client.id}) }}">Modifier</a>
                 </td>
             </tr>

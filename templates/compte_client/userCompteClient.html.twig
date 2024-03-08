@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+<title>Détails Compte</title>
+    <h1>Détails du Compte Client</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom et prénom</th>
+                <td>{{ compte_client.user }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ compte_client.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ compte_client.service }}</td>
+            </tr>
+            <tr>
+                <th>RIB</th>
+                <td>{{ compte_client.RIB }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ compte_client.CreatedAt ? compte_client.CreatedAt|date('Y-m-d ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Solde</th>
+                <td>{{ compte_client.Solde }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary d-block mx-auto" style="width=200px"  href="{{ path('app_user') }}">Acceuil</a>
+{% endblock %}
+    

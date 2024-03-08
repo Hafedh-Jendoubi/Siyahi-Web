@@ -1,6 +1,6 @@
-{% extends 'back_base.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Confirmer la Demande{% endblock %}
+{% block title %}<title>Confirmer la Demande</title>{% endblock %}
 
 {% block body %}
     <div class="container">
@@ -28,7 +28,7 @@
 
                         {{ form_end(form) }}
 
-                        <a href="{{ path('app_demande_achat_index') }}" class="btn btn-secondary">Retour à la Liste</a>
+                        <a href="{{ path('app_achat_indexFront') }}" class="btn btn-secondary">Retour à la Liste</a>
                     </div>
                 </div>
             </div>

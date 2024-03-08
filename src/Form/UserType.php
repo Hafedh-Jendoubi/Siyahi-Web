@@ -48,45 +48,45 @@ class UserType extends AbstractType
                     ])
                 ],
             ])
-            ->add('FirstName', TextType::class, ['attr' => ['placeholder' => 'First Name*'],
+            ->add('FirstName', TextType::class, ['label' => 'Prénom', 'attr' => ['placeholder' => 'Prénom*'],
                 'constraints' => [
-                    new NotBlank(['message' => 'First Name is required.']),
-                    new Length(['max' => 15, 'maxMessage' => 'First Name cannot be longer than {{ limit }} characters.'])
+                    new NotBlank(['message' => 'Le prénom est requis.']),
+                    new Length(['max' => 15, 'maxMessage' => 'Le prénom ne peut pas dépasser {{ limit }} caractères.'])
                 ]
             ])
-            ->add('LastName', TextType::class, ['attr' => ['placeholder' => 'Last Name*'],
+            ->add('LastName', TextType::class, ['label' => 'Nom','attr' => ['placeholder' => 'Nom*'],
                 'constraints' => [
-                    new NotBlank(['message' => 'Last Name is required.']),
-                    new Length(['max' => 20, 'maxMessage' => 'First Name cannot be longer than {{ limit }} characters.'])
+                    new NotBlank(['message' => 'Le nom est requis.']),
+                    new Length(['max' => 20, 'maxMessage' => 'Le nom ne peut pas dépasser {{ limit }} caractères.'])
                 ]
             ])
-            ->add('Gender', ChoiceType::class, ['choices' => [
-                'Male' => 'M',
-                'Female' => 'F'
+            ->add('Gender', ChoiceType::class, ['label' => 'Genre', 'choices' => [
+                'Homme' => 'M',
+                'Femme' => 'F'
             ],
             ])
-            ->add('oldemail', EmailType::class, ['attr' => ['label' => 'Email', 'placeholder' => 'Email*'],
+            ->add('oldemail', EmailType::class, ['label' => 'Email', 'attr' => ['placeholder' => 'Email*'],
                 'constraints' => [
-                    new NotBlank(['message' => 'Email is required.'])
+                    new NotBlank(['message' => 'L\'email est requis.'])
                 ]
             ])
-            ->add('Address', TextType::class, ['attr' => ['placeholder' => 'Address'],
+            ->add('Address', TextType::class, ['attr' => ['placeholder' => 'Adresse'],
                 'constraints' => [
-                    new Length(['max' => 50, 'maxMessage' => 'Address cannot be longer than {{ limit }} characters.'])
+                    new Length(['max' => 50, 'maxMessage' => 'L\'adresse ne peut pas dépasser {{ limit }} caractères.'])
                 ]
             ])
-            ->add('PhoneNumber', NumberType::class, ['attr' => ['placeholder' => 'Phone Number'],
+            ->add('PhoneNumber', NumberType::class, ['label' => 'Numéro de téléphone', 'attr' => ['placeholder' => 'Numéro de téléphone'],
                 'constraints' => [
                     new Length(8)
                 ]
             ])
             ->add('CIN', NumberType::class, ['attr' => ['placeholder' => 'CIN*'],
                 'constraints' => [
-                    new NotBlank(['message' => 'CIN is required.']),
+                    new NotBlank(['message' => 'Le CIN est requis.']),
                     new Length(8)
                 ]
             ])
-            ->add("Submit", SubmitType::class, ['attr'=> ['class' => 'btn btn-primary']])
+            ->add("Submit", SubmitType::class, ['label' => 'Envoyer', 'attr'=> ['class' => 'btn btn-primary']])
             ->add("Reset", ResetType::class, ['attr'=> ['class' => 'btn btn-secondary']])
         ;
     }
