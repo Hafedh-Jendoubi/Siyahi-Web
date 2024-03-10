@@ -9,11 +9,11 @@
 > [!NOTE]
 > Crew-X is a team composed of 6 developpers. 
 > - Jendoubi Hafedh (Users Managemnet)
-> - Ben Hamroun Yessine (
-> - Bettaieb Ahmed
-> - Kacem Skander
-> - Amri Iheb
-> - Khlifi Imed
+> - Ben Hamroun Yessine (Accounts & Operations Management)
+> - Bettaieb Ahmed (Personnel Vacations Management)
+> - Kacem Skander (Loans Management)
+> - Amri Iheb (Reclamation System Management)
+> - Khlifi Imed (Purchases & Deals Management)
 
 > [!TIP]
 > In order to install the project and run it. You must follow these steps in order:
